@@ -62,4 +62,4 @@ If an extension library is loaded (`vsdl.image`, `vsdl.mixer`, `vsdl.ttf`), the 
 
 ## Contributing / Support
 
-This project was developed as a way of improving my understanding of V & C. I will not be providing active support for the project, but I'll happily except any pull requests. You at your own discretion! 
+This project was developed as a way of improving my understanding of V & C. I will not be providing active support for the project, but I'll happily except any pull requests. Use at your own discretion! 

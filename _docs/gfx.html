@@ -19,7 +19,7 @@
 						<input type="text" id="search" placeholder="Search...">
 						<div class="module"></div>
 						<div class="toggle-version-container">
-							<span>0.0.1</span>
+							<span>0.1.0</span>
 							<div id="dark-mode-toggle" role="switch" aria-checked="false" aria-label="Toggle dark mode"><svg xmlns="http://www.w3.org/2000/svg" class="light-icon" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.79 1.42-1.41zM4 10.5H1v2h3v-2zm9-9.95h-2V3.5h2V.55zm7.45 3.91l-1.41-1.41-1.79 1.79 1.41 1.41 1.79-1.79zm-3.21 13.7l1.79 1.8 1.41-1.41-1.8-1.79-1.4 1.4zM20 10.5v2h3v-2h-3zm-8-5c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm-1 16.95h2V19.5h-2v2.95zm-7.45-3.91l1.41 1.41 1.79-1.8-1.41-1.41-1.79 1.8z"/></svg><svg xmlns="http://www.w3.org/2000/svg" class="dark-icon" enable-background="new 0 0 24 24" height="24" viewBox="0 0 24 24" width="24"><g><rect fill="none" height="24" width="24"/></g><g><g><g><path d="M11.1,12.08C8.77,7.57,10.6,3.6,11.63,2.01C6.27,2.2,1.98,6.59,1.98,12c0,0.14,0.02,0.28,0.02,0.42 C2.62,12.15,3.29,12,4,12c1.66,0,3.18,0.83,4.1,2.15C9.77,14.63,11,16.17,11,18c0,1.52-0.87,2.83-2.12,3.51 c0.98,0.32,2.03,0.5,3.11,0.5c3.5,0,6.58-1.8,8.37-4.52C18,17.72,13.38,16.52,11.1,12.08z"/></g><path d="M7,16l-0.18,0C6.4,14.84,5.3,14,4,14c-1.66,0-3,1.34-3,3s1.34,3,3,3c0.62,0,2.49,0,3,0c1.1,0,2-0.9,2-2 C9,16.9,8.1,16,7,16z"/></g></g></svg></div>
 						</div>
 						<svg xmlns="http://www.w3.org/2000/svg" id="toggle-menu" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
@@ -27,14 +27,43 @@
 				</div>
 				<nav class="content hidden">
 					<ul>
-						<li class="open"><div class="menu-row"><a href="./index.html">README</a></div></li><li class="open"><div class="menu-row"><a href="./vsdl.html">vsdl</a></div></li><li class="open"><div class="menu-row"><a href="./audio.html">audio</a></div></li><li class="open active"><div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a href="./gfx.html">gfx</a></div><ul><li><a href="./gfx.image.html">image</a></li></ul></li>
+						<li class="open"><div class="menu-row"><a href="./index.html">README</a></div></li><li class="open"><div class="menu-row"><a href="./vsdl.html">vsdl</a></div></li><li class="open"><div class="menu-row"><a href="./audio.html">audio</a></div></li><li class="open"><div class="menu-row"><a href="./events.html">events</a></div></li><li class="open active"><div class="menu-row"><a href="./gfx.html">gfx</a></div></li><li class="open"><div class="menu-row"><a href="./image.html">image</a></div></li>
 					</ul>
 				</nav>
 			</header>
 			<div class="doc-container">
 				<div class="doc-content">
 					<section id="gfx" class="doc-node">
-<div class="title"><h1>gfx</h1></div></section>
+<div class="title"><h1>gfx</h1></div><h1>VSDL Graphics</h1>
+<p>VSDL implements most of the standard graphics API provided by SDL2 with few changes. Most calls have been consolidated to <code>structs</code> with methods (i.e. <code>SDL_GetWindowTitle()</code> -&gt; <code>window.get_title()</code>). This should make it easy to convert existing code to VSDL.</p>
+<pre><code class="language-v">module main
+
+import vsdl
+import vsdl.events
+import vsdl.gfx
+
+fn main() {
+    mut window, mut renderer := gfx.create_window_and_renderer(&quot;VSDL Graphics Demo&quot;, -1, -1, 640, 480, .shown)?
+
+    v_image := gfx.load_bmp(&quot;./v-logo.bmp&quot;)?
+    v_texture := v_image.create_texture(renderer)?
+
+    renderer.set_draw_color(255, 255, 255, 255)
+    renderer.clear()
+    renderer.set_draw_color(0, 0, 0, 255)
+    renderer.draw_fill_rect({ x: 0, y: 120, w: 640, h: 240 })
+    renderer.render(v_texture, { x: 160, y: 120, w: 320, h: 240 })
+    renderer.present()
+    
+    window.update()
+    events.loop()
+
+    renderer.destroy()
+    v_image.free()
+    window.destroy()
+    vsdl.quit()
+}
+</code></pre></section>
 
 <section id="BlendMode" class="doc-node">
 <div class="title"><h2>BlendMode <a href="#BlendMode">#</a></h2></div><pre class="signature"><code><span class="token keyword">enum</span> <span class="token symbol">BlendMode</span> <span class="token punctuation">{</span>
@@ -159,20 +188,20 @@
 <span class="token punctuation">}</span></code></pre>
 
 </section>
-<section id="get_displays_count" class="doc-node">
-<div class="title"><h2>get_displays_count <a href="#get_displays_count">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">get_displays_count</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<section id="set_cursor" class="doc-node">
+<div class="title"><h2>set_cursor <a href="#set_cursor">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">set_cursor</span><span class="token punctuation">(</span>cursor Cursor<span class="token punctuation">)</span></code></pre>
 
 </section>
 <section id="create_cursor" class="doc-node">
 <div class="title"><h2>create_cursor <a href="#create_cursor">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">create_cursor</span><span class="token punctuation">(</span>color<span class="token punctuation">,</span> mask <span class="token builtin">byte</span><span class="token punctuation">,</span> w<span class="token punctuation">,</span> h<span class="token punctuation">,</span> hot_x<span class="token punctuation">,</span> hot_y <span class="token builtin">int</span><span class="token punctuation">)</span> ?Cursor</code></pre>
 
 </section>
-<section id="load_bmp" class="doc-node">
-<div class="title"><h2>load_bmp <a href="#load_bmp">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">load_bmp</span><span class="token punctuation">(</span>path <span class="token builtin">string</span><span class="token punctuation">)</span> ?<span class="token operator">&</span>Surface</code></pre>
-
-</section>
 <section id="get_window_from_id" class="doc-node">
 <div class="title"><h2>get_window_from_id <a href="#get_window_from_id">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">get_window_from_id</span><span class="token punctuation">(</span>id <span class="token builtin">u32</span><span class="token punctuation">)</span> ?Window</code></pre>
+
+</section>
+<section id="get_displays_count" class="doc-node">
+<div class="title"><h2>get_displays_count <a href="#get_displays_count">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">get_displays_count</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
 
 </section>
 <section id="create_surface" class="doc-node">
@@ -187,12 +216,12 @@
 <div class="title"><h2>create_system_cursor <a href="#create_system_cursor">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">create_system_cursor</span><span class="token punctuation">(</span>cursor_type CursorType<span class="token punctuation">)</span> ?Cursor</code></pre>
 
 </section>
-<section id="set_cursor" class="doc-node">
-<div class="title"><h2>set_cursor <a href="#set_cursor">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">set_cursor</span><span class="token punctuation">(</span>cursor Cursor<span class="token punctuation">)</span></code></pre>
-
-</section>
 <section id="get_display_modes" class="doc-node">
 <div class="title"><h2>get_display_modes <a href="#get_display_modes">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">get_display_modes</span><span class="token punctuation">(</span>display <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+
+</section>
+<section id="get_display" class="doc-node">
+<div class="title"><h2>get_display <a href="#get_display">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">get_display</span><span class="token punctuation">(</span>index <span class="token builtin">int</span><span class="token punctuation">)</span> ?Display</code></pre>
 
 </section>
 <section id="create_window" class="doc-node">
@@ -203,12 +232,12 @@
 <div class="title"><h2>create_window_and_renderer <a href="#create_window_and_renderer">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">create_window_and_renderer</span><span class="token punctuation">(</span>title <span class="token builtin">string</span><span class="token punctuation">,</span> x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> width<span class="token punctuation">,</span> height <span class="token builtin">int</span><span class="token punctuation">,</span> flags ...WindowFlags<span class="token punctuation">)</span> ?<span class="token punctuation">(</span>Window<span class="token punctuation">,</span> Renderer<span class="token punctuation">)</span></code></pre>
 
 </section>
-<section id="get_display" class="doc-node">
-<div class="title"><h2>get_display <a href="#get_display">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">get_display</span><span class="token punctuation">(</span>index <span class="token builtin">int</span><span class="token punctuation">)</span> ?Display</code></pre>
-
-</section>
 <section id="get_cursor" class="doc-node">
 <div class="title"><h2>get_cursor <a href="#get_cursor">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">get_cursor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> ?Cursor</code></pre>
+
+</section>
+<section id="load_bmp" class="doc-node">
+<div class="title"><h2>load_bmp <a href="#load_bmp">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">load_bmp</span><span class="token punctuation">(</span>path <span class="token builtin">string</span><span class="token punctuation">)</span> ?<span class="token operator">&</span>Surface</code></pre>
 
 </section>
 <section id="get_active_window" class="doc-node">
@@ -234,6 +263,14 @@
 <section id="Surface.convert" class="doc-node">
 <div class="title"><h2>Surface.convert <a href="#Surface.convert">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>surface <span class="token operator">&</span>Surface<span class="token punctuation">)</span> <span class="token function">convert</span><span class="token punctuation">(</span>format <span class="token operator">&</span>PixelFormat<span class="token punctuation">,</span> flags <span class="token builtin">u32</span><span class="token punctuation">)</span> ?<span class="token operator">&</span>Surface</code></pre>
 <p>convert modifies the format of this surface and returns a new surface</p>
+</section>
+<section id="Renderer.draw_fill_rect" class="doc-node">
+<div class="title"><h2>Renderer.draw_fill_rect <a href="#Renderer.draw_fill_rect">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>renderer Renderer<span class="token punctuation">)</span> <span class="token function">draw_fill_rect</span><span class="token punctuation">(</span>rect Rect<span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>fill_rect draws a filled in rectangle with the provided x, y, width and height values</p>
+</section>
+<section id="Renderer.draw_fill_rects" class="doc-node">
+<div class="title"><h2>Renderer.draw_fill_rects <a href="#Renderer.draw_fill_rects">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>renderer Renderer<span class="token punctuation">)</span> <span class="token function">draw_fill_rects</span><span class="token punctuation">(</span>rects <span class="token punctuation">[</span><span class="token punctuation">]</span>Rect<span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>fill_rect draws filled in rectangles for the provided <code>rects</code></p>
 </section>
 <section id="Renderer.draw_line" class="doc-node">
 <div class="title"><h2>Renderer.draw_line <a href="#Renderer.draw_line">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>renderer Renderer<span class="token punctuation">)</span> <span class="token function">draw_line</span><span class="token punctuation">(</span>point1<span class="token punctuation">,</span> point2 Point<span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
@@ -263,14 +300,6 @@
 <div class="title"><h2>Surface.fill_rect <a href="#Surface.fill_rect">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>surface <span class="token operator">&</span>Surface<span class="token punctuation">)</span> <span class="token function">fill_rect</span><span class="token punctuation">(</span>rect Rect<span class="token punctuation">,</span> color <span class="token builtin">u32</span><span class="token punctuation">)</span></code></pre>
 <p>fill_rect creates a filled in rectange on this surface</p>
 </section>
-<section id="Renderer.fill_rect" class="doc-node">
-<div class="title"><h2>Renderer.fill_rect <a href="#Renderer.fill_rect">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>renderer Renderer<span class="token punctuation">)</span> <span class="token function">fill_rect</span><span class="token punctuation">(</span>rect Rect<span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
-<p>fill_rect draws a filled in rectangle with the provided x, y, width and height values</p>
-</section>
-<section id="Renderer.fill_rects" class="doc-node">
-<div class="title"><h2>Renderer.fill_rects <a href="#Renderer.fill_rects">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>renderer Renderer<span class="token punctuation">)</span> <span class="token function">fill_rects</span><span class="token punctuation">(</span>rects <span class="token punctuation">[</span><span class="token punctuation">]</span>Rect<span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
-<p>fill_rect draws filled in rectangles for the provided <code>rects</code></p>
-</section>
 <section id="Window.focus" class="doc-node">
 <div class="title"><h2>Window.focus <a href="#Window.focus">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>window Window<span class="token punctuation">)</span> <span class="token function">focus</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
 <p>focus sets the window to the actively focused window</p>
@@ -295,9 +324,9 @@
 <div class="title"><h2>Renderer.copy <a href="#Renderer.copy">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>renderer Renderer<span class="token punctuation">)</span> <span class="token function">copy</span><span class="token punctuation">(</span>texture Texture<span class="token punctuation">,</span> src_rect<span class="token punctuation">,</span> dst_rect Rect<span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
 <p>copy a src_<code>Rect</code> from the provided texture to a dst_<code>Rect</code> for the rendering target</p>
 </section>
-<section id="Texture.get_alpha" class="doc-node">
-<div class="title"><h2>Texture.get_alpha <a href="#Texture.get_alpha">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>texture Texture<span class="token punctuation">)</span> <span class="token function">get_alpha</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">byte</span></code></pre>
-<p>get_alpha gets the alpha value of the texture</p>
+<section id="Window.update" class="doc-node">
+<div class="title"><h2>Window.update <a href="#Window.update">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>window Window<span class="token punctuation">)</span> <span class="token function">update</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+
 </section>
 <section id="Texture.get_blend_mode" class="doc-node">
 <div class="title"><h2>Texture.get_blend_mode <a href="#Texture.get_blend_mode">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>texture Texture<span class="token punctuation">)</span> <span class="token function">get_blend_mode</span><span class="token punctuation">(</span><span class="token punctuation">)</span> BlendMode</code></pre>
@@ -315,8 +344,8 @@
 <div class="title"><h2>Texture.get_color_mod <a href="#Texture.get_color_mod">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>texture Texture<span class="token punctuation">)</span> <span class="token function">get_color_mod</span><span class="token punctuation">(</span><span class="token punctuation">)</span> Color</code></pre>
 <p>get_color_mod gets the color value that is multiplied into render copy operations</p>
 </section>
-<section id="Window.update" class="doc-node">
-<div class="title"><h2>Window.update <a href="#Window.update">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>window Window<span class="token punctuation">)</span> <span class="token function">update</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<section id="Texture.update" class="doc-node">
+<div class="title"><h2>Texture.update <a href="#Texture.update">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>texture Texture<span class="token punctuation">)</span> <span class="token function">update</span><span class="token punctuation">(</span>rect Rect<span class="token punctuation">,</span> pixels <span class="token builtin">voidptr</span><span class="token punctuation">,</span> pitch <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
 
 </section>
 <section id="Window.get_data" class="doc-node">
@@ -327,10 +356,6 @@
 <div class="title"><h2>Window.get_display <a href="#Window.get_display">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>window Window<span class="token punctuation">)</span> <span class="token function">get_display</span><span class="token punctuation">(</span><span class="token punctuation">)</span> ?Display</code></pre>
 
 </section>
-<section id="Texture.update" class="doc-node">
-<div class="title"><h2>Texture.update <a href="#Texture.update">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>texture Texture<span class="token punctuation">)</span> <span class="token function">update</span><span class="token punctuation">(</span>rect Rect<span class="token punctuation">,</span> pixels <span class="token builtin">voidptr</span><span class="token punctuation">,</span> pitch <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
-
-</section>
 <section id="Surface.create_texture" class="doc-node">
 <div class="title"><h2>Surface.create_texture <a href="#Surface.create_texture">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>surface <span class="token operator">&</span>Surface<span class="token punctuation">)</span> <span class="token function">create_texture</span><span class="token punctuation">(</span>renderer Renderer<span class="token punctuation">)</span> ?Texture</code></pre>
 
@@ -338,6 +363,10 @@
 <section id="Renderer.create_texture" class="doc-node">
 <div class="title"><h2>Renderer.create_texture <a href="#Renderer.create_texture">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>renderer Renderer<span class="token punctuation">)</span> <span class="token function">create_texture</span><span class="token punctuation">(</span>format PixelFormats<span class="token punctuation">,</span> access<span class="token punctuation">,</span> width<span class="token punctuation">,</span> height <span class="token builtin">int</span><span class="token punctuation">)</span> ?Texture</code></pre>
 <p>create_texture creates a new texture from the renderer</p>
+</section>
+<section id="Surface.create_renderer" class="doc-node">
+<div class="title"><h2>Surface.create_renderer <a href="#Surface.create_renderer">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>surface <span class="token operator">&</span>Surface<span class="token punctuation">)</span> <span class="token function">create_renderer</span><span class="token punctuation">(</span><span class="token punctuation">)</span> ?Renderer</code></pre>
+<p>create_rendered that can be used for directly drawing to or rendering textures onto</p>
 </section>
 <section id="Surface.get_flags" class="doc-node">
 <div class="title"><h2>Surface.get_flags <a href="#Surface.get_flags">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>surface <span class="token operator">&</span>Surface<span class="token punctuation">)</span> <span class="token function">get_flags</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">u32</span></code></pre>
@@ -351,13 +380,13 @@
 <div class="title"><h2>Surface.get_format <a href="#Surface.get_format">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>surface <span class="token operator">&</span>Surface<span class="token punctuation">)</span> <span class="token function">get_format</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&</span>PixelFormat</code></pre>
 
 </section>
-<section id="Surface.get_height" class="doc-node">
-<div class="title"><h2>Surface.get_height <a href="#Surface.get_height">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>surface <span class="token operator">&</span>Surface<span class="token punctuation">)</span> <span class="token function">get_height</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
-
-</section>
 <section id="Texture.get_height" class="doc-node">
 <div class="title"><h2>Texture.get_height <a href="#Texture.get_height">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>texture Texture<span class="token punctuation">)</span> <span class="token function">get_height</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
 <p>get_height returns the height of the texture</p>
+</section>
+<section id="Surface.get_height" class="doc-node">
+<div class="title"><h2>Surface.get_height <a href="#Surface.get_height">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>surface <span class="token operator">&</span>Surface<span class="token punctuation">)</span> <span class="token function">get_height</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+
 </section>
 <section id="Window.get_id" class="doc-node">
 <div class="title"><h2>Window.get_id <a href="#Window.get_id">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>window Window<span class="token punctuation">)</span> <span class="token function">get_id</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">u32</span></code></pre>
@@ -391,6 +420,10 @@
 <div class="title"><h2>Window.get_position <a href="#Window.get_position">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>window Window<span class="token punctuation">)</span> <span class="token function">get_position</span><span class="token punctuation">(</span><span class="token punctuation">)</span> Point</code></pre>
 
 </section>
+<section id="Surface.get_rect" class="doc-node">
+<div class="title"><h2>Surface.get_rect <a href="#Surface.get_rect">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>surface <span class="token operator">&</span>Surface<span class="token punctuation">)</span> <span class="token function">get_rect</span><span class="token punctuation">(</span><span class="token punctuation">)</span> Rect</code></pre>
+
+</section>
 <section id="Renderer.get_render_target" class="doc-node">
 <div class="title"><h2>Renderer.get_render_target <a href="#Renderer.get_render_target">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>renderer Renderer<span class="token punctuation">)</span> <span class="token function">get_render_target</span><span class="token punctuation">(</span><span class="token punctuation">)</span> ?Texture</code></pre>
 <p>get_render_target gets the current render target if set or returns an error if the defualt is set</p>
@@ -411,25 +444,25 @@
 <div class="title"><h2>Window.get_title <a href="#Window.get_title">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>window Window<span class="token punctuation">)</span> <span class="token function">get_title</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">string</span></code></pre>
 
 </section>
-<section id="Surface.get_width" class="doc-node">
-<div class="title"><h2>Surface.get_width <a href="#Surface.get_width">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>surface <span class="token operator">&</span>Surface<span class="token punctuation">)</span> <span class="token function">get_width</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
-
-</section>
 <section id="Texture.get_width" class="doc-node">
 <div class="title"><h2>Texture.get_width <a href="#Texture.get_width">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>texture Texture<span class="token punctuation">)</span> <span class="token function">get_width</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
 <p>get_width returns the width of the texture</p>
 </section>
-<section id="Surface.create_renderer" class="doc-node">
-<div class="title"><h2>Surface.create_renderer <a href="#Surface.create_renderer">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>surface <span class="token operator">&</span>Surface<span class="token punctuation">)</span> <span class="token function">create_renderer</span><span class="token punctuation">(</span><span class="token punctuation">)</span> ?Renderer</code></pre>
-<p>create_rendered that can be used for directly drawing to or rendering textures onto</p>
-</section>
-<section id="Window.has_focus" class="doc-node">
-<div class="title"><h2>Window.has_focus <a href="#Window.has_focus">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>window Window<span class="token punctuation">)</span> <span class="token function">has_focus</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">bool</span></code></pre>
+<section id="Surface.get_width" class="doc-node">
+<div class="title"><h2>Surface.get_width <a href="#Surface.get_width">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>surface <span class="token operator">&</span>Surface<span class="token punctuation">)</span> <span class="token function">get_width</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
 
 </section>
 <section id="Window.create_renderer" class="doc-node">
 <div class="title"><h2>Window.create_renderer <a href="#Window.create_renderer">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>window Window<span class="token punctuation">)</span> <span class="token function">create_renderer</span><span class="token punctuation">(</span>index <span class="token builtin">int</span><span class="token punctuation">,</span> flags <span class="token builtin">u32</span><span class="token punctuation">)</span> ?Renderer</code></pre>
 
+</section>
+<section id="Window.has_focus" class="doc-node">
+<div class="title"><h2>Window.has_focus <a href="#Window.has_focus">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>window Window<span class="token punctuation">)</span> <span class="token function">has_focus</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">bool</span></code></pre>
+
+</section>
+<section id="Texture.get_alpha" class="doc-node">
+<div class="title"><h2>Texture.get_alpha <a href="#Texture.get_alpha">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>texture Texture<span class="token punctuation">)</span> <span class="token function">get_alpha</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">byte</span></code></pre>
+<p>get_alpha gets the alpha value of the texture</p>
 </section>
 <section id="Window.maximize" class="doc-node">
 <div class="title"><h2>Window.maximize <a href="#Window.maximize">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>window Window<span class="token punctuation">)</span> <span class="token function">maximize</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
@@ -487,13 +520,13 @@
 <div class="title"><h2>Texture.set_alpha <a href="#Texture.set_alpha">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>texture Texture<span class="token punctuation">)</span> <span class="token function">set_alpha</span><span class="token punctuation">(</span>alpha <span class="token builtin">byte</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
 <p>set_alpha sets the alpha value of the texture</p>
 </section>
-<section id="Renderer.set_blend_mode" class="doc-node">
-<div class="title"><h2>Renderer.set_blend_mode <a href="#Renderer.set_blend_mode">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>renderer Renderer<span class="token punctuation">)</span> <span class="token function">set_blend_mode</span><span class="token punctuation">(</span>mode BlendMode<span class="token punctuation">)</span></code></pre>
-
-</section>
 <section id="Texture.set_blend_mode" class="doc-node">
 <div class="title"><h2>Texture.set_blend_mode <a href="#Texture.set_blend_mode">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>texture Texture<span class="token punctuation">)</span> <span class="token function">set_blend_mode</span><span class="token punctuation">(</span>mode BlendMode<span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
 <p>set_blend_mode for the texture</p>
+</section>
+<section id="Renderer.set_blend_mode" class="doc-node">
+<div class="title"><h2>Renderer.set_blend_mode <a href="#Renderer.set_blend_mode">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>renderer Renderer<span class="token punctuation">)</span> <span class="token function">set_blend_mode</span><span class="token punctuation">(</span>mode BlendMode<span class="token punctuation">)</span></code></pre>
+
 </section>
 <section id="Window.set_border" class="doc-node">
 <div class="title"><h2>Window.set_border <a href="#Window.set_border">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>window Window<span class="token punctuation">)</span> <span class="token function">set_border</span><span class="token punctuation">(</span>bordered <span class="token builtin">bool</span><span class="token punctuation">)</span></code></pre>
@@ -579,6 +612,14 @@
 <div class="title"><h2>Renderer.destroy <a href="#Renderer.destroy">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> renderer Renderer<span class="token punctuation">)</span> <span class="token function">destroy</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
 <p>destroy the renderer</p>
 </section>
+<section id="Renderer.draw_fill_rect" class="doc-node">
+<div class="title"><h2>Renderer.draw_fill_rect <a href="#Renderer.draw_fill_rect">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>renderer Renderer<span class="token punctuation">)</span> <span class="token function">draw_fill_rect</span><span class="token punctuation">(</span>rect Rect<span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>fill_rect draws a filled in rectangle with the provided x, y, width and height values</p>
+</section>
+<section id="Renderer.draw_fill_rects" class="doc-node">
+<div class="title"><h2>Renderer.draw_fill_rects <a href="#Renderer.draw_fill_rects">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>renderer Renderer<span class="token punctuation">)</span> <span class="token function">draw_fill_rects</span><span class="token punctuation">(</span>rects <span class="token punctuation">[</span><span class="token punctuation">]</span>Rect<span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>fill_rect draws filled in rectangles for the provided <code>rects</code></p>
+</section>
 <section id="Renderer.draw_line" class="doc-node">
 <div class="title"><h2>Renderer.draw_line <a href="#Renderer.draw_line">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>renderer Renderer<span class="token punctuation">)</span> <span class="token function">draw_line</span><span class="token punctuation">(</span>point1<span class="token punctuation">,</span> point2 Point<span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
 <p>draw_line from <code>point1</code> to <code>point2</code></p>
@@ -602,14 +643,6 @@
 <section id="Renderer.draw_rects" class="doc-node">
 <div class="title"><h2>Renderer.draw_rects <a href="#Renderer.draw_rects">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>renderer Renderer<span class="token punctuation">)</span> <span class="token function">draw_rects</span><span class="token punctuation">(</span>rects <span class="token punctuation">[</span><span class="token punctuation">]</span>Rect<span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
 <p>draw_rects draws open rectangles for the provided <code>rects</code></p>
-</section>
-<section id="Renderer.fill_rect" class="doc-node">
-<div class="title"><h2>Renderer.fill_rect <a href="#Renderer.fill_rect">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>renderer Renderer<span class="token punctuation">)</span> <span class="token function">fill_rect</span><span class="token punctuation">(</span>rect Rect<span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
-<p>fill_rect draws a filled in rectangle with the provided x, y, width and height values</p>
-</section>
-<section id="Renderer.fill_rects" class="doc-node">
-<div class="title"><h2>Renderer.fill_rects <a href="#Renderer.fill_rects">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>renderer Renderer<span class="token punctuation">)</span> <span class="token function">fill_rects</span><span class="token punctuation">(</span>rects <span class="token punctuation">[</span><span class="token punctuation">]</span>Rect<span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
-<p>fill_rect draws filled in rectangles for the provided <code>rects</code></p>
 </section>
 <section id="Renderer.get_render_target" class="doc-node">
 <div class="title"><h2>Renderer.get_render_target <a href="#Renderer.get_render_target">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>renderer Renderer<span class="token punctuation">)</span> <span class="token function">get_render_target</span><span class="token punctuation">(</span><span class="token punctuation">)</span> ?Texture</code></pre>
@@ -749,6 +782,10 @@
 </section>
 <section id="Surface.get_pitch" class="doc-node">
 <div class="title"><h2>Surface.get_pitch <a href="#Surface.get_pitch">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>surface <span class="token operator">&</span>Surface<span class="token punctuation">)</span> <span class="token function">get_pitch</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+
+</section>
+<section id="Surface.get_rect" class="doc-node">
+<div class="title"><h2>Surface.get_rect <a href="#Surface.get_rect">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>surface <span class="token operator">&</span>Surface<span class="token punctuation">)</span> <span class="token function">get_rect</span><span class="token punctuation">(</span><span class="token punctuation">)</span> Rect</code></pre>
 
 </section>
 <section id="Surface.get_width" class="doc-node">
@@ -1009,6 +1046,14 @@
 <div class="title"><h2>Renderer.destroy <a href="#Renderer.destroy">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> renderer Renderer<span class="token punctuation">)</span> <span class="token function">destroy</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
 <p>destroy the renderer</p>
 </section>
+<section id="Renderer.draw_fill_rect" class="doc-node">
+<div class="title"><h2>Renderer.draw_fill_rect <a href="#Renderer.draw_fill_rect">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>renderer Renderer<span class="token punctuation">)</span> <span class="token function">draw_fill_rect</span><span class="token punctuation">(</span>rect Rect<span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>fill_rect draws a filled in rectangle with the provided x, y, width and height values</p>
+</section>
+<section id="Renderer.draw_fill_rects" class="doc-node">
+<div class="title"><h2>Renderer.draw_fill_rects <a href="#Renderer.draw_fill_rects">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>renderer Renderer<span class="token punctuation">)</span> <span class="token function">draw_fill_rects</span><span class="token punctuation">(</span>rects <span class="token punctuation">[</span><span class="token punctuation">]</span>Rect<span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>fill_rect draws filled in rectangles for the provided <code>rects</code></p>
+</section>
 <section id="Renderer.draw_line" class="doc-node">
 <div class="title"><h2>Renderer.draw_line <a href="#Renderer.draw_line">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>renderer Renderer<span class="token punctuation">)</span> <span class="token function">draw_line</span><span class="token punctuation">(</span>point1<span class="token punctuation">,</span> point2 Point<span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
 <p>draw_line from <code>point1</code> to <code>point2</code></p>
@@ -1032,14 +1077,6 @@
 <section id="Renderer.draw_rects" class="doc-node">
 <div class="title"><h2>Renderer.draw_rects <a href="#Renderer.draw_rects">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>renderer Renderer<span class="token punctuation">)</span> <span class="token function">draw_rects</span><span class="token punctuation">(</span>rects <span class="token punctuation">[</span><span class="token punctuation">]</span>Rect<span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
 <p>draw_rects draws open rectangles for the provided <code>rects</code></p>
-</section>
-<section id="Renderer.fill_rect" class="doc-node">
-<div class="title"><h2>Renderer.fill_rect <a href="#Renderer.fill_rect">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>renderer Renderer<span class="token punctuation">)</span> <span class="token function">fill_rect</span><span class="token punctuation">(</span>rect Rect<span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
-<p>fill_rect draws a filled in rectangle with the provided x, y, width and height values</p>
-</section>
-<section id="Renderer.fill_rects" class="doc-node">
-<div class="title"><h2>Renderer.fill_rects <a href="#Renderer.fill_rects">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>renderer Renderer<span class="token punctuation">)</span> <span class="token function">fill_rects</span><span class="token punctuation">(</span>rects <span class="token punctuation">[</span><span class="token punctuation">]</span>Rect<span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
-<p>fill_rect draws filled in rectangles for the provided <code>rects</code></p>
 </section>
 <section id="Renderer.get_render_target" class="doc-node">
 <div class="title"><h2>Renderer.get_render_target <a href="#Renderer.get_render_target">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>renderer Renderer<span class="token punctuation">)</span> <span class="token function">get_render_target</span><span class="token punctuation">(</span><span class="token punctuation">)</span> ?Texture</code></pre>
@@ -1079,7 +1116,7 @@
 </section>
 
 					<div class="footer">
-						Powered by vdoc. Generated on: 27 Sep 2020 15:13:46
+						Powered by vdoc. Generated on: 29 Sep 2020 01:42:34
 					</div>
 				</div>
 				<div class="doc-toc"><ul><li class="open"><a href="#BlendMode">BlendMode</a>        <ul>
@@ -1103,16 +1140,16 @@
 <li class="open"><a href="#CursorMode">CursorMode</a>        <ul>
 </ul>
 </li>
-<li class="open"><a href="#get_displays_count">get_displays_count</a>        <ul>
+<li class="open"><a href="#set_cursor">set_cursor</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#create_cursor">create_cursor</a>        <ul>
 </ul>
 </li>
-<li class="open"><a href="#load_bmp">load_bmp</a>        <ul>
+<li class="open"><a href="#get_window_from_id">get_window_from_id</a>        <ul>
 </ul>
 </li>
-<li class="open"><a href="#get_window_from_id">get_window_from_id</a>        <ul>
+<li class="open"><a href="#get_displays_count">get_displays_count</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#create_surface">create_surface</a>        <ul>
@@ -1124,10 +1161,10 @@
 <li class="open"><a href="#create_system_cursor">create_system_cursor</a>        <ul>
 </ul>
 </li>
-<li class="open"><a href="#set_cursor">set_cursor</a>        <ul>
+<li class="open"><a href="#get_display_modes">get_display_modes</a>        <ul>
 </ul>
 </li>
-<li class="open"><a href="#get_display_modes">get_display_modes</a>        <ul>
+<li class="open"><a href="#get_display">get_display</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#create_window">create_window</a>        <ul>
@@ -1136,10 +1173,10 @@
 <li class="open"><a href="#create_window_and_renderer">create_window_and_renderer</a>        <ul>
 </ul>
 </li>
-<li class="open"><a href="#get_display">get_display</a>        <ul>
+<li class="open"><a href="#get_cursor">get_cursor</a>        <ul>
 </ul>
 </li>
-<li class="open"><a href="#get_cursor">get_cursor</a>        <ul>
+<li class="open"><a href="#load_bmp">load_bmp</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#get_active_window">get_active_window</a>        <ul>
@@ -1154,14 +1191,14 @@
 <li><a href="#Renderer.copy_ex">copy_ex</a></li>
 <li><a href="#Renderer.create_texture">create_texture</a></li>
 <li><a href="#Renderer.destroy">destroy</a></li>
+<li><a href="#Renderer.draw_fill_rect">draw_fill_rect</a></li>
+<li><a href="#Renderer.draw_fill_rects">draw_fill_rects</a></li>
 <li><a href="#Renderer.draw_line">draw_line</a></li>
 <li><a href="#Renderer.draw_lines">draw_lines</a></li>
 <li><a href="#Renderer.draw_point">draw_point</a></li>
 <li><a href="#Renderer.draw_points">draw_points</a></li>
 <li><a href="#Renderer.draw_rect">draw_rect</a></li>
 <li><a href="#Renderer.draw_rects">draw_rects</a></li>
-<li><a href="#Renderer.fill_rect">fill_rect</a></li>
-<li><a href="#Renderer.fill_rects">fill_rects</a></li>
 <li><a href="#Renderer.get_render_target">get_render_target</a></li>
 <li><a href="#Renderer.get_scale">get_scale</a></li>
 <li><a href="#Renderer.present">present</a></li>
@@ -1198,6 +1235,7 @@
 <li><a href="#Surface.get_format">get_format</a></li>
 <li><a href="#Surface.get_height">get_height</a></li>
 <li><a href="#Surface.get_pitch">get_pitch</a></li>
+<li><a href="#Surface.get_rect">get_rect</a></li>
 <li><a href="#Surface.get_width">get_width</a></li>
 <li><a href="#Surface.set_color_key">set_color_key</a></li>
 </ul>
@@ -1270,14 +1308,14 @@
 <li><a href="#Renderer.copy_ex">copy_ex</a></li>
 <li><a href="#Renderer.create_texture">create_texture</a></li>
 <li><a href="#Renderer.destroy">destroy</a></li>
+<li><a href="#Renderer.draw_fill_rect">draw_fill_rect</a></li>
+<li><a href="#Renderer.draw_fill_rects">draw_fill_rects</a></li>
 <li><a href="#Renderer.draw_line">draw_line</a></li>
 <li><a href="#Renderer.draw_lines">draw_lines</a></li>
 <li><a href="#Renderer.draw_point">draw_point</a></li>
 <li><a href="#Renderer.draw_points">draw_points</a></li>
 <li><a href="#Renderer.draw_rect">draw_rect</a></li>
 <li><a href="#Renderer.draw_rects">draw_rects</a></li>
-<li><a href="#Renderer.fill_rect">fill_rect</a></li>
-<li><a href="#Renderer.fill_rects">fill_rects</a></li>
 <li><a href="#Renderer.get_render_target">get_render_target</a></li>
 <li><a href="#Renderer.get_scale">get_scale</a></li>
 <li><a href="#Renderer.present">present</a></li>

@@ -19,7 +19,7 @@
 						<input type="text" id="search" placeholder="Search...">
 						<div class="module"></div>
 						<div class="toggle-version-container">
-							<span>0.0.1</span>
+							<span>0.1.0</span>
 							<div id="dark-mode-toggle" role="switch" aria-checked="false" aria-label="Toggle dark mode"><svg xmlns="http://www.w3.org/2000/svg" class="light-icon" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.79 1.42-1.41zM4 10.5H1v2h3v-2zm9-9.95h-2V3.5h2V.55zm7.45 3.91l-1.41-1.41-1.79 1.79 1.41 1.41 1.79-1.79zm-3.21 13.7l1.79 1.8 1.41-1.41-1.8-1.79-1.4 1.4zM20 10.5v2h3v-2h-3zm-8-5c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm-1 16.95h2V19.5h-2v2.95zm-7.45-3.91l1.41 1.41 1.79-1.8-1.41-1.41-1.79 1.8z"/></svg><svg xmlns="http://www.w3.org/2000/svg" class="dark-icon" enable-background="new 0 0 24 24" height="24" viewBox="0 0 24 24" width="24"><g><rect fill="none" height="24" width="24"/></g><g><g><g><path d="M11.1,12.08C8.77,7.57,10.6,3.6,11.63,2.01C6.27,2.2,1.98,6.59,1.98,12c0,0.14,0.02,0.28,0.02,0.42 C2.62,12.15,3.29,12,4,12c1.66,0,3.18,0.83,4.1,2.15C9.77,14.63,11,16.17,11,18c0,1.52-0.87,2.83-2.12,3.51 c0.98,0.32,2.03,0.5,3.11,0.5c3.5,0,6.58-1.8,8.37-4.52C18,17.72,13.38,16.52,11.1,12.08z"/></g><path d="M7,16l-0.18,0C6.4,14.84,5.3,14,4,14c-1.66,0-3,1.34-3,3s1.34,3,3,3c0.62,0,2.49,0,3,0c1.1,0,2-0.9,2-2 C9,16.9,8.1,16,7,16z"/></g></g></svg></div>
 						</div>
 						<svg xmlns="http://www.w3.org/2000/svg" id="toggle-menu" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
@@ -27,14 +27,82 @@
 				</div>
 				<nav class="content hidden">
 					<ul>
-						<li class="open"><div class="menu-row"><a href="./index.html">README</a></div></li><li class="open"><div class="menu-row"><a href="./vsdl.html">vsdl</a></div></li><li class="open active"><div class="menu-row"><a href="./audio.html">audio</a></div></li><li class="open"><div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a href="./gfx.html">gfx</a></div><ul><li><a href="./gfx.image.html">image</a></li></ul></li>
+						<li class="open"><div class="menu-row"><a href="./index.html">README</a></div></li><li class="open"><div class="menu-row"><a href="./vsdl.html">vsdl</a></div></li><li class="open active"><div class="menu-row"><a href="./audio.html">audio</a></div></li><li class="open"><div class="menu-row"><a href="./events.html">events</a></div></li><li class="open"><div class="menu-row"><a href="./gfx.html">gfx</a></div></li><li class="open"><div class="menu-row"><a href="./image.html">image</a></div></li>
 					</ul>
 				</nav>
 			</header>
 			<div class="doc-container">
 				<div class="doc-content">
 					<section id="audio" class="doc-node">
-<div class="title"><h1>audio</h1></div></section>
+<div class="title"><h1>audio</h1></div><h1>VSDL Audio</h1>
+<p>VSDL Implements the standard Audio library provided by SDL with some minor improvements. It can be a bit cumbersome to play audio via the standard library without using the Mixer extension. This module aims to simplify that a bit and provides the ability to control playback for each individual track.</p>
+<pre><code class="language-v">module main
+
+import vsdl
+import vsdl.audio
+import vsdl.gfx
+import vsdl.events
+
+fn main() {
+    mut window := gfx.create_window(&quot;Simple VSDL Window&quot;, -1, -1, 640, 480, .shown)?
+    surface := window.get_surface()?
+    surface.fill_rect(surface.get_rect(), surface.format_color(255, 255, 255))
+    
+    window.update()
+
+    mut audio_song    := audio.load_wav(&quot;./song.wav&quot;)?
+    audio_devices := audio.get_devices() // returns a list of available output devices
+
+    mut device := audio_devices[0] // adjust to the device on your computer
+    device.open(audio_song.get_spec())
+    device.unpause()
+
+    defer {
+        audio_song.free()
+        device.close()
+        surface.free()
+        window.destroy()
+        vsdl.quit()
+    }
+
+    mut song := device.play(audio_song, 75)
+    song.set_loop(true)
+
+    key_chan := events.create_watcher(10, .key)
+
+    for events.run() {
+        select {
+            event := &lt;-key_chan {
+                match event.key.input.key {
+                   .key_up { 
+                       volume := song.get_volume()
+                       song.set_volume(volume + 1)
+                   }
+                   .key_down {
+                       volume := song.get_volume()
+                       song.set_volume(volume - 1)
+                   }
+                   .key_left {
+                       pos := song.get_pos()
+                       song.set_pos(pos - 1)
+                   }
+                   .key_right {
+                       pos := song.get_pos()
+                       song.set_pos(pos + 1)
+                   }
+                   else { }
+                }
+            }
+            else {}
+        }
+    }
+}
+</code></pre>
+<p>The <code>vsdl.mixer</code> module has more control for channels and the ability to import different types of file types. The <code>vsdl.audio</code> module is more simpler use cases where a <code>wav</code> is fine for use.</p>
+<h2>Multiple Tracks</h2>
+<p>This module automatically handles mixing the audio tracks together. It's possible to call <code>AudioDevice.play(AudioData, :volume)</code> as many times as you want. Each call returns back a copy of the provided <code>AudioData</code> file, with which it's possible to control the playback (position, volume, etc) for that specific audio track.</p>
+<h2>Memory</h2>
+<p>The <code>AudioData</code> that is returned from <code>.play()</code> is a copy of the original and all of the struct values <em>but</em> the audio data itself. Attempting to call <code>AudioData.free()</code> on a copy will return <code>false</code>. Call <code>.free()</code> on the original <code>AudioData</code> object to free its memory.</p></section>
 
 <section id="AudioStatus" class="doc-node">
 <div class="title"><h2>AudioStatus <a href="#AudioStatus">#</a></h2></div><pre class="signature"><code><span class="token keyword">enum</span> <span class="token symbol">AudioStatus</span> <span class="token punctuation">{</span>
@@ -114,13 +182,13 @@
 <div class="title"><h2>AudioDevice.close <a href="#AudioDevice.close">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> device AudioDevice<span class="token punctuation">)</span> <span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
 
 </section>
-<section id="AudioData.set_loop" class="doc-node">
-<div class="title"><h2>AudioData.set_loop <a href="#AudioData.set_loop">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> data AudioData<span class="token punctuation">)</span> <span class="token function">set_loop</span><span class="token punctuation">(</span>loop <span class="token builtin">bool</span><span class="token punctuation">)</span></code></pre>
-<p>set_loop sets the track to loop or not loop</p>
-</section>
 <section id="AudioData.set_pos" class="doc-node">
 <div class="title"><h2>AudioData.set_pos <a href="#AudioData.set_pos">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> data AudioData<span class="token punctuation">)</span> <span class="token function">set_pos</span><span class="token punctuation">(</span>pos <span class="token builtin">f32</span><span class="token punctuation">)</span></code></pre>
 <p>set_pos sets the position of the track based on a percentage from 0-100</p>
+</section>
+<section id="AudioData.set_pos_byte" class="doc-node">
+<div class="title"><h2>AudioData.set_pos_byte <a href="#AudioData.set_pos_byte">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> data AudioData<span class="token punctuation">)</span> <span class="token function">set_pos_byte</span><span class="token punctuation">(</span>pos <span class="token builtin">u32</span><span class="token punctuation">)</span></code></pre>
+<p>set_pos_byte sets the position of the track by byte</p>
 </section>
 <section id="AudioData.get_pos" class="doc-node">
 <div class="title"><h2>AudioData.get_pos <a href="#AudioData.get_pos">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>data <span class="token operator">&</span>AudioData<span class="token punctuation">)</span> <span class="token function">get_pos</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">f32</span></code></pre>
@@ -146,9 +214,13 @@
 <div class="title"><h2>AudioDevice.get_status <a href="#AudioDevice.get_status">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>device <span class="token operator">&</span>AudioDevice<span class="token punctuation">)</span> <span class="token function">get_status</span><span class="token punctuation">(</span><span class="token punctuation">)</span> AudioStatus</code></pre>
 <p>get_status returns the current play status of the <code>AudioDevice</code></p>
 </section>
-<section id="AudioData.set_pos_byte" class="doc-node">
-<div class="title"><h2>AudioData.set_pos_byte <a href="#AudioData.set_pos_byte">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> data AudioData<span class="token punctuation">)</span> <span class="token function">set_pos_byte</span><span class="token punctuation">(</span>pos <span class="token builtin">u32</span><span class="token punctuation">)</span></code></pre>
-<p>set_pos_byte sets the position of the track by byte</p>
+<section id="AudioData.get_volume" class="doc-node">
+<div class="title"><h2>AudioData.get_volume <a href="#AudioData.get_volume">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>data <span class="token operator">&</span>AudioData<span class="token punctuation">)</span> <span class="token function">get_volume</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">i8</span></code></pre>
+<p>get_volume gets the current volume level of the audio track</p>
+</section>
+<section id="AudioData.set_volume" class="doc-node">
+<div class="title"><h2>AudioData.set_volume <a href="#AudioData.set_volume">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> data AudioData<span class="token punctuation">)</span> <span class="token function">set_volume</span><span class="token punctuation">(</span>volume <span class="token builtin">i8</span><span class="token punctuation">)</span></code></pre>
+<p>set_volume sets the volume level of the audio track</p>
 </section>
 <section id="AudioDevice.unlock_callback" class="doc-node">
 <div class="title"><h2>AudioDevice.unlock_callback <a href="#AudioDevice.unlock_callback">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>device <span class="token operator">&</span>AudioDevice<span class="token punctuation">)</span> <span class="token function">unlock_callback</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
@@ -178,20 +250,13 @@
 <div class="title"><h2>AudioData.get_loop <a href="#AudioData.get_loop">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>data <span class="token operator">&</span>AudioData<span class="token punctuation">)</span> <span class="token function">get_loop</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">bool</span></code></pre>
 <p>get_loop returns true if this audio track is set to loop</p>
 </section>
+<section id="AudioData.set_loop" class="doc-node">
+<div class="title"><h2>AudioData.set_loop <a href="#AudioData.set_loop">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> data AudioData<span class="token punctuation">)</span> <span class="token function">set_loop</span><span class="token punctuation">(</span>loop <span class="token builtin">bool</span><span class="token punctuation">)</span></code></pre>
+<p>set_loop sets the track to loop or not loop</p>
+</section>
 <section id="AudioDevice.unpause" class="doc-node">
 <div class="title"><h2>AudioDevice.unpause <a href="#AudioDevice.unpause">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>device <span class="token operator">&</span>AudioDevice<span class="token punctuation">)</span> <span class="token function">unpause</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
 <p>unpause the device to continue or start playing music</p>
-</section>
-<section id="AudioDevice" class="doc-node">
-<div class="title"><h2>AudioDevice <a href="#AudioDevice">#</a></h2></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">AudioDevice</span> <span class="token punctuation">{</span>
-<span class="token keyword">mut</span><span class="token punctuation">:</span>
-	index <span class="token builtin">int</span>
-	name  <span class="token builtin">string</span>
-	ptr   <span class="token builtin">voidptr</span>
-	spec  AudioSpec
-	queue <span class="token builtin">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span><span class="token operator">&</span>AudioData
-<span class="token punctuation">}</span></code></pre>
-
 </section>
 <section id="AudioDevice.close" class="doc-node">
 <div class="title"><h2>AudioDevice.close <a href="#AudioDevice.close">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> device AudioDevice<span class="token punctuation">)</span> <span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
@@ -245,7 +310,7 @@
 <div class="title"><h2>AudioData <a href="#AudioData">#</a></h2></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">AudioData</span> <span class="token punctuation">{</span>
 <span class="token keyword">mut</span><span class="token punctuation">:</span>
 	copy   <span class="token builtin">bool</span>
-	device <span class="token operator">&</span>AudioDevice
+	device <span class="token operator">&</span>AudioDevice <span class="token operator">=</span> <span class="token number">0</span>
 	len    <span class="token builtin">u32</span>
 	loop   <span class="token builtin">bool</span>
 	path   <span class="token builtin">string</span>
@@ -281,6 +346,10 @@
 <div class="title"><h2>AudioData.get_spec <a href="#AudioData.get_spec">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>data <span class="token operator">&</span>AudioData<span class="token punctuation">)</span> <span class="token function">get_spec</span><span class="token punctuation">(</span><span class="token punctuation">)</span> AudioSpec</code></pre>
 <p>get_spec returns the specifications about this audio track</p>
 </section>
+<section id="AudioData.get_volume" class="doc-node">
+<div class="title"><h2>AudioData.get_volume <a href="#AudioData.get_volume">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>data <span class="token operator">&</span>AudioData<span class="token punctuation">)</span> <span class="token function">get_volume</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">i8</span></code></pre>
+<p>get_volume gets the current volume level of the audio track</p>
+</section>
 <section id="AudioData.set_loop" class="doc-node">
 <div class="title"><h2>AudioData.set_loop <a href="#AudioData.set_loop">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> data AudioData<span class="token punctuation">)</span> <span class="token function">set_loop</span><span class="token punctuation">(</span>loop <span class="token builtin">bool</span><span class="token punctuation">)</span></code></pre>
 <p>set_loop sets the track to loop or not loop</p>
@@ -292,6 +361,21 @@
 <section id="AudioData.set_pos_byte" class="doc-node">
 <div class="title"><h2>AudioData.set_pos_byte <a href="#AudioData.set_pos_byte">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> data AudioData<span class="token punctuation">)</span> <span class="token function">set_pos_byte</span><span class="token punctuation">(</span>pos <span class="token builtin">u32</span><span class="token punctuation">)</span></code></pre>
 <p>set_pos_byte sets the position of the track by byte</p>
+</section>
+<section id="AudioData.set_volume" class="doc-node">
+<div class="title"><h2>AudioData.set_volume <a href="#AudioData.set_volume">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> data AudioData<span class="token punctuation">)</span> <span class="token function">set_volume</span><span class="token punctuation">(</span>volume <span class="token builtin">i8</span><span class="token punctuation">)</span></code></pre>
+<p>set_volume sets the volume level of the audio track</p>
+</section>
+<section id="AudioDevice" class="doc-node">
+<div class="title"><h2>AudioDevice <a href="#AudioDevice">#</a></h2></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">AudioDevice</span> <span class="token punctuation">{</span>
+<span class="token keyword">mut</span><span class="token punctuation">:</span>
+	index <span class="token builtin">int</span>
+	name  <span class="token builtin">string</span>
+	ptr   <span class="token builtin">voidptr</span>
+	spec  AudioSpec
+	queue <span class="token builtin">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span><span class="token operator">&</span>AudioData
+<span class="token punctuation">}</span></code></pre>
+
 </section>
 <section id="AudioDevice.close" class="doc-node">
 <div class="title"><h2>AudioDevice.close <a href="#AudioDevice.close">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> device AudioDevice<span class="token punctuation">)</span> <span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
@@ -358,7 +442,7 @@
 </section>
 
 					<div class="footer">
-						Powered by vdoc. Generated on: 27 Sep 2020 15:13:46
+						Powered by vdoc. Generated on: 29 Sep 2020 01:42:34
 					</div>
 				</div>
 				<div class="doc-toc"><ul><li class="open"><a href="#AudioStatus">AudioStatus</a>        <ul>
@@ -391,7 +475,7 @@
 <li class="open"><a href="#get_device_count">get_device_count</a>        <ul>
 </ul>
 </li>
-<li class="open"><a href="#AudioDevice">AudioDevice</a>        <ul>
+<li class="open"><a href="#">AudioDevice</a>        <ul>
 <li><a href="#AudioDevice.close">close</a></li>
 <li><a href="#AudioDevice.dequeue">dequeue</a></li>
 <li><a href="#AudioDevice.empty">empty</a></li>
@@ -413,12 +497,14 @@
 <li><a href="#AudioData.get_pos_byte">get_pos_byte</a></li>
 <li><a href="#AudioData.get_remaining">get_remaining</a></li>
 <li><a href="#AudioData.get_spec">get_spec</a></li>
+<li><a href="#AudioData.get_volume">get_volume</a></li>
 <li><a href="#AudioData.set_loop">set_loop</a></li>
 <li><a href="#AudioData.set_pos">set_pos</a></li>
 <li><a href="#AudioData.set_pos_byte">set_pos_byte</a></li>
+<li><a href="#AudioData.set_volume">set_volume</a></li>
 </ul>
 </li>
-<li class="open"><a href="#">AudioDevice</a>        <ul>
+<li class="open"><a href="#AudioDevice">AudioDevice</a>        <ul>
 <li><a href="#AudioDevice.close">close</a></li>
 <li><a href="#AudioDevice.dequeue">dequeue</a></li>
 <li><a href="#AudioDevice.empty">empty</a></li>

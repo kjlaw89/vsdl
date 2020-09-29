@@ -20,7 +20,7 @@ fn main() {
 	mut audio_song    := audio.load_wav("./song.wav")?
 	audio_devices := audio.get_devices() // returns a list of available output devices
 
-	mut device := audio_devices[3] // adjust to the device on your computer
+	mut device := audio_devices[0] // adjust to the device on your computer
 	device.open(audio_song.get_spec())
 	device.unpause()
 

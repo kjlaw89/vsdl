@@ -19,7 +19,7 @@
 						<input type="text" id="search" placeholder="Search...">
 						<div class="module"></div>
 						<div class="toggle-version-container">
-							<span>0.0.1</span>
+							<span>0.1.0</span>
 							<div id="dark-mode-toggle" role="switch" aria-checked="false" aria-label="Toggle dark mode"><svg xmlns="http://www.w3.org/2000/svg" class="light-icon" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.79 1.42-1.41zM4 10.5H1v2h3v-2zm9-9.95h-2V3.5h2V.55zm7.45 3.91l-1.41-1.41-1.79 1.79 1.41 1.41 1.79-1.79zm-3.21 13.7l1.79 1.8 1.41-1.41-1.8-1.79-1.4 1.4zM20 10.5v2h3v-2h-3zm-8-5c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm-1 16.95h2V19.5h-2v2.95zm-7.45-3.91l1.41 1.41 1.79-1.8-1.41-1.41-1.79 1.8z"/></svg><svg xmlns="http://www.w3.org/2000/svg" class="dark-icon" enable-background="new 0 0 24 24" height="24" viewBox="0 0 24 24" width="24"><g><rect fill="none" height="24" width="24"/></g><g><g><g><path d="M11.1,12.08C8.77,7.57,10.6,3.6,11.63,2.01C6.27,2.2,1.98,6.59,1.98,12c0,0.14,0.02,0.28,0.02,0.42 C2.62,12.15,3.29,12,4,12c1.66,0,3.18,0.83,4.1,2.15C9.77,14.63,11,16.17,11,18c0,1.52-0.87,2.83-2.12,3.51 c0.98,0.32,2.03,0.5,3.11,0.5c3.5,0,6.58-1.8,8.37-4.52C18,17.72,13.38,16.52,11.1,12.08z"/></g><path d="M7,16l-0.18,0C6.4,14.84,5.3,14,4,14c-1.66,0-3,1.34-3,3s1.34,3,3,3c0.62,0,2.49,0,3,0c1.1,0,2-0.9,2-2 C9,16.9,8.1,16,7,16z"/></g></g></svg></div>
 						</div>
 						<svg xmlns="http://www.w3.org/2000/svg" id="toggle-menu" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
@@ -27,492 +27,90 @@
 				</div>
 				<nav class="content hidden">
 					<ul>
-						<li class="open"><div class="menu-row"><a href="./index.html">README</a></div></li><li class="open active"><div class="menu-row"><a href="./vsdl.html">vsdl</a></div></li><li class="open"><div class="menu-row"><a href="./audio.html">audio</a></div></li><li class="open"><div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a href="./gfx.html">gfx</a></div><ul><li><a href="./gfx.image.html">image</a></li></ul></li>
+						<li class="open"><div class="menu-row"><a href="./index.html">README</a></div></li><li class="open active"><div class="menu-row"><a href="./vsdl.html">vsdl</a></div></li><li class="open"><div class="menu-row"><a href="./audio.html">audio</a></div></li><li class="open"><div class="menu-row"><a href="./events.html">events</a></div></li><li class="open"><div class="menu-row"><a href="./gfx.html">gfx</a></div></li><li class="open"><div class="menu-row"><a href="./image.html">image</a></div></li>
 					</ul>
 				</nav>
 			</header>
 			<div class="doc-container">
 				<div class="doc-content">
 					<section id="vsdl" class="doc-node">
-<div class="title"><h1>vsdl</h1></div></section>
+<div class="title"><h1>vsdl</h1></div><div align="center">
+    <h1>VSDL</h1>
+</div>
+<p>VSDL is a work-in-progress V wrapper for the C-based <a href="https://www.libsdl.org">SDL library</a>. The aim of this library is to provide a thorough implementation of SDL in V. The implementation is faithful to the original API but takes some liberties to provide a native &quot;V&quot; feel.</p>
+<h2>Example</h2>
+<pre><code class="language-v">module main
 
-<section id="ScanCode" class="doc-node">
-<div class="title"><h2>ScanCode <a href="#ScanCode">#</a></h2></div><pre class="signature"><code><span class="token keyword">enum</span> <span class="token symbol">ScanCode</span> <span class="token punctuation">{</span>
-	code_unknown <span class="token operator">=</span> <span class="token number">0</span>
-	code_a <span class="token operator">=</span> <span class="token number">4</span>
-	code_b <span class="token operator">=</span> <span class="token number">5</span>
-	code_c <span class="token operator">=</span> <span class="token number">6</span>
-	code_d <span class="token operator">=</span> <span class="token number">7</span>
-	code_e <span class="token operator">=</span> <span class="token number">8</span>
-	code_f <span class="token operator">=</span> <span class="token number">9</span>
-	code_g <span class="token operator">=</span> <span class="token number">10</span>
-	code_h <span class="token operator">=</span> <span class="token number">11</span>
-	code_i <span class="token operator">=</span> <span class="token number">12</span>
-	code_j <span class="token operator">=</span> <span class="token number">13</span>
-	code_k <span class="token operator">=</span> <span class="token number">14</span>
-	code_l <span class="token operator">=</span> <span class="token number">15</span>
-	code_m <span class="token operator">=</span> <span class="token number">16</span>
-	code_n <span class="token operator">=</span> <span class="token number">17</span>
-	code_o <span class="token operator">=</span> <span class="token number">18</span>
-	code_p <span class="token operator">=</span> <span class="token number">19</span>
-	code_q <span class="token operator">=</span> <span class="token number">20</span>
-	code_r <span class="token operator">=</span> <span class="token number">21</span>
-	code_s <span class="token operator">=</span> <span class="token number">22</span>
-	code_t <span class="token operator">=</span> <span class="token number">23</span>
-	code_u <span class="token operator">=</span> <span class="token number">24</span>
-	code_v <span class="token operator">=</span> <span class="token number">25</span>
-	code_w <span class="token operator">=</span> <span class="token number">26</span>
-	code_x <span class="token operator">=</span> <span class="token number">27</span>
-	code_y <span class="token operator">=</span> <span class="token number">28</span>
-	code_z <span class="token operator">=</span> <span class="token number">29</span>
-	code_1 <span class="token operator">=</span> <span class="token number">30</span>
-	code_2 <span class="token operator">=</span> <span class="token number">31</span>
-	code_3 <span class="token operator">=</span> <span class="token number">32</span>
-	code_4 <span class="token operator">=</span> <span class="token number">33</span>
-	code_5 <span class="token operator">=</span> <span class="token number">34</span>
-	code_6 <span class="token operator">=</span> <span class="token number">35</span>
-	code_7 <span class="token operator">=</span> <span class="token number">36</span>
-	code_8 <span class="token operator">=</span> <span class="token number">37</span>
-	code_9 <span class="token operator">=</span> <span class="token number">38</span>
-	code_0 <span class="token operator">=</span> <span class="token number">39</span>
-	code_return <span class="token operator">=</span> <span class="token number">40</span>
-	code_escape <span class="token operator">=</span> <span class="token number">41</span>
-	code_backspace <span class="token operator">=</span> <span class="token number">42</span>
-	code_tab <span class="token operator">=</span> <span class="token number">43</span>
-	code_space <span class="token operator">=</span> <span class="token number">44</span>
-	code_minus <span class="token operator">=</span> <span class="token number">45</span>
-	code_equals <span class="token operator">=</span> <span class="token number">46</span>
-	code_leftbracket <span class="token operator">=</span> <span class="token number">47</span>
-	code_rightbracket <span class="token operator">=</span> <span class="token number">48</span>
-	code_backslash <span class="token operator">=</span> <span class="token number">49</span>
-	code_nonushash <span class="token operator">=</span> <span class="token number">50</span>
-	code_semicolon <span class="token operator">=</span> <span class="token number">51</span>
-	code_apostrophe <span class="token operator">=</span> <span class="token number">52</span>
-	code_grave <span class="token operator">=</span> <span class="token number">53</span>
-	code_comma <span class="token operator">=</span> <span class="token number">54</span>
-	code_period <span class="token operator">=</span> <span class="token number">55</span>
-	code_slash <span class="token operator">=</span> <span class="token number">56</span>
-	code_capslock <span class="token operator">=</span> <span class="token number">57</span>
-	code_f1 <span class="token operator">=</span> <span class="token number">58</span>
-	code_f2 <span class="token operator">=</span> <span class="token number">59</span>
-	code_f3 <span class="token operator">=</span> <span class="token number">60</span>
-	code_f4 <span class="token operator">=</span> <span class="token number">61</span>
-	code_f5 <span class="token operator">=</span> <span class="token number">62</span>
-	code_f6 <span class="token operator">=</span> <span class="token number">63</span>
-	code_f7 <span class="token operator">=</span> <span class="token number">64</span>
-	code_f8 <span class="token operator">=</span> <span class="token number">65</span>
-	code_f9 <span class="token operator">=</span> <span class="token number">66</span>
-	code_f10 <span class="token operator">=</span> <span class="token number">67</span>
-	code_f11 <span class="token operator">=</span> <span class="token number">68</span>
-	code_f12 <span class="token operator">=</span> <span class="token number">69</span>
-	code_printscreen <span class="token operator">=</span> <span class="token number">70</span>
-	code_scrolllock <span class="token operator">=</span> <span class="token number">71</span>
-	code_pause <span class="token operator">=</span> <span class="token number">72</span>
-	code_insert <span class="token operator">=</span> <span class="token number">73</span>
-	code_home <span class="token operator">=</span> <span class="token number">74</span>
-	code_pageup <span class="token operator">=</span> <span class="token number">75</span>
-	code_delete <span class="token operator">=</span> <span class="token number">76</span>
-	code_end <span class="token operator">=</span> <span class="token number">77</span>
-	code_pagedown <span class="token operator">=</span> <span class="token number">78</span>
-	code_right <span class="token operator">=</span> <span class="token number">79</span>
-	code_left <span class="token operator">=</span> <span class="token number">80</span>
-	code_down <span class="token operator">=</span> <span class="token number">81</span>
-	code_up <span class="token operator">=</span> <span class="token number">82</span>
-	code_numlockclear <span class="token operator">=</span> <span class="token number">83</span>
-	code_kp_divide <span class="token operator">=</span> <span class="token number">84</span>
-	code_kp_multiply <span class="token operator">=</span> <span class="token number">85</span>
-	code_kp_minus <span class="token operator">=</span> <span class="token number">86</span>
-	code_kp_plus <span class="token operator">=</span> <span class="token number">87</span>
-	code_kp_enter <span class="token operator">=</span> <span class="token number">88</span>
-	code_kp_1 <span class="token operator">=</span> <span class="token number">89</span>
-	code_kp_2 <span class="token operator">=</span> <span class="token number">90</span>
-	code_kp_3 <span class="token operator">=</span> <span class="token number">91</span>
-	code_kp_4 <span class="token operator">=</span> <span class="token number">92</span>
-	code_kp_5 <span class="token operator">=</span> <span class="token number">93</span>
-	code_kp_6 <span class="token operator">=</span> <span class="token number">94</span>
-	code_kp_7 <span class="token operator">=</span> <span class="token number">95</span>
-	code_kp_8 <span class="token operator">=</span> <span class="token number">96</span>
-	code_kp_9 <span class="token operator">=</span> <span class="token number">97</span>
-	code_kp_0 <span class="token operator">=</span> <span class="token number">98</span>
-	code_kp_period <span class="token operator">=</span> <span class="token number">99</span>
-	code_nonusbackslash <span class="token operator">=</span> <span class="token number">100</span>
-	code_application <span class="token operator">=</span> <span class="token number">101</span>
-	code_power <span class="token operator">=</span> <span class="token number">102</span>
-	code_kp_equals <span class="token operator">=</span> <span class="token number">103</span>
-	code_f13 <span class="token operator">=</span> <span class="token number">104</span>
-	code_f14 <span class="token operator">=</span> <span class="token number">105</span>
-	code_f15 <span class="token operator">=</span> <span class="token number">106</span>
-	code_f16 <span class="token operator">=</span> <span class="token number">107</span>
-	code_f17 <span class="token operator">=</span> <span class="token number">108</span>
-	code_f18 <span class="token operator">=</span> <span class="token number">109</span>
-	code_f19 <span class="token operator">=</span> <span class="token number">110</span>
-	code_f20 <span class="token operator">=</span> <span class="token number">111</span>
-	code_f21 <span class="token operator">=</span> <span class="token number">112</span>
-	code_f22 <span class="token operator">=</span> <span class="token number">113</span>
-	code_f23 <span class="token operator">=</span> <span class="token number">114</span>
-	code_f24 <span class="token operator">=</span> <span class="token number">115</span>
-	code_execute <span class="token operator">=</span> <span class="token number">116</span>
-	code_help <span class="token operator">=</span> <span class="token number">117</span>
-	code_menu <span class="token operator">=</span> <span class="token number">118</span>
-	code_select <span class="token operator">=</span> <span class="token number">119</span>
-	code_stop <span class="token operator">=</span> <span class="token number">120</span>
-	code_again <span class="token operator">=</span> <span class="token number">121</span>
-	code_undo <span class="token operator">=</span> <span class="token number">122</span>
-	code_cut <span class="token operator">=</span> <span class="token number">123</span>
-	code_copy <span class="token operator">=</span> <span class="token number">124</span>
-	code_paste <span class="token operator">=</span> <span class="token number">125</span>
-	code_find <span class="token operator">=</span> <span class="token number">126</span>
-	code_mute <span class="token operator">=</span> <span class="token number">127</span>
-	code_volumeup <span class="token operator">=</span> <span class="token number">128</span>
-	code_volumedown <span class="token operator">=</span> <span class="token number">129</span>
-	code_kp_comma <span class="token operator">=</span> <span class="token number">133</span>
-	code_kp_equalsas400 <span class="token operator">=</span> <span class="token number">134</span>
-	code_international1 <span class="token operator">=</span> <span class="token number">135</span>
-	code_international2 <span class="token operator">=</span> <span class="token number">136</span>
-	code_international3 <span class="token operator">=</span> <span class="token number">137</span>
-	code_international4 <span class="token operator">=</span> <span class="token number">138</span>
-	code_international5 <span class="token operator">=</span> <span class="token number">139</span>
-	code_international6 <span class="token operator">=</span> <span class="token number">140</span>
-	code_international7 <span class="token operator">=</span> <span class="token number">141</span>
-	code_international8 <span class="token operator">=</span> <span class="token number">142</span>
-	code_international9 <span class="token operator">=</span> <span class="token number">143</span>
-	code_lang1 <span class="token operator">=</span> <span class="token number">144</span>
-	code_lang2 <span class="token operator">=</span> <span class="token number">145</span>
-	code_lang3 <span class="token operator">=</span> <span class="token number">146</span>
-	code_lang4 <span class="token operator">=</span> <span class="token number">147</span>
-	code_lang5 <span class="token operator">=</span> <span class="token number">148</span>
-	code_lang6 <span class="token operator">=</span> <span class="token number">149</span>
-	code_lang7 <span class="token operator">=</span> <span class="token number">150</span>
-	code_lang8 <span class="token operator">=</span> <span class="token number">151</span>
-	code_lang9 <span class="token operator">=</span> <span class="token number">152</span>
-	code_alterase <span class="token operator">=</span> <span class="token number">153</span>
-	code_sysreq <span class="token operator">=</span> <span class="token number">154</span>
-	code_cancel <span class="token operator">=</span> <span class="token number">155</span>
-	code_clear <span class="token operator">=</span> <span class="token number">156</span>
-	code_prior <span class="token operator">=</span> <span class="token number">157</span>
-	code_return2 <span class="token operator">=</span> <span class="token number">158</span>
-	code_separator <span class="token operator">=</span> <span class="token number">159</span>
-	code_out <span class="token operator">=</span> <span class="token number">160</span>
-	code_oper <span class="token operator">=</span> <span class="token number">161</span>
-	code_clearagain <span class="token operator">=</span> <span class="token number">162</span>
-	code_crsel <span class="token operator">=</span> <span class="token number">163</span>
-	code_exsel <span class="token operator">=</span> <span class="token number">164</span>
-	code_kp_00 <span class="token operator">=</span> <span class="token number">176</span>
-	code_kp_000 <span class="token operator">=</span> <span class="token number">177</span>
-	code_thousandsseparator <span class="token operator">=</span> <span class="token number">178</span>
-	code_decimalseparator <span class="token operator">=</span> <span class="token number">179</span>
-	code_currencyunit <span class="token operator">=</span> <span class="token number">180</span>
-	code_currencysubunit <span class="token operator">=</span> <span class="token number">181</span>
-	code_kp_leftparen <span class="token operator">=</span> <span class="token number">182</span>
-	code_kp_rightparen <span class="token operator">=</span> <span class="token number">183</span>
-	code_kp_leftbrace <span class="token operator">=</span> <span class="token number">184</span>
-	code_kp_rightbrace <span class="token operator">=</span> <span class="token number">185</span>
-	code_kp_tab <span class="token operator">=</span> <span class="token number">186</span>
-	code_kp_backspace <span class="token operator">=</span> <span class="token number">187</span>
-	code_kp_a <span class="token operator">=</span> <span class="token number">188</span>
-	code_kp_b <span class="token operator">=</span> <span class="token number">189</span>
-	code_kp_c <span class="token operator">=</span> <span class="token number">190</span>
-	code_kp_d <span class="token operator">=</span> <span class="token number">191</span>
-	code_kp_e <span class="token operator">=</span> <span class="token number">192</span>
-	code_kp_f <span class="token operator">=</span> <span class="token number">193</span>
-	code_kp_xor <span class="token operator">=</span> <span class="token number">194</span>
-	code_kp_power <span class="token operator">=</span> <span class="token number">195</span>
-	code_kp_percent <span class="token operator">=</span> <span class="token number">196</span>
-	code_kp_less <span class="token operator">=</span> <span class="token number">197</span>
-	code_kp_greater <span class="token operator">=</span> <span class="token number">198</span>
-	code_kp_ampersand <span class="token operator">=</span> <span class="token number">199</span>
-	code_kp_dblampersand <span class="token operator">=</span> <span class="token number">200</span>
-	code_kp_verticalbar <span class="token operator">=</span> <span class="token number">201</span>
-	code_kp_dblverticalbar <span class="token operator">=</span> <span class="token number">202</span>
-	code_kp_colon <span class="token operator">=</span> <span class="token number">203</span>
-	code_kp_hash <span class="token operator">=</span> <span class="token number">204</span>
-	code_kp_space <span class="token operator">=</span> <span class="token number">205</span>
-	code_kp_at <span class="token operator">=</span> <span class="token number">206</span>
-	code_kp_exclam <span class="token operator">=</span> <span class="token number">207</span>
-	code_kp_memstore <span class="token operator">=</span> <span class="token number">208</span>
-	code_kp_memrecall <span class="token operator">=</span> <span class="token number">209</span>
-	code_kp_memclear <span class="token operator">=</span> <span class="token number">210</span>
-	code_kp_memadd <span class="token operator">=</span> <span class="token number">211</span>
-	code_kp_memsubtract <span class="token operator">=</span> <span class="token number">212</span>
-	code_kp_memmultiply <span class="token operator">=</span> <span class="token number">213</span>
-	code_kp_memdivide <span class="token operator">=</span> <span class="token number">214</span>
-	code_kp_plusminus <span class="token operator">=</span> <span class="token number">215</span>
-	code_kp_clear <span class="token operator">=</span> <span class="token number">216</span>
-	code_kp_clearentry <span class="token operator">=</span> <span class="token number">217</span>
-	code_kp_binary <span class="token operator">=</span> <span class="token number">218</span>
-	code_kp_octal <span class="token operator">=</span> <span class="token number">219</span>
-	code_kp_decimal <span class="token operator">=</span> <span class="token number">220</span>
-	code_kp_hexadecimal <span class="token operator">=</span> <span class="token number">221</span>
-	code_lctrl <span class="token operator">=</span> <span class="token number">224</span>
-	code_lshift <span class="token operator">=</span> <span class="token number">225</span>
-	code_lalt <span class="token operator">=</span> <span class="token number">226</span>
-	code_lgui <span class="token operator">=</span> <span class="token number">227</span>
-	code_rctrl <span class="token operator">=</span> <span class="token number">228</span>
-	code_rshift <span class="token operator">=</span> <span class="token number">229</span>
-	code_ralt <span class="token operator">=</span> <span class="token number">230</span>
-	code_rgui <span class="token operator">=</span> <span class="token number">231</span>
-	code_mode <span class="token operator">=</span> <span class="token number">257</span>
-	code_audionext <span class="token operator">=</span> <span class="token number">258</span>
-	code_audioprev <span class="token operator">=</span> <span class="token number">259</span>
-	code_audiostop <span class="token operator">=</span> <span class="token number">260</span>
-	code_audioplay <span class="token operator">=</span> <span class="token number">261</span>
-	code_audiomute <span class="token operator">=</span> <span class="token number">262</span>
-	code_mediaselect <span class="token operator">=</span> <span class="token number">263</span>
-	code_www <span class="token operator">=</span> <span class="token number">264</span>
-	code_mail <span class="token operator">=</span> <span class="token number">265</span>
-	code_calculator <span class="token operator">=</span> <span class="token number">266</span>
-	code_computer <span class="token operator">=</span> <span class="token number">267</span>
-	code_ac_search <span class="token operator">=</span> <span class="token number">268</span>
-	code_ac_home <span class="token operator">=</span> <span class="token number">269</span>
-	code_ac_back <span class="token operator">=</span> <span class="token number">270</span>
-	code_ac_forward <span class="token operator">=</span> <span class="token number">271</span>
-	code_ac_stop <span class="token operator">=</span> <span class="token number">272</span>
-	code_ac_refresh <span class="token operator">=</span> <span class="token number">273</span>
-	code_ac_bookmarks <span class="token operator">=</span> <span class="token number">274</span>
-	code_brightnessdown <span class="token operator">=</span> <span class="token number">275</span>
-	code_brightnessup <span class="token operator">=</span> <span class="token number">276</span>
-	code_displayswitch <span class="token operator">=</span> <span class="token number">277</span>
-	code_kbdillumtoggle <span class="token operator">=</span> <span class="token number">278</span>
-	code_kbdillumdown <span class="token operator">=</span> <span class="token number">279</span>
-	code_kbdillumup <span class="token operator">=</span> <span class="token number">280</span>
-	code_eject <span class="token operator">=</span> <span class="token number">281</span>
-	code_sleep <span class="token operator">=</span> <span class="token number">282</span>
-	code_app1 <span class="token operator">=</span> <span class="token number">283</span>
-	code_app2 <span class="token operator">=</span> <span class="token number">284</span>
-	code_audiorewind <span class="token operator">=</span> <span class="token number">285</span>
-	code_audiofastforward <span class="token operator">=</span> <span class="token number">286</span>
-	code_num_scancodes <span class="token operator">=</span> <span class="token number">512</span>
-<span class="token punctuation">}</span></code></pre>
+import vsdl
+import vsdl.events
+import vsdl.gfx
 
-</section>
-<section id="EventType" class="doc-node">
-<div class="title"><h2>EventType <a href="#EventType">#</a></h2></div><pre class="signature"><code><span class="token keyword">enum</span> <span class="token symbol">EventType</span> <span class="token punctuation">{</span>
-	first <span class="token operator">=</span> <span class="token number">0x000</span>
-	quit <span class="token operator">=</span> <span class="token number">0x100</span>
-	app_terminating <span class="token operator">=</span> <span class="token number">0x101</span>
-	app_lowmemory <span class="token operator">=</span> <span class="token number">0x102</span>
-	app_willenterbackground <span class="token operator">=</span> <span class="token number">0x103</span>
-	app_didenterbackground <span class="token operator">=</span> <span class="token number">0x104</span>
-	app_willenterforeground <span class="token operator">=</span> <span class="token number">0x105</span>
-	app_didenterforeground <span class="token operator">=</span> <span class="token number">0x106</span>
-	displayevent <span class="token operator">=</span> <span class="token number">0x150</span>
-	windowevent <span class="token operator">=</span> <span class="token number">0x200</span>
-	syswmevent <span class="token operator">=</span> <span class="token number">0x201</span>
-	keydown <span class="token operator">=</span> <span class="token number">0x300</span>
-	keyup <span class="token operator">=</span> <span class="token number">0x301</span>
-	textediting <span class="token operator">=</span> <span class="token number">0x302</span>
-	textinput <span class="token operator">=</span> <span class="token number">0x303</span>
-	keymapchanged <span class="token operator">=</span> <span class="token number">0x304</span>
-	mousemotion <span class="token operator">=</span> <span class="token number">0x400</span>
-	mousebuttondown <span class="token operator">=</span> <span class="token number">0x401</span>
-	mousebuttonup <span class="token operator">=</span> <span class="token number">0x402</span>
-	mousewheel <span class="token operator">=</span> <span class="token number">0x403</span>
-	joyaxismotion <span class="token operator">=</span> <span class="token number">0x600</span>
-	joyballmotion <span class="token operator">=</span> <span class="token number">0x601</span>
-	joyhatmotion <span class="token operator">=</span> <span class="token number">0x602</span>
-	joybuttondown <span class="token operator">=</span> <span class="token number">0x603</span>
-	joybuttonup <span class="token operator">=</span> <span class="token number">0x604</span>
-	joydeviceadded <span class="token operator">=</span> <span class="token number">0x605</span>
-	joydeviceremoved <span class="token operator">=</span> <span class="token number">0x606</span>
-	controlleraxismotion <span class="token operator">=</span> <span class="token number">0x650</span>
-	controlleraxisbuttondown <span class="token operator">=</span> <span class="token number">0x651</span>
-	controlleraxisbuttonup <span class="token operator">=</span> <span class="token number">0x652</span>
-	controllerdeviceadded <span class="token operator">=</span> <span class="token number">0x653</span>
-	controllerdeviceremoved <span class="token operator">=</span> <span class="token number">0x654</span>
-	controllerdeviceremapped <span class="token operator">=</span> <span class="token number">0x655</span>
-	fingerdown <span class="token operator">=</span> <span class="token number">0x700</span>
-	fingerup <span class="token operator">=</span> <span class="token number">0x701</span>
-	fingermotion <span class="token operator">=</span> <span class="token number">0x702</span>
-	dollargesture <span class="token operator">=</span> <span class="token number">0x800</span>
-	dollarrecord <span class="token operator">=</span> <span class="token number">0x801</span>
-	multigesture <span class="token operator">=</span> <span class="token number">0x802</span>
-	clipboardupdate <span class="token operator">=</span> <span class="token number">0x900</span>
-	dropfile <span class="token operator">=</span> <span class="token number">0x1000</span>
-	droptext <span class="token operator">=</span> <span class="token number">0x1001</span>
-	dropbegin <span class="token operator">=</span> <span class="token number">0x1002</span>
-	dropcomplete <span class="token operator">=</span> <span class="token number">0x1003</span>
-	audiodeviceadded <span class="token operator">=</span> <span class="token number">0x1100</span>
-	audiodeviceremoved <span class="token operator">=</span> <span class="token number">0x1101</span>
-	sensorupdate <span class="token operator">=</span> <span class="token number">0x1200</span>
-	render_targets_reset <span class="token operator">=</span> <span class="token number">0x2000</span>
-	render_device_reset <span class="token operator">=</span> <span class="token number">0x2001</span>
-	userevent <span class="token operator">=</span> <span class="token number">0x8000</span>
-	lastevent <span class="token operator">=</span> <span class="token number">0xFFFF</span>
-<span class="token punctuation">}</span></code></pre>
+fn main() {
+    mut window := gfx.create_window(&quot;Simple VSDL Window&quot;, -1, -1, 640, 480, .shown)?
+    surface := window.get_surface()?
+    surface.fill_rect(surface.get_rect(), surface.format_color(255, 255, 255))
 
-</section>
-<section id="KeyCode" class="doc-node">
-<div class="title"><h2>KeyCode <a href="#KeyCode">#</a></h2></div><pre class="signature"><code><span class="token keyword">enum</span> <span class="token symbol">KeyCode</span> <span class="token punctuation">{</span>
-	key_unknown <span class="token operator">=</span> <span class="token number">0</span>
-	key_return <span class="token operator">=</span> <span class="token number">13</span>
-	key_escape <span class="token operator">=</span> <span class="token number">27</span>
-	key_backspace <span class="token operator">=</span> <span class="token number">8</span>
-	key_tab <span class="token operator">=</span> <span class="token number">9</span>
-	key_space <span class="token operator">=</span> <span class="token number">32</span>
-	key_exclaim <span class="token operator">=</span> <span class="token number">33</span>
-	key_quotedbl <span class="token operator">=</span> <span class="token number">34</span>
-	key_hash <span class="token operator">=</span> <span class="token number">35</span>
-	key_percent <span class="token operator">=</span> <span class="token number">36</span>
-	key_dollar <span class="token operator">=</span> <span class="token number">37</span>
-	key_ampersand <span class="token operator">=</span> <span class="token number">38</span>
-	key_quote <span class="token operator">=</span> <span class="token number">39</span>
-	key_leftparen <span class="token operator">=</span> <span class="token number">40</span>
-	key_rightparen <span class="token operator">=</span> <span class="token number">41</span>
-	key_asterisk <span class="token operator">=</span> <span class="token number">42</span>
-	key_plus <span class="token operator">=</span> <span class="token number">43</span>
-	key_comma <span class="token operator">=</span> <span class="token number">44</span>
-	key_minus <span class="token operator">=</span> <span class="token number">45</span>
-	key_period <span class="token operator">=</span> <span class="token number">46</span>
-	key_slash <span class="token operator">=</span> <span class="token number">47</span>
-	key_0 <span class="token operator">=</span> <span class="token number">48</span>
-	key_1 <span class="token operator">=</span> <span class="token number">49</span>
-	key_2 <span class="token operator">=</span> <span class="token number">50</span>
-	key_3 <span class="token operator">=</span> <span class="token number">51</span>
-	key_4 <span class="token operator">=</span> <span class="token number">52</span>
-	key_5 <span class="token operator">=</span> <span class="token number">53</span>
-	key_6 <span class="token operator">=</span> <span class="token number">54</span>
-	key_7 <span class="token operator">=</span> <span class="token number">55</span>
-	key_8 <span class="token operator">=</span> <span class="token number">56</span>
-	key_9 <span class="token operator">=</span> <span class="token number">57</span>
-	key_colon <span class="token operator">=</span> <span class="token number">58</span>
-	key_semicolon <span class="token operator">=</span> <span class="token number">59</span>
-	key_less <span class="token operator">=</span> <span class="token number">60</span>
-	key_equals <span class="token operator">=</span> <span class="token number">61</span>
-	key_greater <span class="token operator">=</span> <span class="token number">62</span>
-	key_question <span class="token operator">=</span> <span class="token number">63</span>
-	key_at <span class="token operator">=</span> <span class="token number">64</span>
-	key_leftbracket <span class="token operator">=</span> <span class="token number">91</span>
-	key_backslash <span class="token operator">=</span> <span class="token number">92</span>
-	key_rightbracket <span class="token operator">=</span> <span class="token number">93</span>
-	key_caret <span class="token operator">=</span> <span class="token number">94</span>
-	key_underscore <span class="token operator">=</span> <span class="token number">95</span>
-	key_backquote <span class="token operator">=</span> <span class="token number">96</span>
-	key_a <span class="token operator">=</span> <span class="token number">97</span>
-	key_b <span class="token operator">=</span> <span class="token number">98</span>
-	key_c <span class="token operator">=</span> <span class="token number">99</span>
-	key_d <span class="token operator">=</span> <span class="token number">100</span>
-	key_e <span class="token operator">=</span> <span class="token number">101</span>
-	key_f <span class="token operator">=</span> <span class="token number">102</span>
-	key_g <span class="token operator">=</span> <span class="token number">103</span>
-	key_h <span class="token operator">=</span> <span class="token number">104</span>
-	key_i <span class="token operator">=</span> <span class="token number">105</span>
-	key_j <span class="token operator">=</span> <span class="token number">106</span>
-	key_k <span class="token operator">=</span> <span class="token number">107</span>
-	key_l <span class="token operator">=</span> <span class="token number">108</span>
-	key_m <span class="token operator">=</span> <span class="token number">109</span>
-	key_n <span class="token operator">=</span> <span class="token number">110</span>
-	key_o <span class="token operator">=</span> <span class="token number">111</span>
-	key_p <span class="token operator">=</span> <span class="token number">112</span>
-	key_q <span class="token operator">=</span> <span class="token number">113</span>
-	key_r <span class="token operator">=</span> <span class="token number">114</span>
-	key_s <span class="token operator">=</span> <span class="token number">115</span>
-	key_t <span class="token operator">=</span> <span class="token number">116</span>
-	key_u <span class="token operator">=</span> <span class="token number">117</span>
-	key_v <span class="token operator">=</span> <span class="token number">118</span>
-	key_w <span class="token operator">=</span> <span class="token number">119</span>
-	key_x <span class="token operator">=</span> <span class="token number">120</span>
-	key_y <span class="token operator">=</span> <span class="token number">121</span>
-	key_z <span class="token operator">=</span> <span class="token number">122</span>
-	key_printscreen <span class="token operator">=</span> <span class="token number">1073741894</span>
-	key_scrolllock <span class="token operator">=</span> <span class="token number">1073741895</span>
-	key_pause <span class="token operator">=</span> <span class="token number">1073741896</span>
-	key_insert <span class="token operator">=</span> <span class="token number">1073741897</span>
-	key_home <span class="token operator">=</span> <span class="token number">1073741898</span>
-	key_pageup <span class="token operator">=</span> <span class="token number">1073741899</span>
-	key_delete <span class="token operator">=</span> <span class="token number">127</span>
-	key_end <span class="token operator">=</span> <span class="token number">1073741901</span>
-	key_pagedown <span class="token operator">=</span> <span class="token number">1073741902</span>
-	key_right <span class="token operator">=</span> <span class="token number">1073741903</span>
-	key_left <span class="token operator">=</span> <span class="token number">1073741904</span>
-	key_down <span class="token operator">=</span> <span class="token number">1073741905</span>
-	key_up <span class="token operator">=</span> <span class="token number">1073741906</span>
-<span class="token punctuation">}</span></code></pre>
+    defer {
+        surface.free()
+        window.destroy()
+        vsdl.quit()
+    }
+    
+    window.update()
+    events.loop()
+}
+</code></pre>
+<p>See the examples folder for more examples. Run any <code>.v</code> files with <code>v run [file]</code>.</p>
+<h2>Requirements</h2>
+<p>The SDL2 headers come pre-included with this repo. To run the only thing needed are the runtime binaries.</p>
+<p>On <strong>Ubuntu 14.04 and above</strong>, run:</p>
+<p><code>apt install libsdl2{,-image,-mixer,-ttf}</code></p>
+<p>On <strong>MacOS</strong> install SDL2 via Homebrew:</p>
+<p><code>brew install sdl2{,-image,-mixer,-ttf}</code></p>
+<p>On <strong>Windows</strong>,</p>
+<ol>
+<li>Download the runtime binaries from SDL2</li>
+</ol>
+<ul>
+<li><a href="https://libsdl.org/download-2.0.php">SDL2 Runtime Binaries</a></li>
+<li><a href="https://www.libsdl.org/projects/SDL_image/">SDL2 Image Runtime Binaries</a> (optional)</li>
+<li><a href="https://www.libsdl.org/projects/SDL_mixer/">SDL2 Mixer Runtime Binaries</a> (optional)</li>
+<li><a href="https://www.libsdl.org/projects/SDL_ttf/">SDL2 TTF Runtim Binaries</a> (optional)</li>
+</ul>
+<ol start="2">
+<li>Extract the binaries to the folder where your executable resides</li>
+</ol>
+<h3>Notes about dependencies</h3>
+<p>This repo comes with a copy of the headers for the version of SDL2 that it was developed against, but does not ship with the runtime libraries. It is <em>not</em> necessary to get the Image, Mixer or TTF library runtimes if you do not plan to use them in your application.</p>
+<p>By default VSDL only initializes the subsystems that are imported. For example, importing just <code>vsdl</code> only initializes the main SDL2 system, giving you limited access to SDL2 base functionality. The <code>video</code> or <code>audio</code> subsystems are only initialized when <code>vsdl.gfx</code> or <code>vsdl.audio</code> are imported. This allows you to only activate the subsystems that are important to your project.</p>
+<p>If an extension library is loaded (<code>vsdl.image</code>, <code>vsdl.mixer</code>, <code>vsdl.ttf</code>), the required runtime binaries must be installed or provided along with the build.</p>
+<h2>Contributing / Support</h2>
+<p>This project was developed as a way of improving my understanding of V &amp; C. I will not be providing active support for the project, but I'll happily except any pull requests. Use at your own discretion!</p></section>
 
-</section>
 <section id="get_ticks" class="doc-node">
 <div class="title"><h2>get_ticks <a href="#get_ticks">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">get_ticks</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">u32</span></code></pre>
-
-</section>
-<section id="delay" class="doc-node">
-<div class="title"><h2>delay <a href="#delay">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">delay</span><span class="token punctuation">(</span>ms <span class="token builtin">u32</span><span class="token punctuation">)</span></code></pre>
-
-</section>
-<section id="poll_events" class="doc-node">
-<div class="title"><h2>poll_events <a href="#poll_events">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">poll_events</span><span class="token punctuation">(</span>event <span class="token operator">&</span>Event<span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
 
 </section>
 <section id="quit" class="doc-node">
 <div class="title"><h2>quit <a href="#quit">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">quit</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
 
 </section>
-<section id="watch_event" class="doc-node">
-<div class="title"><h2>watch_event <a href="#watch_event">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">watch_event</span><span class="token punctuation">(</span>callback EventFilterCallback<span class="token punctuation">,</span> data <span class="token builtin">voidptr</span><span class="token punctuation">)</span></code></pre>
-
-</section>
-<section id="Event" class="doc-node">
-<div class="title"><h2>Event <a href="#Event">#</a></h2></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">Event</span> <span class="token punctuation">{</span>
-<span class="token keyword">pub</span><span class="token punctuation">:</span>
-	<span class="token keyword">type</span>     EventType
-	common   CommonEvent
-	display  DisplayEvent
-	window   WindowEvent
-	key      KeyboardEvent
-	edit     TextEditingEvent
-	text     TextInputEvent
-	motion   MouseMotionEvent
-	button   MouseButtonEvent
-	wheel    MouseWheelEvent
-	jaxis    JoyAxisEvent
-	jball    JoyBallEvent
-	jhat     JoyHatEvent
-	jbutton  JoyButtonEvent
-	jdevice  JoyDeviceEvent
-	caxis    ControllerAxisEvent
-	cbutton  ControllerButtonEvent
-	cdevice  ControllerDeviceEvent
-	adevice  AudioDeviceEvent
-	sensor   SensorEvent
-	quit     QuitEvent
-	user     UserEvent
-	syswm    SysWMEvent
-	tfinger  TouchFingerEvent
-	mgesture MultiGestureEvent
-	dgesture DollarGestureEvent
-	drop     DropEvent
-	padding_ <span class="token punctuation">[</span><span class="token number">56</span><span class="token punctuation">]</span><span class="token builtin">byte</span>
-<span class="token punctuation">}</span></code></pre>
+<section id="delay" class="doc-node">
+<div class="title"><h2>delay <a href="#delay">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">delay</span><span class="token punctuation">(</span>ms <span class="token builtin">u32</span><span class="token punctuation">)</span></code></pre>
 
 </section>
 
 					<div class="footer">
-						Powered by vdoc. Generated on: 27 Sep 2020 15:13:46
+						Powered by vdoc. Generated on: 29 Sep 2020 01:42:34
 					</div>
 				</div>
-				<div class="doc-toc"><ul><li class="open"><a href="#ScanCode">ScanCode</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#EventType">EventType</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#KeyCode">KeyCode</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#get_ticks">get_ticks</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#delay">delay</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#poll_events">poll_events</a>        <ul>
+				<div class="doc-toc"><ul><li class="open"><a href="#get_ticks">get_ticks</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#quit">quit</a>        <ul>
 </ul>
 </li>
-<li class="open"><a href="#watch_event">watch_event</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#Event">Event</a>        <ul>
+<li class="open"><a href="#delay">delay</a>        <ul>
 </ul>
 </li>
 </ul></div>

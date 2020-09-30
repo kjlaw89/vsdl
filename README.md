@@ -37,7 +37,7 @@ The SDL2 headers come pre-included with this repo. To run the only thing needed 
 
 On **Ubuntu 14.04 and above**, run:
 
-`apt install libsdl2{,-image,-mixer,-ttf}`
+`apt install libsdl2{,-image,-mixer,-ttf}-dev zlib1g-dev libfreetype6-dev`
 
 On **MacOS** install SDL2 via Homebrew:
 

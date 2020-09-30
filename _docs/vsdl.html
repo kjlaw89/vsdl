@@ -5,7 +5,7 @@
 		<meta charset="UTF-8">
 		<meta http-equiv="x-ua-compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>README | vdoc</title>
+		<title>vsdl | vdoc</title>
 		<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 		
 	<link rel="stylesheet" href="doc.css" />
@@ -27,14 +27,14 @@
 				</div>
 				<nav class="content hidden">
 					<ul>
-						<li class="open active"><div class="menu-row"><a href="./index.html">README</a></div></li><li class="open"><div class="menu-row"><a href="./vsdl.html">vsdl</a></div></li><li class="open"><div class="menu-row"><a href="./audio.html">audio</a></div></li><li class="open"><div class="menu-row"><a href="./events.html">events</a></div></li><li class="open"><div class="menu-row"><a href="./gfx.html">gfx</a></div></li><li class="open"><div class="menu-row"><a href="./image.html">image</a></div></li><li class="open"><div class="menu-row"><a href="./ttf.html">ttf</a></div></li>
+						<li class="open"><div class="menu-row"><a href="./index.html">README</a></div></li><li class="open active"><div class="menu-row"><a href="./vsdl.html">vsdl</a></div></li><li class="open"><div class="menu-row"><a href="./audio.html">audio</a></div></li><li class="open"><div class="menu-row"><a href="./events.html">events</a></div></li><li class="open"><div class="menu-row"><a href="./gfx.html">gfx</a></div></li><li class="open"><div class="menu-row"><a href="./image.html">image</a></div></li><li class="open"><div class="menu-row"><a href="./ttf.html">ttf</a></div></li>
 					</ul>
 				</nav>
 			</header>
 			<div class="doc-container">
 				<div class="doc-content">
-					<section id="README" class="doc-node">
-<div align="center">
+					<section id="vsdl" class="doc-node">
+<div class="title"><h1>vsdl</h1></div><div align="center">
     <h1>VSDL</h1>
 </div>
 <p>VSDL is a work-in-progress V wrapper for the C-based <a href="https://www.libsdl.org">SDL library</a>. The aim of this library is to provide a thorough implementation of SDL in V. The implementation is faithful to the original API but takes some liberties to provide a native &quot;V&quot; feel.</p>
@@ -87,12 +87,33 @@ fn main() {
 <h2>Contributing / Support</h2>
 <p>This project was developed as a way of improving my understanding of V &amp; C. I will not be providing active support for the project, but I'll happily accept any pull requests. Use at your own discretion!</p></section>
 
+<section id="get_ticks" class="doc-node">
+<div class="title"><h2>get_ticks <a href="#get_ticks">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">get_ticks</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">u32</span></code></pre>
+
+</section>
+<section id="quit" class="doc-node">
+<div class="title"><h2>quit <a href="#quit">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">quit</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+
+</section>
+<section id="delay" class="doc-node">
+<div class="title"><h2>delay <a href="#delay">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">delay</span><span class="token punctuation">(</span>ms <span class="token builtin">u32</span><span class="token punctuation">)</span></code></pre>
+
+</section>
 
 					<div class="footer">
 						Powered by vdoc. Generated on: 29 Sep 2020 23:53:10
 					</div>
 				</div>
-				
+				<div class="doc-toc"><ul><li class="open"><a href="#get_ticks">get_ticks</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#quit">quit</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#delay">delay</a>        <ul>
+</ul>
+</li>
+</ul></div>
 			</div>
 		</div>
 		<script src="doc.js"></script>

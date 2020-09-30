@@ -2,8 +2,9 @@ module ttf
 
 #flag -I @VROOT/headers
 #flag -L .
-#flag -llibfreetype-6
-#flag -lzlib1
+#flag windows -lzlib1
+#flag windows-llibfreetype-6
+#flag linux -lz
 #flag -lSDL2_ttf
 #flag -lSDL2
 #include "ttf/SDL_ttf.h"

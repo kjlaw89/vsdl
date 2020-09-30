@@ -12,8 +12,8 @@ fn C.SDL_FreeSurface(voidptr)
 fn C.SDL_MapRGB(voidptr, byte, byte, byte) u32
 fn C.SDL_SetColorKey(voidptr, bool, u32) int
 
-pub fn create_surface(width, height, depth int, r, g, b, a u32) ?&Surface {
-	new_surface := C.SDL_CreateRGBSurface(0, width, height, depth, r, g, b, a)
+pub fn create_surface(width, height, depth int, color Color) ?&Surface {
+	new_surface := C.SDL_CreateRGBSurface(0, width, height, depth, color.r, color.g, color.b, color.a)
 
 	if new_surface == 0 {
 		return error(serror("Unable to create new surface"))
@@ -22,8 +22,8 @@ pub fn create_surface(width, height, depth int, r, g, b, a u32) ?&Surface {
 	return new_surface
 }
 
-pub fn create_surface_from(data voidptr, width, height, depth, pitch int, r, g, b, a u32) ?&Surface {
-	new_surface := C.SDL_CreateRGBSurfaceFrom(data, width, height, depth, pitch, r, g, b, a)
+pub fn create_surface_from(data voidptr, width, height, depth, pitch int, color Color) ?&Surface {
+	new_surface := C.SDL_CreateRGBSurfaceFrom(data, width, height, depth, pitch, color.r, color.g, color.b, color.a)
 
 	if new_surface == 0 {
 		return error(serror("Unable to create new surface"))
@@ -66,6 +66,7 @@ pub fn (surface &Surface) create_renderer() ?Renderer {
 	return renderer
 }
 
+// create_texture for the provided renderer
 pub fn (surface &Surface) create_texture(renderer Renderer) ?Texture {
 	texture := Texture{ h: surface.get_height(), ptr: C.SDL_CreateTextureFromSurface(renderer.ptr, surface), w: surface.get_width() }
 
@@ -76,13 +77,18 @@ pub fn (surface &Surface) create_texture(renderer Renderer) ?Texture {
 	return texture
 }
 
-// fill_rect creates a filled in rectange on this surface
-pub fn (surface &Surface) fill_rect(rect Rect, color u32) {
-	C.SDL_FillRect(surface, &rect, color)
+pub fn (surface &Surface) fill(color Color) {
+	rect := surface.get_rect()
+	C.SDL_FillRect(surface, &rect, C.SDL_MapRGB(surface.format, color.r, color.g, color.b))
 }
 
-pub fn (surface &Surface) format_color(r, g, b byte) u32 {
-	return C.SDL_MapRGB(surface.format, r, g, b)
+// fill_rect creates a filled in rectange on this surface
+pub fn (surface &Surface) fill_rect(rect Rect, color Color) {
+	C.SDL_FillRect(surface, &rect, C.SDL_MapRGB(surface.format, color.r, color.g, color.b))
+}
+
+pub fn (surface &Surface) format_color(color Color) u32 {
+	return C.SDL_MapRGB(surface.format, color.r, color.g, color.b)
 }
 
 pub fn (surface &Surface) free() {

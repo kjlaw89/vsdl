@@ -2,6 +2,7 @@ module gfx
 
 fn C.SDL_CreateTexture(voidptr, u32, int, int, int) voidptr
 fn C.SDL_DestroyRenderer(voidptr)
+fn C.SDL_GetRenderDrawColor(voidptr, voidptr, voidptr, voidptr, voidptr) int
 fn C.SDL_GetRenderTarget(voidptr) voidptr
 fn C.SDL_RenderGetScale(voidptr, voidptr, voidptr)
 fn C.SDL_RenderDrawLine(voidptr, int, int, int, int) int
@@ -100,6 +101,28 @@ pub fn (renderer Renderer) draw_fill_rects(rects []Rect) int {
 	return C.SDL_RenderFillRects(renderer.ptr, rects.data, rects.len)
 }
 
+// fill fills in this renderer with the provided color
+// without affecting the existing draw color
+pub fn (renderer Renderer) fill(color Color) {
+	existing_color := renderer.get_draw_color()
+
+	renderer.set_draw_color(color)
+	renderer.clear()
+	renderer.set_draw_color(existing_color)
+}
+
+// get_draw_color returns back the currently set draw color
+pub fn (renderer Renderer) get_draw_color() Color {
+	r := byte(0)
+	b := byte(0)
+	g := byte(0)
+	a := byte(0)
+
+	C.SDL_GetRenderDrawColor(renderer.ptr, &r, &b, &g, &a)
+
+	return { r: r, b: b, g: g, a: a }
+}
+
 // get_render_target gets the current render target if set
 // or returns an error if the defualt is set
 pub fn (renderer Renderer) get_render_target() ?Texture {
@@ -142,8 +165,8 @@ pub fn (renderer Renderer) set_blend_mode(mode BlendMode) {
 	C.SDL_SetRenderDrawBlendMode(renderer.ptr, mode)
 }
 
-pub fn (renderer Renderer) set_draw_color(r, g, b, a byte) {
-	C.SDL_SetRenderDrawColor(renderer.ptr, r, g, b, a)
+pub fn (renderer Renderer) set_draw_color(color Color) {
+	C.SDL_SetRenderDrawColor(renderer.ptr, color.r, color.g, color.b, color.a)
 }
 
 pub fn (renderer Renderer) set_target(texture Texture) {

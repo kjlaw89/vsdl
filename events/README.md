@@ -1,6 +1,6 @@
 # VSDL Events
 
-VSDL Implements support for the Events subsystem provided by SDL2. There are two standard method of implementing event handling in your application.
+VSDL implements support for the Events subsystem provided by SDL2. There are two methods of implementing event handling in your application.
 
 ## Standard Event Handling
 
@@ -56,7 +56,7 @@ import vsdl.gfx
 fn main() {
 	mut window := gfx.create_window("Simple VSDL Window", -1, -1, 640, 480, .shown)?
 	surface := window.get_surface()?
-	surface.fill_rect(surface.get_rect(), surface.format_color(0, 0, 255))
+	surface.fill_rect(surface.get_rect(), { r: 0, g: 0, b: 255 })
 
 	defer {
 		surface.free()

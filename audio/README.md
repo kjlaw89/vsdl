@@ -1,6 +1,6 @@
 # VSDL Audio
 
-VSDL Implements the standard Audio library provided by SDL with some minor improvements. It can be a bit cumbersome to play audio via the standard library without using the Mixer extension. This module aims to simplify that a bit and provides the ability to control playback for each individual track.
+VSDL implements the standard Audio library provided by SDL with some minor improvements. It can be a bit cumbersome to play audio via the standard library without using the Mixer extension. This module aims to simplify that a bit and provides the ability to control playback for each individual track.
 
 ```v
 module main
@@ -13,7 +13,7 @@ import vsdl.events
 fn main() {
 	mut window := gfx.create_window("Simple VSDL Window", -1, -1, 640, 480, .shown)?
 	surface := window.get_surface()?
-	surface.fill_rect(surface.get_rect(), surface.format_color(255, 255, 255))
+	surface.fill(r: 255, g: 255, b: 255)
 	
 	window.update()
 

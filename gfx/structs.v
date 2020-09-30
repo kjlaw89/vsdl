@@ -1,5 +1,13 @@
 module gfx
 
+struct C.SDL_Color {
+pub mut:
+	r byte
+	g byte
+	b byte
+	a byte
+}
+
 /* Top-level structures */
 pub struct Cursor {
 mut:

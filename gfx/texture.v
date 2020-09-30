@@ -12,7 +12,7 @@ fn C.SDL_SetTextureColorMod(voidptr, byte, byte, byte) int
 //fn C.SDL_UnlockTexture(voidptr)
 fn C.SDL_UpdateTexture(voidptr)
 
-pub fn (texture Texture) destroy() {
+pub fn (texture Texture) free() {
 	if texture.ptr == 0 {
 		return
 	}

@@ -16,7 +16,7 @@ import vsdl.gfx
 fn main() {
 	mut window := gfx.create_window("Simple VSDL Window", -1, -1, 640, 480, .shown)?
 	surface := window.get_surface()?
-	surface.fill_rect(surface.get_rect(), surface.format_color(255, 255, 255))
+	surface.fill(r: 255, g: 255, b: 255)
 
 	defer {
 		surface.free()
@@ -62,4 +62,4 @@ If an extension library is loaded (`vsdl.image`, `vsdl.mixer`, `vsdl.ttf`), the 
 
 ## Contributing / Support
 
-This project was developed as a way of improving my understanding of V & C. I will not be providing active support for the project, but I'll happily except any pull requests. Use at your own discretion! 
+This project was developed as a way of improving my understanding of V & C. I will not be providing active support for the project, but I'll happily accept any pull requests. Use at your own discretion! 

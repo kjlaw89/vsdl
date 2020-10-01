@@ -1,13 +1,5 @@
 module gfx
 
-struct C.SDL_Color {
-pub mut:
-	r byte
-	g byte
-	b byte
-	a byte
-}
-
 /* Top-level structures */
 pub struct Cursor {
 mut:
@@ -20,6 +12,43 @@ pub struct Display {
 	h            int
 	refresh_rate int
 	driverdata   voidptr
+}
+
+struct GLContext {
+mut:
+	ptr voidptr
+}
+
+struct C.SDL_MessageBoxData
+
+pub struct MessageBox {
+pub mut:
+	flags        MessageBoxFlags
+	window       voidptr
+	title        charptr
+	message      charptr
+	numbuttons   int
+	buttons      voidptr
+	color_scheme voidptr
+}
+
+pub struct MessageBoxButton {
+mut:
+	flag        MessageBoxButtonFlags
+	id          int
+	text        voidptr
+}
+
+pub struct MessageBoxColor {
+pub mut:
+	r  byte
+	g  byte
+	b  byte
+}
+
+pub struct MessageBoxColorScheme {
+pub mut:
+	colors  []MessageBoxColor = []MessageBoxColor{ len: 5, cap: 5 }
 }
 
 pub struct Renderer {
@@ -87,14 +116,6 @@ mut:
 	refcount int
 }
 
-pub struct Color {
-pub mut:
-	r byte
-	g byte
-	b byte
-	a byte = 255
-}
-
 pub struct Point {
 pub mut:
 	x int
@@ -108,3 +129,14 @@ pub mut:
 	w int
 	h int
 }
+
+/* C Struct References */
+struct C.SDL_Color {
+pub mut:
+	r byte
+	g byte
+	b byte
+	a byte = 255
+}
+
+pub type Color = C.SDL_Color

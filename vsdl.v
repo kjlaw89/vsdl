@@ -4,6 +4,7 @@ module vsdl
 #flag -L .
 #flag -lSDL2
 #include "SDL.h"
+#include "SDL_vulkan.h"
 
 fn C.SDL_Init(u32)
 fn C.SDL_InitSubSystem(u32)

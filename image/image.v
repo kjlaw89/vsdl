@@ -17,7 +17,7 @@ import vsdl.gfx
 #flag windows -llibwebp-7
 #flag -lSDL2_image
 #flag -lSDL2
-#include "image/SDL_Image.h"
+#include "image/SDL_image.h"
 
 fn C.IMG_GetError() charptr
 fn C.IMG_Init(int) int

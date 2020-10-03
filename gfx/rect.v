@@ -65,8 +65,47 @@ pub fn (rect Rect) intersects(rect_b Rect) bool {
 }
 
 pub fn (rect Rect) + (rect_b Rect) Rect {
-	new_rect := Rect{}
-	C.UnionRect(&rect, &rect_b, &new_rect)
+	if !rect.has_area() && !rect_b.has_area() {
+		return Rect{}
+	} else if !rect.has_area() {
+		return rect_b
+	} else {
+		return rect
+	}
 
-	return new_rect
+	mut result := Rect{}
+
+	// Horizontal
+	mut a_min := rect.x
+	mut a_max := rect.x + rect.w
+	mut b_min := rect_b.x
+	mut b_max := rect_b.x + rect_b.w
+
+	if b_min < a_min {
+		a_min = b_min
+	}
+
+	if b_max > a_max {
+		a_max = b_max
+	}
+
+	result.x = a_min
+	result.w = a_max - a_min
+
+	// Vertical
+	a_min = rect.y
+	a_max = rect.y + rect.h
+	b_min = rect_b.y
+	b_max = rect_b.y + rect_b.h
+
+	if b_min < a_min {
+		a_min = b_min
+	}
+
+	if b_max > a_max {
+		a_max = b_max
+	}
+
+	result.y = a_min
+	result.h = a_max - a_min
 }

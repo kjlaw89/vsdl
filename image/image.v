@@ -4,7 +4,7 @@ import vsdl
 import vsdl.gfx
 
 #flag -I @VROOT/headers
-#flag windows -L .
+#flag -L .
 #flag linux -lz
 #flag linux -ljpeg
 #flag linux -lpng

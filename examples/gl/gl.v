@@ -4,8 +4,9 @@ import vsdl
 import vsdl.events
 import vsdl.gfx
 
-#flag -lopengl32
-#include <GL/GL.h>
+#flag linux -lGL
+#flag windows -lopengl32
+#include <GL/gl.h>
 
 fn C.glClear(int)
 fn C.glBegin(int)

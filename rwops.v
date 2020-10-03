@@ -35,6 +35,10 @@ pub fn (mut ops RWops) close() int {
 	return result
 }
 
+pub fn (ops RWops) get_ptr() voidptr {
+	return ops.ptr
+}
+
 pub fn rw_from_const_mem(stream voidptr, size int) ?RWops {
 	ops := RWops{ ptr: C.SDL_RWFromConstMem(stream, size) }
 

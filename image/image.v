@@ -4,13 +4,19 @@ import vsdl
 import vsdl.gfx
 
 #flag -I @VROOT/headers
-#flag -L .
-#flag -llibjpeg-9
-#flag -llibpng16-16
-#flag -llibtiff-5
-#flag -llibwebp-7
-#flag -lzlib1
+#flag windows -L .
+#flag linux -lz
+#flag linux -ljpeg
+#flag linux -lpng
+#flag linux -ltiff
+#flag linux -lwebp
+#flag windows -lzlib1
+#flag windows -llibtiff-5
+#flag windows -llibjpeg-9
+#flag windows -llibpng16-16
+#flag windows -llibwebp-7
 #flag -lSDL2_image
+#flag -lSDL2
 #include "image/SDL_Image.h"
 
 fn C.IMG_GetError() charptr

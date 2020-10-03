@@ -55,52 +55,52 @@ pub fn init(flags ...ImgFlags) int {
 	return C.IMG_Init(flag)
 }
 
-pub fn is_cur(ops vsdl.RWops) bool {
-	return C.IMG_isCUR(ops.get_ptr())
+pub fn is_cur(ops &vsdl.RWops) bool {
+	return C.IMG_isCUR(ops)
 }
 
-pub fn is_ico(ops vsdl.RWops) bool {
-	return C.IMG_isICO(ops.get_ptr())
+pub fn is_ico(ops &vsdl.RWops) bool {
+	return C.IMG_isICO(ops)
 }
 
-pub fn is_bmp(ops vsdl.RWops) bool {
-	return C.IMG_isBMP(ops.get_ptr())
+pub fn is_bmp(ops &vsdl.RWops) bool {
+	return C.IMG_isBMP(ops)
 }
 
-pub fn is_xpm(ops vsdl.RWops) bool {
-	return C.IMG_isXPM(ops.get_ptr())
+pub fn is_xpm(ops &vsdl.RWops) bool {
+	return C.IMG_isXPM(ops)
 }
 
-pub fn is_xcf(ops vsdl.RWops) bool {
-	return C.IMG_isXCF(ops.get_ptr())
+pub fn is_xcf(ops &vsdl.RWops) bool {
+	return C.IMG_isXCF(ops)
 }
 
-pub fn is_pcx(ops vsdl.RWops) bool {
-	return C.IMG_isPCX(ops.get_ptr())
+pub fn is_pcx(ops &vsdl.RWops) bool {
+	return C.IMG_isPCX(ops)
 }
 
-pub fn is_gif(ops vsdl.RWops) bool {
-	return C.IMG_isGIF(ops.get_ptr())
+pub fn is_gif(ops &vsdl.RWops) bool {
+	return C.IMG_isGIF(ops)
 }
 
-pub fn is_jpg(ops vsdl.RWops) bool {
-	return C.IMG_isJPG(ops.get_ptr())
+pub fn is_jpg(ops &vsdl.RWops) bool {
+	return C.IMG_isJPG(ops)
 }
 
-pub fn is_tif(ops vsdl.RWops) bool {
-	return C.IMG_isTIF(ops.get_ptr())
+pub fn is_tif(ops &vsdl.RWops) bool {
+	return C.IMG_isTIF(ops)
 }
 
-pub fn is_png(ops vsdl.RWops) bool {
-	return C.IMG_isPNG(ops.get_ptr())
+pub fn is_png(ops &vsdl.RWops) bool {
+	return C.IMG_isPNG(ops)
 }
 
-pub fn is_lbm(ops vsdl.RWops) bool {
-	return C.IMG_isLBM(ops.get_ptr())
+pub fn is_lbm(ops &vsdl.RWops) bool {
+	return C.IMG_isLBM(ops)
 }
 
-pub fn is_xv(ops vsdl.RWops) bool {
-	return C.IMG_isXV(ops.get_ptr())
+pub fn is_xv(ops &vsdl.RWops) bool {
+	return C.IMG_isXV(ops)
 }
 
 // load loads in an image based on the provided path
@@ -117,8 +117,8 @@ pub fn load(path string) ?&gfx.Surface {
 }
 
 // load_rw loads in an image via a `RWops` object
-pub fn load_rw(ops vsdl.RWops, autofree bool) ?&gfx.Surface {
-	surface := C.IMG_Load_RW(ops.get_ptr(), autofree)
+pub fn load_rw(ops &vsdl.RWops, autofree bool) ?&gfx.Surface {
+	surface := C.IMG_Load_RW(ops, autofree)
 
 	if surface == 0 {
 		return error(serror("Unable to load image"))
@@ -128,8 +128,8 @@ pub fn load_rw(ops vsdl.RWops, autofree bool) ?&gfx.Surface {
 }
 
 // load_rw loads in an image via a `RWops` object with specified image type
-pub fn load_typed_rw(ops vsdl.RWops, autofree bool, img_type string) ?&gfx.Surface {
-	surface := C.IMG_LoadTyped_RW(ops.get_ptr(), autofree, img_type.str)
+pub fn load_typed_rw(ops &vsdl.RWops, autofree bool, img_type string) ?&gfx.Surface {
+	surface := C.IMG_LoadTyped_RW(ops, autofree, img_type.str)
 
 	if surface == 0 {
 		return error(serror("Unable to load image"))

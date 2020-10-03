@@ -11,9 +11,9 @@ VSDL is a work-in-progress V wrapper for the C-based [SDL library](https://www.l
   - [x] renderer
   - [x] texture
   - [x] surface
-  - [ ] rect
-  - [x] gl
-  - [x] vulkan (untested)
+  - [x] rect
+  - [x] gl hook
+  - [x] vulkan hook (untested)
   - [ ] pixel formats
 - [ ] events
   - [x] basic event handling
@@ -31,10 +31,10 @@ VSDL is a work-in-progress V wrapper for the C-based [SDL library](https://www.l
 - [ ] mixer
 - [x] image
   - [x] load
-  - [x] details (file type, size, etc)
+  - [x] file type
 - [ ] network
-- [ ] SDL2 concurrency
-- [x] SDL2 RWops
+- [ ] concurrency/threading
+- [x] RWops
 
 ## Example
 

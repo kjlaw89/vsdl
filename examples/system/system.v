@@ -10,6 +10,6 @@ fn main() {
 	println("CPU Count: ${system.get_cpu_count()}")
 	println("CPU Cache Lines: ${system.get_cpu_cache_line_size()}")
 	println("Power State: $state, $secs, $percentage%")
-	println("RAM: ${system.get_memory() / 1024}")
+	println("RAM: ${f32(system.get_memory()) / 1024.0}")
 	println("SSE4.2 Support: ${system.has_sse42()}")
 }

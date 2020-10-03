@@ -46,7 +46,6 @@ fn C.SDL_SetWindowPosition(voidptr, int, int)
 fn C.SDL_SetWindowResizable(voidptr bool)
 fn C.SDL_SetWindowSize(voidptr, int, int)
 fn C.SDL_SetWindowTitle(voidptr, charptr)
-fn C.SDL_SetWindowsMessageHook(voidptr)
 fn C.SDL_UpdateWindowSurface(voidptr)
 
 pub fn (window Window) create_renderer(index int, flags u32) ?Renderer {

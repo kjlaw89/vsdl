@@ -2,7 +2,39 @@
 	<h1>VSDL</h1>
 </div>
 
-VSDL is a work-in-progress V wrapper for the C-based [SDL library](https://www.libsdl.org). The aim of this library is to provide a thorough implementation of SDL in V. The implementation is faithful to the original API but takes some liberties to provide a native "V" feel.
+VSDL is a work-in-progress V wrapper for the C-based [SDL library](https://www.libsdl.org). The aim of this library is to provide a thorough implementation of SDL2 in V. The implementation is faithful to the original API but takes some liberties to provide a native "V" feel.
+
+## Features
+
+- [ ] gfx
+  - [x] window management
+  - [x] renderer
+  - [x] texture
+  - [x] surface
+  - [ ] rect
+  - [x] gl
+  - [x] vulkan (untested)
+  - [ ] pixel formats
+- [ ] events
+  - [x] basic event handling
+  - [ ] subscribed events
+- [ ] input
+  - [x] keyboard
+  - [x] mouse
+- [x] controller
+  - [x] joysticks
+  - [x] game controllers
+- [ ] sensors
+- [ ] haptics
+- [x] audio
+- [x] ttf
+- [ ] mixer
+- [ ] image
+  - [x] load
+  - [ ] details (file type, size, etc)
+- [ ] network
+- [ ] SDL2 concurrency
+- [ ] SDL2 RWops
 
 ## Example
 
@@ -49,12 +81,12 @@ On **Windows**,
   * [SDL2 Runtime Binaries](https://libsdl.org/download-2.0.php)
   * [SDL2 Image Runtime Binaries](https://www.libsdl.org/projects/SDL_image/) (optional)
   * [SDL2 Mixer Runtime Binaries](https://www.libsdl.org/projects/SDL_mixer/) (optional)
-  * [SDL2 TTF Runtim Binaries](https://www.libsdl.org/projects/SDL_ttf/) (optional)
+  * [SDL2 TTF Runtime Binaries](https://www.libsdl.org/projects/SDL_ttf/) (optional)
 2. Extract the binaries to the folder where your executable resides
 
 ### Notes about dependencies
 
-This repo comes with a copy of the headers for the version of SDL2 that it was developed against, but does not ship with the runtime libraries. It is *not* necessary to get the Image, Mixer or TTF library runtimes if you do not plan to use them in your application.
+This repo comes with a copy of the headers for the version of SDL2 that it was developed against (2.0.12), but does not ship with the runtime libraries. It is *not* necessary to get the Image, Mixer or TTF library runtimes if you do not plan to use them in your application.
 
 By default VSDL only initializes the subsystems that are imported. For example, importing just `vsdl` only initializes the main SDL2 system, giving you limited access to SDL2 base functionality. The `video` or `audio` subsystems are only initialized when `vsdl.gfx` or `vsdl.audio` are imported. This allows you to only activate the subsystems that are important to your project.
 

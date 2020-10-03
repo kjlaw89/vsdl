@@ -28,3 +28,8 @@ pub fn get_ticks() u32 {
 pub fn quit() {
 	C.SDL_Quit()
 }
+
+fn serror(text string) string {
+	msg := tos3(C.SDL_GetError())
+	return "$text: $msg"
+}

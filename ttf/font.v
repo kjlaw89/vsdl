@@ -140,7 +140,7 @@ pub fn open_font_index(name string, size, index int) ?Font {
 
 // render_solid renders `text` in a lower quality to a `Surface`
 pub fn (font Font) render_solid(text string, color gfx.Color) ?&gfx.Surface {
-	surface := C.TTF_RenderUTF8_Solid(font.ptr, text.str, C.SDL_Color(color))
+	surface := C.TTF_RenderUTF8_Solid(font.ptr, text.str, color)
 
 	if surface == 0 {
 		return error(serror("Unable to render '$text' to surface"))
@@ -151,7 +151,7 @@ pub fn (font Font) render_solid(text string, color gfx.Color) ?&gfx.Surface {
 
 // render_shaded renders `text` in a good quality to a `Surface` with a background
 pub fn (font Font) render_shaded(text string, fg gfx.Color, bg gfx.Color) ?&gfx.Surface {
-	surface := C.TTF_RenderUTF8_Shaded(font.ptr, text.str, C.SDL_Color(fg), C.SDL_Color(bg))
+	surface := C.TTF_RenderUTF8_Shaded(font.ptr, text.str, fg, bg)
 
 	if surface == 0 {
 		return error(serror("Unable to render '$text' to surface"))
@@ -162,7 +162,7 @@ pub fn (font Font) render_shaded(text string, fg gfx.Color, bg gfx.Color) ?&gfx.
 
 // render_blended renders `text` in a good quality with alpha to a `Surface`
 pub fn (font Font) render_blended(text string, color gfx.Color) ?&gfx.Surface {
-	surface := C.TTF_RenderUTF8_Blended(font.ptr, text.str, C.SDL_Color(color))
+	surface := C.TTF_RenderUTF8_Blended(font.ptr, text.str, color)
 
 	if surface == 0 {
 		return error(serror("Unable to render '$text' to surface"))

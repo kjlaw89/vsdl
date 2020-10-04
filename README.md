@@ -5,7 +5,7 @@
 VSDL is a work-in-progress V wrapper for the C-based [SDL library](https://www.libsdl.org). The aim of this library is to provide a thorough implementation of SDL2 in V. The implementation is faithful to the original API but takes some liberties to provide a native "V" feel.
 
 <div align="center">
-	<img src="https://raw.githubusercontent.com/kjlaw89/vsdl/master/examples/image/example.png" alt="'Image' Example" style="width: 480px;" />
+	<img src="https://raw.githubusercontent.com/kjlaw89/vsdl/master/sample.png" alt="'Image' Example" style="width: 480px;" />
 </div>
 
 ## Features

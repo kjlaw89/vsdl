@@ -48,10 +48,8 @@ pub enum ImgFlags {
 
 // init initializes the img library with the provided flags
 // Note: This can be used to preload libraries. If not called
-// it will automatically be called when needed for a filetype
+// it will automatically be called once when needed for a filetype
 pub fn init(flags ...ImgFlags) int {
-	println("IMG init")
-
 	// Sum the flags
 	mut flag := 0
 	for f in flags {

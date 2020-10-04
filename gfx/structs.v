@@ -1,12 +1,12 @@
 module gfx
 
 /* Top-level structures */
-pub struct Cursor {
+struct Cursor {
 mut:
 	ptr   voidptr
 }
 
-pub struct Display {
+struct Display {
 	format       u32
 	w            int
 	h            int
@@ -21,7 +21,7 @@ mut:
 
 struct C.SDL_MessageBoxData
 
-pub struct MessageBox {
+struct MessageBox {
 pub mut:
 	flags        MessageBoxFlags
 	window       voidptr
@@ -51,12 +51,12 @@ pub mut:
 	colors  []MessageBoxColor = []MessageBoxColor{ len: 5, cap: 5 }
 }
 
-pub struct Renderer {
+struct Renderer {
 mut:
 	ptr voidptr
 }
 
-pub struct Surface {
+struct Surface {
 mut:
 	flags     u32
 	format    &PixelFormat
@@ -66,20 +66,20 @@ mut:
 	pixels    voidptr
 	userdata  voidptr
 	locked    int
-	lock_data voidptr
+ 	lock_data voidptr
 	clip_rect Rect
 	blit_map  voidptr
 	refcount  int
 }
 
-pub struct Texture {
+struct Texture {
 mut:
 	h  int
 	ptr voidptr
 	w  int
 }
 
-pub struct Window {
+struct Window {
 mut:
 	ptr voidptr
 }

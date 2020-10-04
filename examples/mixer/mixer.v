@@ -10,9 +10,13 @@ fn main() {
 	surface := window.get_surface()?
 	surface.fill(r: 255, g: 255, b: 255)
 
+	mixer.open(44100, .default, 2, 1024)?
+
 	defer {
+		mixer.close()
 		surface.free()
 		window.destroy()
+		mixer.quit()
 		vsdl.quit()
 	}
 	

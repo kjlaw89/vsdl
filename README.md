@@ -6,7 +6,7 @@ VSDL is a work-in-progress V wrapper for the C-based [SDL library](https://www.l
 
 ## Features
 
-- [ ] gfx
+- [x] gfx
   - [x] window management
   - [x] renderer
   - [x] texture

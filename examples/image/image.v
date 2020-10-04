@@ -6,7 +6,7 @@ import vsdl.gfx
 import vsdl.image
 
 fn main() {
-	mut window, mut renderer := gfx.create_window_and_renderer("VSDL Graphics Demo", -1, -1, 640, 480, .shown)?
+	mut window, mut renderer := gfx.create_window_and_renderer("VSDL Image Demo", -1, -1, 640, 480, .shown)?
 
 	v_image := image.load("./v-logo.png")?
 	v_texture := v_image.create_texture(renderer)?

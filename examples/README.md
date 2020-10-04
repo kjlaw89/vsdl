@@ -24,6 +24,12 @@ This is a basic demo of the linking OpenGL to the GFX Window to render 2D/3D. Th
 
 This demo showcases the SDL Image library by loading in a `.jpg` background and the V and SDL logos in a `.png` format. This requires the runtime libraries included with SDL Image to run.
 
+On Linux it may be necessary to install the image development libraries to compile:
+
+Ubuntu 14.04+
+
+`sudo apt install libjpeg-dev libpng-dev libtiff-dev libwebp-dev`
+
 ## Messagebox
 
 This showcases a very simple example of the Messagebox popups.

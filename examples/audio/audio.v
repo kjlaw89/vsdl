@@ -1,5 +1,6 @@
 module main
 
+import os
 import vsdl
 import vsdl.audio
 import vsdl.gfx
@@ -12,7 +13,7 @@ fn main() {
 	
 	window.update()
 
-	mut audio_song := audio.load_wav("./song.wav")?
+	mut audio_song := audio.load_wav(os.resource_abs_path("song.wav"))?
 	audio_devices  := audio.get_devices() 				// returns a list of available output devices
 
 	mut device := audio_devices[0]

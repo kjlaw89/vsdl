@@ -1,5 +1,6 @@
 module main
 
+import os
 import vsdl
 import vsdl.events
 import vsdl.gfx
@@ -7,7 +8,7 @@ import vsdl.gfx
 fn main() {
 	mut window, mut renderer := gfx.create_window_and_renderer("VSDL Graphics Demo", -1, -1, 640, 480, .shown)?
 
-	v_image := gfx.load_bmp("./v-logo.bmp")?
+	v_image := gfx.load_bmp(os.resource_abs_path("v-logo.bmp"))?
 	v_texture := v_image.create_texture(renderer)?
 
 	renderer.fill(r: 255, g: 255, b: 255)

@@ -1,5 +1,6 @@
 module main
 
+import os
 import vsdl
 import vsdl.events
 import vsdl.gfx
@@ -8,9 +9,9 @@ import vsdl.ttf
 fn main() {
 	mut window, mut renderer := gfx.create_window_and_renderer("VSDL Text Demo", -1, -1, 640, 480, .shown)?
 
-	font_header := ttf.open_font("Roboto-Light.ttf", 100)?
-	font_subheader := ttf.open_font("Roboto-Light.ttf", 32)?
-	font_body := ttf.open_font("PTMono-Regular.ttf", 18)?
+	font_header := ttf.open_font(os.resource_abs_path("Roboto-Light.ttf"), 100)?
+	font_subheader := ttf.open_font(os.resource_abs_path("Roboto-Light.ttf"), 32)?
+	font_body := ttf.open_font(os.resource_abs_path("PTMono-Regular.ttf"), 18)?
 
 	renderer.fill(r: 255, g: 255, b: 255)
 

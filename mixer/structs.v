@@ -1,8 +1,5 @@
 module mixer
 
-pub type EffectCallback = fn(int, voidptr, int, voidptr)
-pub type EffectDoneCallback = fn(int, voidptr)
-
 struct Chunk {
 mut:
 	allocated     int
@@ -14,4 +11,6 @@ mut:
 struct Music {
 mut:
 	ptr          voidptr
+pub:
+	@type        MusicType
 }

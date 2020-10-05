@@ -44,10 +44,12 @@ pub fn init(flags ...MixerFlags) int {
 	return C.Mix_Init(flag)
 }
 
+// close closes mixer audio
 pub fn close() {
 	C.Mix_CloseAudio()
 }
 
+// quit shuts down all mixer libraries
 pub fn quit() {
 	for C.Mix_Init(0) > 0 {
 		C.Mix_Quit()

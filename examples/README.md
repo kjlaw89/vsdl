@@ -46,6 +46,16 @@ Ubuntu 14.04+
 
 `sudo apt install libjpeg-dev libpng-dev libtiff-dev libwebp-dev`
 
+## Mixer
+
+This basic demo showcases the Mixer extension by loading in a couple of `.mid` files to play. Use the `1` and `2` keys to switch between music as well as the `up` and `down` keys to control volume.
+
+On Linux it may be necessary to install the mixer development libraries to compile:
+
+Ubuntu 14.04+
+
+`sudo apt install libsdl2-mixer-dev libflac-dev libogg-dev libmpg123-dev libmodplug-dev libopus-dev libvorbis-dev`
+
 ## Messagebox
 
 <div align="center">

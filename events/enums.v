@@ -146,20 +146,20 @@ pub enum KeyCode {
 	key_y = 121
 	key_z = 122
 
-	/*key_capslock = sdl_scancode_to_keycode(sdl_scancode_capslock)
+	key_capslock = 1073741881
 
-	key_f1 = sdl_scancode_to_keycode(sdl_scancode_f1)
-	key_f2 = sdl_scancode_to_keycode(sdl_scancode_f2)
-	key_f3 = sdl_scancode_to_keycode(sdl_scancode_f3)
-	key_f4 = sdl_scancode_to_keycode(sdl_scancode_f4)
-	key_f5 = sdl_scancode_to_keycode(sdl_scancode_f5)
-	key_f6 = sdl_scancode_to_keycode(sdl_scancode_f6)
-	key_f7 = sdl_scancode_to_keycode(sdl_scancode_f7)
-	key_f8 = sdl_scancode_to_keycode(sdl_scancode_f8)
-	key_f9 = sdl_scancode_to_keycode(sdl_scancode_f9)
-	key_f10 = sdl_scancode_to_keycode(sdl_scancode_f10)
-	key_f11 = sdl_scancode_to_keycode(sdl_scancode_f11)
-	key_f12 = sdl_scancode_to_keycode(sdl_scancode_f12)*/
+	key_f1 = 1073741882
+	key_f2 = 1073741883
+	key_f3 = 1073741884
+	key_f4 = 1073741885
+	key_f5 = 1073741886
+	key_f6 = 1073741887
+	key_f7 = 1073741888
+	key_f8 = 1073741889
+	key_f9 = 1073741890
+	key_f10 = 1073741891
+	key_f11 = 1073741892
+	key_f12 = 1073741893
 
 	key_printscreen = 1073741894
 	key_scrolllock = 1073741895
@@ -174,26 +174,26 @@ pub enum KeyCode {
 	key_left = 1073741904
 	key_down = 1073741905
 	key_up = 1073741906
+	key_numlockclear = 1073741907
 
-	/*key_numlockclear = sdl_scancode_to_keycode(sdl_scancode_numlockclear)
-	key_kp_divide = sdl_scancode_to_keycode(sdl_scancode_kp_divide)
-	key_kp_multiply = sdl_scancode_to_keycode(sdl_scancode_kp_multiply)
-	key_kp_minus = sdl_scancode_to_keycode(sdl_scancode_kp_minus)
-	key_kp_plus = sdl_scancode_to_keycode(sdl_scancode_kp_plus)
-	key_kp_enter = sdl_scancode_to_keycode(sdl_scancode_kp_enter)
-	key_kp_1 = sdl_scancode_to_keycode(sdl_scancode_kp_1)
-	key_kp_2 = sdl_scancode_to_keycode(sdl_scancode_kp_2)
-	key_kp_3 = sdl_scancode_to_keycode(sdl_scancode_kp_3)
-	key_kp_4 = sdl_scancode_to_keycode(sdl_scancode_kp_4)
-	key_kp_5 = sdl_scancode_to_keycode(sdl_scancode_kp_5)
-	key_kp_6 = sdl_scancode_to_keycode(sdl_scancode_kp_6)
-	key_kp_7 = sdl_scancode_to_keycode(sdl_scancode_kp_7)
-	key_kp_8 = sdl_scancode_to_keycode(sdl_scancode_kp_8)
-	key_kp_9 = sdl_scancode_to_keycode(sdl_scancode_kp_9)
-	key_kp_0 = sdl_scancode_to_keycode(sdl_scancode_kp_0)
-	key_kp_period = sdl_scancode_to_keycode(sdl_scancode_kp_period)
+	key_kp_divide   = 1073741908
+	key_kp_multiply = 1073741909
+	key_kp_minus    = 1073741910
+	key_kp_plus     = 1073741911
+	key_kp_enter    = 1073741912
+	key_kp_1        = 1073741913
+	key_kp_2        = 1073741914
+	key_kp_3        = 1073741915
+	key_kp_4        = 1073741916
+	key_kp_5        = 1073741917
+	key_kp_6        = 1073741918
+	key_kp_7        = 1073741919
+	key_kp_8        = 1073741920
+	key_kp_9        = 1073741921
+	key_kp_0        = 1073741922
+	key_kp_period   = 1073741923
 
-	key_application = sdl_scancode_to_keycode(sdl_scancode_application)
+	/*key_application = sdl_scancode_to_keycode(sdl_scancode_application)
 	key_power = sdl_scancode_to_keycode(sdl_scancode_power)
 	key_kp_equals = sdl_scancode_to_keycode(sdl_scancode_kp_equals)
 	key_f13 = sdl_scancode_to_keycode(sdl_scancode_f13)
@@ -294,19 +294,20 @@ pub enum KeyCode {
 	key_kp_decimal = sdl_scancode_to_keycode(sdl_scancode_kp_decimal)
 	key_kp_hexadecimal =
 		sdl_scancode_to_keycode(sdl_scancode_kp_hexadecimal)
+	*/
 
-	key_lctrl = sdl_scancode_to_keycode(sdl_scancode_lctrl)
-	key_lshift = sdl_scancode_to_keycode(sdl_scancode_lshift)
-	key_lalt = sdl_scancode_to_keycode(sdl_scancode_lalt)
-	key_lgui = sdl_scancode_to_keycode(sdl_scancode_lgui)
-	key_rctrl = sdl_scancode_to_keycode(sdl_scancode_rctrl)
-	key_rshift = sdl_scancode_to_keycode(sdl_scancode_rshift)
-	key_ralt = sdl_scancode_to_keycode(sdl_scancode_ralt)
-	key_rgui = sdl_scancode_to_keycode(sdl_scancode_rgui)
+	key_lctrl  = 1073742048
+	key_lshift = 1073742049
+	key_lalt   = 1073742050
+	key_lgui   = 1073742051
+	key_rctrl  = 1073742052
+	key_rshift = 1073742053
+	key_ralt   = 1073742054
+	key_rgui   = 1073742055
 
-	key_mode = sdl_scancode_to_keycode(sdl_scancode_mode)
+	key_mode   = 1073742081
 
-	key_audionext = sdl_scancode_to_keycode(sdl_scancode_audionext)
+	/*key_audionext = sdl_scancode_to_keycode(sdl_scancode_audionext)
 	key_audioprev = sdl_scancode_to_keycode(sdl_scancode_audioprev)
 	key_audiostop = sdl_scancode_to_keycode(sdl_scancode_audiostop)
 	key_audioplay = sdl_scancode_to_keycode(sdl_scancode_audioplay)

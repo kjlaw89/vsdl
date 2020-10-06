@@ -18,11 +18,12 @@ mut:
 
 pub struct AudioDevice {
 mut:
-	index     int
-	name      string
 	ptr       voidptr
 	spec      AudioSpec
 	queue     map[string]&AudioData
+pub:
+	index     int
+	name      string
 }
 
 pub struct AudioSpec {

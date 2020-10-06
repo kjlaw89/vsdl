@@ -65,9 +65,9 @@ typedef signed long long int64_t;
 typedef unsigned long long uint64_t;
 #ifndef _SIZE_T_DEFINED_
 #define _SIZE_T_DEFINED_
-typedef unsigned int size_t;
+//typedef unsigned int size_t;         // causes problems with TCC
 #endif
-typedef unsigned int uintptr_t;
+//typedef unsigned int uintptr_t;      // causes problems with TCC
 #endif /* __GNUC__ || _MSC_VER */
 #endif /* !_STDINT_H_ && !HAVE_STDINT_H */
 

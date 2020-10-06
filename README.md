@@ -32,7 +32,7 @@ VSDL is a work-in-progress V wrapper for the C-based [SDL library](https://www.l
 - [ ] haptics
 - [x] audio
 - [x] ttf
-- [ ] mixer
+- [x] mixer
 - [x] image
   - [x] load
   - [x] file type

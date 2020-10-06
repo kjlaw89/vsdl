@@ -4,7 +4,7 @@ import vsdl.audio
 
 #flag -I @VROOT/headers
 #flag -L .
-#flag linux -lflac
+#flag linux -lFLAC
 #flag linux -lmodplug
 #flag linux -lmpg123
 #flag linux -logg

@@ -54,7 +54,7 @@ On Linux it may be necessary to install the mixer development libraries to compi
 
 Ubuntu 14.04+
 
-`sudo apt install libsdl2-mixer-dev libflac-dev libogg-dev libmpg123-dev libmodplug-dev libopus-dev libvorbis-dev`
+`sudo apt install libsdl2-mixer-dev libflac-dev libogg-dev libmpg123-dev libmodplug-dev libopus-dev libopusfile-dev libvorbis-dev`
 
 ## Messagebox
 

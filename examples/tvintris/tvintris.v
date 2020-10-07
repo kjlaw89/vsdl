@@ -18,7 +18,7 @@ const (
 	// Assets
 	base_dir = os.dir(os.real_path(os.executable()))
 	font_path = os.join_path(base_dir, 'assets', 'PTMono-Regular.ttf')
-	music_path = os.join_path(base_dir, 'assets', 'TwintrisThosenin.mod')
+	music_path = os.join_path(base_dir, 'assets', 'TwintrisThosenine.mod')
 	sound_block_path = os.join_path(base_dir, 'assets', 'block.wav')
 	sound_double_path = os.join_path(base_dir, 'assets', 'triple.wav')
 	sound_line_path = os.join_path(base_dir, 'assets', 'single.wav')
@@ -29,6 +29,8 @@ const (
 	block_size = 30 // pixels
 	field_height = 20
 	field_width = 10
+	game_width = block_size * field_width + 2
+	game_height = block_size * field_height
 	seed = util.time_seed_array(2)
 	target_fps = u32(math.floor(1000.0 / 60.0))
 	tetro_size = 4
@@ -36,9 +38,9 @@ const (
 	win_height = block_size * field_height
 
 	// Controls
-	p1_fire  = events.KeyCode.key_s
+	p1_fire  = events.KeyCode.key_q
 	p1_up    = events.KeyCode.key_w
-	p1_down  = events.KeyCode.key_x
+	p1_down  = events.KeyCode.key_s
 	p1_left  = events.KeyCode.key_a
 	p1_right = events.KeyCode.key_d
 
@@ -122,6 +124,16 @@ fn main() {
 	mut fonts := map[string]ttf.Font{}
 	fonts["body"] = ttf.open_font(os.resource_abs_path("PTMono-Regular.ttf"), 18)?
 
+	// Load in music and effects
+	mixer.open(44100, .default, 2, 1024)?
+	music1 := mixer.load_music(music_path)?
+	music1.fade_in(999, 2000)
+
+	mut effects := map[string]&mixer.Chunk
+	effects["block"] = mixer.load_chunk(sound_block_path)?
+	effects["double"] = mixer.load_chunk(sound_double_path)?
+	effects["line"] = mixer.load_chunk(sound_line_path)?
+
 	// Create a channel the "games" can use to communicate back to the main thread with
 	// This can be used for playing sound effects or update other aspects of the game
 	game_events := chan string{}
@@ -167,17 +179,43 @@ fn main() {
 	for events.run(false) {
 
 		renderer.fill(bg_color)
+		renderer.set_draw_color(fg_color)
+		renderer.draw_line({ x: game_width - 2, y: 0 }, { x: game_width - 2, y: win_height })
+		renderer.draw_line({ x: game_width * 2 - 4, y: 0 }, { x: game_width * 2 - 4, y: win_height })
 
 		// Set left viewport and draw game 1
-		renderer.set_viewport({ x: 0, y: 0, w: block_size * field_width + 2, h: win_height })
+		renderer.set_viewport({ x: 0, y: 0, w: game_width, h: win_height })
 		game1.draw()
 
 		// Set middle viewport
-		renderer.set_viewport({ x: block_size * field_width + 2, y: 0, w: block_size * field_width, h: win_height })
+		renderer.set_viewport({ x: game_width, y: 0, w: block_size * field_width, h: win_height })
 
 		// Set right viewport and draw game 2
-		renderer.set_viewport({ x: win_width - (block_size * field_width) + 2, y: 0, w: block_size * field_width + 2, h: win_height })
+		renderer.set_viewport({ x: win_width - (block_size * field_width) + 2, y: 0, w: game_width, h: win_height })
 		game2.draw()
+
+		// Reset the viewport back to the whole window
+		renderer.set_viewport({ x: 0, y: 0, w: win_width, h: win_height })
+
+		draw_pause(renderer)
+
+		// Handle queued up events
+		for {
+			select {
+				event := <-game_events {
+					match event {
+						"pause"       {
+							
+						}
+						"play_block"  { effects["block"].play(0, 0)  }
+						"play_double" { effects["double"].play(0, 0) }
+						"play_single" { effects["single"].play(0, 0) }
+						else {}
+					}
+				}
+				else { break }
+			}
+		}
 
 		renderer.present()
 		vsdl.delay(target_fps)
@@ -194,4 +232,10 @@ fn main() {
 
 	window.update()
 	events.loop()
+}
+
+fn draw_pause(renderer gfx.Renderer) {
+	renderer.set_draw_color({ r: 0, g: 0, b: 0, a: 175})
+	renderer.set_blend_mode(.blend)
+	renderer.draw_fill_rect({ x: 0, y: 0, w: win_width, h: win_height })
 }

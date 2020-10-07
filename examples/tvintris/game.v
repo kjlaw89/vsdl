@@ -172,7 +172,7 @@ fn (mut game Game) input() {
 		select {
 			event := <-game.input {
 				match event.@type {
-					.keyup {
+					.keydown {
 						match event.key.input.key {
 							game.k_up    { game.rotate_tetro() }
 							game.k_left  { game.move_right(-1) }
@@ -228,7 +228,7 @@ fn (mut game Game) move_tetro() {
 			// Drop it and generate a new one
 			game.drop_tetro()
 			game.generate_tetro()
-			//C.Mix_PlayChannel(0, game.sdl.actx.waves[0], 0)
+			game.events <- "play_block"
 			return
 		}
 	}
@@ -338,11 +338,12 @@ fn (mut game Game) update() {
 				game.lines += n
 			} else {
 				if game.lines > 0 {
-					/*if game.lines > 1 {
-						C.Mix_PlayChannel(0, game.sdl.actx.waves[2], 0)
+					if game.lines > 1 {
+						game.events <- "play_double"
 					} else if game.lines == 1 {
-						C.Mix_PlayChannel(0, game.sdl.actx.waves[1], 0)
-					}*/
+						game.events <- "play_single"
+					}
+
 					game.score += 10 * game.lines * game.lines
 					game.lines = 0
 				}

@@ -3,7 +3,7 @@ module events
 import vsdl
 
 const (
-	system = &EventSystem{ test: true }
+	system = &EventSystem{}
 )
 
 fn C.SDL_PollEvent(voidptr) int
@@ -83,7 +83,7 @@ pub fn get_delay() u32 {
 }
 
 pub fn loop() {
-	for run() {}
+	for run(true) {}
 }
 
 // poll_events gets the most recent event from the queue and
@@ -93,12 +93,14 @@ pub fn poll_events(event &Event) int {
 	return C.SDL_PollEvent(event)
 }
 
-pub fn run() bool {
+// run runs the input loop to update all events
+// if `delay` is set to true, loop will pause for `EventSystem.delay` time
+pub fn run(delay bool) bool {
 	if !system.running {
 		return false
 	}
 
-	system.run()
+	system.run(delay)
 	return true
 }
 
@@ -124,7 +126,7 @@ pub fn quit() {
 	// Loop through each channel and close it
 	for _, channels in system_ref.channels {
 		for channel in channels {
-			ref := voidptr(&channel)
+			ref := voidptr(channel)
 
 			// Can't close a channel that has already been closed
 			if closed_channels.index(ref) >= 0 {
@@ -137,7 +139,7 @@ pub fn quit() {
 	}
 }
 
-fn (system &EventSystem) run() {
+fn (system &EventSystem) run(delay bool) {
 	event := &Event{}
 
 	mut system_ref := &EventSystem(0)
@@ -198,8 +200,10 @@ fn (system &EventSystem) run() {
 			}
 		}
 	}
-	
-	vsdl.delay(system.delay)
+
+	if delay {		
+		vsdl.delay(system.delay)
+	}
 }
 
 fn trigger_event(category string, event Event) {

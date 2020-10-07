@@ -20,7 +20,7 @@ fn main() {
 
 	println('Controller "$controller.name" detected. See device activity below. Press "Start" or "CTRL+C" to quit')
 
-	for events.run() {
+	for events.run(true) {
 		if controller.get_button(.start) {
 			println("")
 			println("Start was pressed. Terminating.")

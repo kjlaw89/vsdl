@@ -38,7 +38,7 @@ pub fn (window Window) get_vulkan_extensions() []string {
 
 	pointers := []charptr{ len: int(count) }
 	mut extensions := []string{ len: int(count) }
-	C.SDL_Vulkan_GetInstanceExtensions(window.ptr, &count, &pointers[0])
+	C.SDL_Vulkan_GetInstanceExtensions(window.ptr, &count, &pointers)
 
 	for i, _ in pointers {
 		extensions[i] = tos3(pointers[i])

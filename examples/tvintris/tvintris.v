@@ -3,6 +3,7 @@ module main
 import math
 import os
 import rand
+import rand.util
 import time
 import vsdl
 import vsdl.events
@@ -25,9 +26,11 @@ const (
 
 	// Game Properties
 	audio_buf_size = 1024
-	block_size = 20 // pixels
+	block_size = 30 // pixels
 	field_height = 20
 	field_width = 10
+	seed = util.time_seed_array(2)
+	target_fps = u32(math.floor(1000.0 / 60.0))
 	tetro_size = 4
 	win_width = block_size * field_width * 3
 	win_height = block_size * field_height
@@ -107,5 +110,88 @@ mut:
 }
 
 enum GameState {
-	pausing running gameover
+	gameover gamestart init paused running shutdown
+}
+
+fn main() {
+	println("tVintris -- tribute to venerable Twintris")
+
+	mut window, mut renderer := gfx.create_window_and_renderer(title, -1, -1, win_width, win_height, .shown)?
+
+	// Load in our assets and initialize basic game properties
+	mut fonts := map[string]ttf.Font{}
+	fonts["body"] = ttf.open_font(os.resource_abs_path("PTMono-Regular.ttf"), 18)?
+
+	// Create a channel the "games" can use to communicate back to the main thread with
+	// This can be used for playing sound effects or update other aspects of the game
+	game_events := chan string{}
+
+	// Initialize our games
+	mut game1 := Game{
+		events: game_events
+		fonts: fonts
+		input: events.create_watcher(100, .key)
+		k_fire: p1_fire
+		k_up: p1_up
+		k_down: p1_down
+		k_left: p1_left
+		k_right: p1_right
+		name: "Player 1"
+		rng: rand.new_default({ seed: seed })
+		renderer: renderer
+	}
+
+	mut game2 := Game{
+		events: game_events
+		fonts: fonts
+		input: events.create_watcher(100, .key)
+		k_fire: p2_fire
+		k_up: p2_up
+		k_down: p2_down
+		k_left: p2_left
+		k_right: p2_right
+		name: "Player 2"
+		rng: rand.new_default({ seed: seed })
+		renderer: renderer
+	}
+
+	game1.init()
+	game2.init()
+
+	//v_image := gfx.load_bmp(os.resource_abs_path("v-logo.bmp"))?
+	//v_texture := v_image.create_texture(renderer)?
+
+	game1.start()
+	game2.start()
+
+	for events.run(false) {
+
+		renderer.fill(bg_color)
+
+		// Set left viewport and draw game 1
+		renderer.set_viewport({ x: 0, y: 0, w: block_size * field_width + 2, h: win_height })
+		game1.draw()
+
+		// Set middle viewport
+		renderer.set_viewport({ x: block_size * field_width + 2, y: 0, w: block_size * field_width, h: win_height })
+
+		// Set right viewport and draw game 2
+		renderer.set_viewport({ x: win_width - (block_size * field_width) + 2, y: 0, w: block_size * field_width + 2, h: win_height })
+		game2.draw()
+
+		renderer.present()
+		vsdl.delay(target_fps)
+	}
+
+	game1.shutdown()
+	game2.shutdown()
+
+	renderer.destroy()
+	window.destroy()
+	mixer.quit()
+	ttf.quit()
+	vsdl.quit()
+
+	window.update()
+	events.loop()
 }

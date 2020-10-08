@@ -1,362 +1,235 @@
 module main
 
-import math
-import rand.wyrand
-import sync
+import rand
+//import time
 import vsdl
 import vsdl.events
 import vsdl.gfx
+import vsdl.mixer
 import vsdl.ttf
 
 struct Game {
-	events       chan string
-	fonts        map[string]ttf.Font
-	input        chan events.Event
-	renderer     gfx.Renderer
+	events     chan string = chan string{}
 mut:
-	k_fire       int
-	k_up         int
-	k_down       int
-	k_left       int
-	k_right      int
-	lines        int                     // Count consecutive lines for scoring
-	name         string
-	pos_x        int                     // X Position of the current tetro
-	pos_y        int                     // Y Position of the current tetro
-	rng          &wyrand.WyRandRNG
-	score        int                     // Score of the current game
-	state        GameState       = .init // State of the current game
-	update_rate  u32             = 250
-	wg           &sync.WaitGroup = sync.new_waitgroup()
-	
-	// field[y][x] contains the color of the block with (x,y) coordinates
-	// "-1" border is to avoid bounds checking.
-	// -1 -1 -1 -1
-	// -1  0  0 -1
-	// -1  0  0 -1
-	// -1 -1 -1 -1
-	field        [][]int
-	rotation_idx int                     // Index of the rotation (0-3)
-	tetro        []Block                 // TODO: tetro Tetro
-	tetro_idx    int                     // Index of the current tetro. Refers to its color.
-	tetro_next   int                     // Index of the next tetro. Refers to its color.
-	tetro_stats  []int                   // tetro stats : buckets of drawn tetros
-	tetro_total  int                     // total number of drawn tetros
-	tetros_cache []Block                 // TODO: tetros_cache []Tetro
+	effects    map[string]&mixer.Chunk
+	fonts      map[string]ttf.Font
+	images     map[string]&gfx.Surface
+	music      map[string]mixer.Music
+	players    []Player
+	renderer   gfx.Renderer
+	state      GameState   = .init
 }
 
-// init initializes this game state
-pub fn (mut game Game) init() {
+pub fn (mut game Game) run() {
+	game.music["bg"].fade_in(999, 2000)
 
-	// Don't allow initializing the game more than once
-	if game.state != .init {
-		return
+	// Initialize our games
+	mut player1 := Player{
+		events: game.events
+		input: events.create_watcher(100, .key)
+		k_fire: p1_fire
+		k_up: p1_up
+		k_down: p1_down
+		k_left: p1_left
+		k_right: p1_right
+		name: "Player 1"
+		rng: rand.new_default({ seed: seed })
+		renderer: game.renderer
 	}
 
-	game.state = .gamestart
-
-	// Start the update loop in a new thread
-	// This will manage the input
-	go game.update()
-	go game.input()
-
-	game.wg.add(2)
-}
-
-fn (mut game Game) delete_completed_line(y int) int {
-	for x := 1; x <= field_width; x++ {
-		f := game.field[y]
-		if f[x] == 0 {
-			return 0
-		}
+	mut player2 := Player{
+		events: game.events
+		input: events.create_watcher(100, .key)
+		k_fire: p2_fire
+		k_up: p2_up
+		k_down: p2_down
+		k_left: p2_left
+		k_right: p2_right
+		name: "Player 2"
+		rng: rand.new_default({ seed: seed })
+		renderer: game.renderer
 	}
 
-	// Move everything down by 1 position
-	for yy := y - 1; yy >= 1; yy-- {
-		for x := 1; x <= field_width; x++ {
-			mut a := game.field[yy + 1]
-			b := game.field[yy]
-			a[x] = b[x]
-		}
-	}
+	game.players << player1
+	game.players << player2
+	game.players_init()
 
-	return 1
-}
+	for events.run(false) {
 
-fn (mut game Game) delete_completed_lines() int {
-	mut n := 0
-	for y := field_height; y >= 1; y-- {
-		n += game.delete_completed_line(y)
-	}
+		// Clear the screen and re-draw the borders
+		game.renderer.fill(bg_color)
+		game.renderer.set_draw_color(fg_color)
+		game.renderer.draw_line({ x: game_width - 2, y: 0 }, { x: game_width - 2, y: win_height })
+		game.renderer.draw_line({ x: game_width * 2 - 4, y: 0 }, { x: game_width * 2 - 4, y: win_height })
 
-	return n
-}
+		// Set left viewport and draw game 1
+		game.renderer.set_viewport({ x: 0, y: 0, w: game_width, h: game_height })
+		game.players[0].draw()
 
-// draw draws this game to the renderer
-pub fn (mut game Game) draw() {
+		// Set middle viewport
+		game.renderer.set_viewport({ x: game_width, y: 0, w: block_size * field_width, h: win_height })
 
-	// Draw tetro
-	for i in 0..tetro_size {
-		if game.tetro.len <= i {
-			continue
+		// Set right viewport and draw game 2
+		game.renderer.set_viewport({ x: win_width - (block_size * field_width) + 2, y: 0, w: game_width, h: win_height })
+		game.players[1].draw()
+
+		if game.state == .init {
+			game.draw_dialog("Start Game", "Hit 'Q' and 'L' to start.")
 		}
 
-		tetro := game.tetro[i]
-		game.draw_block(game.pos_x + tetro.x, game.pos_y + tetro.y, game.tetro_idx + 1)
-	}
-
-	// Draw field
-	for i := 1; i < field_height + 1; i++ {
-		for j := 1; j < field_width + 1; j++ {
-			if game.field.len <= i {
-				continue
-			}
-
-			f := game.field[i]
-			if f[j] > 0 {
-				game.draw_block(j, i, f[j])
-			}
+		if game.state == .paused {
+			game.draw_dialog("Game Paused", "Hit 'Q' or 'L' to resume.")
 		}
-	}
-}
 
-// draw_block is a simple helper function to draw a single block based on the provided details
-fn (game Game) draw_block(x, y, color_index int) {
-	rect := gfx.Rect{
-		x: (x - 1) * block_size
-		y: (y - 1) * block_size
-		w: block_size - 1
-		h: block_size - 1
-	}
+		if game.state == .gameover {
+			game.draw_dialog("Game Over", "Hit 'Q' and 'L' to start.")
+		}
 
-	color := tetro_colors[color_index]
+		// Reset the viewport back to the whole window
+		game.renderer.set_viewport({ x: 0, y: 0, w: win_width, h: win_height })
 
-	game.renderer.set_draw_color(color)
-	game.renderer.draw_fill_rect(rect)
-	game.renderer.set_draw_color(bg_color)
-}
+		// Handle queued up events
+		for {
+			select {
+				event := <-game.events {
+					match event {
+						"action" {
+							if game.state in [.init, .gameover] && game.players_ready() {
+								game.players_start()
+								continue
+							}
 
-fn (mut game Game) drop_tetro() {
-	for i in 0..tetro_size {
-		tetro := game.tetro[i]
-		x := tetro.x + game.pos_x
-		y := tetro.y + game.pos_y
-		// Remember the color of each block
-		// TODO: game.field[y][x] = game.tetro_idx + 1
-		mut row := game.field[y]
-		row[x] = game.tetro_idx + 1
-	}
-}
+							if game.state == .playing {
+								game.players_pause()
+								continue
+							}
 
-// Place a new tetro on top
-fn (mut game Game) generate_tetro() {
-	game.pos_y = 0
-	game.pos_x = field_width / 2 - tetro_size / 2
-	game.tetro_idx = game.rand_tetro()
-	game.tetro_stats[game.tetro_idx]++
-	game.tetro_total++
-	game.rotation_idx = 0
-	game.get_tetro()
-}
-
-// Get the right tetro from cache
-fn (mut game Game) get_tetro() {
-	idx := game.tetro_idx * tetro_size * tetro_size + game.rotation_idx * tetro_size
-	game.tetro = game.tetros_cache[idx .. idx + tetro_size]
-}
-
-// input manages this game's input data as it comes in
-// This is run in a separate thread
-fn (mut game Game) input() {
-	for game.state != .shutdown {
-		select {
-			event := <-game.input {
-				match event.@type {
-					.keydown {
-						match event.key.input.key {
-							game.k_up    { game.rotate_tetro() }
-							game.k_left  { game.move_right(-1) }
-							game.k_right { game.move_right(1)  }
-							game.k_down  { game.move_tetro()   } // drop faster when the player presses <down>
-							else {}
+							if game.state == .paused {
+								game.players_resume()
+								continue
+							}
 						}
+						"gameover" {
+							if game.players_gameover() {
+								game.state = .gameover
+							}
+						}
+						"play_block"  { game.effects["block"].play(0, 0)  }
+						"play_double" { game.effects["double"].play(0, 0) }
+						"play_single" { game.effects["single"].play(0, 0) }
+						else {}
 					}
-					else {}
 				}
+				else { break }
 			}
 		}
+
+		game.renderer.present()
+		vsdl.delay(target_fps)
 	}
 
-	game.wg.done()
+	game.players_shutdown()
 }
 
-// move_right
-fn (mut game Game) move_right(dx int) bool {
-	// Reached left/right edge or another tetro?
-	for i in 0..tetro_size {
-		tetro := game.tetro[i]
-		y := tetro.y + game.pos_y
-		x := tetro.x + game.pos_x + dx
-		row := game.field[y]
-		if row[x] != 0 {
-			// Do not move
+fn (game Game) draw_dialog(header, body string) ? {
+	width := 350
+	height := 130
+	
+	// Draw transparent BG
+	game.renderer.set_viewport({ x: 0, y: 0, w: win_width, h: win_height })
+	game.renderer.set_draw_color({ r: 0, g: 0, b: 0, a: 175})
+	game.renderer.set_blend_mode(.blend)
+	game.renderer.draw_fill_rect({ x: 0, y: 0, w: win_width, h: win_height })
+
+	// Render dialog
+	game.renderer.set_viewport({
+		x: win_width / 2 - 175,
+		y: win_height / 3 - 65,
+		w: width,
+		h: height
+	})
+	game.renderer.set_blend_mode(.@none)
+	game.renderer.set_draw_color(dialog_color)
+	game.renderer.draw_fill_rect({ x: 0, y: 0, w: width, h: height })
+
+	h_text := game.fonts["subheader"].render_blended(header, text_color)?
+	h_text_texture := h_text.create_texture(game.renderer)?
+
+	b_text := game.fonts["body"].render_blended(body, text_color)?
+	b_text_texture := b_text.create_texture(game.renderer)?
+
+	game.renderer.render(h_text_texture, { x: (width / 2) - (h_text.get_width() / 2), y: 20, w: h_text.get_width(), h: h_text.get_height() })
+	game.renderer.render(b_text_texture, { x: (width / 2) - (b_text.get_width() / 2), y: 80, w: b_text.get_width(), h: b_text.get_height() })
+
+	h_text_texture.free()
+	b_text_texture.free()
+	h_text.free()
+	b_text.free()
+}
+
+fn (game Game) draw_center() {
+
+}
+
+fn (game Game) players_gameover() bool {
+	for p in 0..game.players.len {
+		mut player := &game.players[p]
+		if player.state != .gameover {
 			return false
 		}
 	}
-	game.pos_x += dx
+
 	return true
 }
 
-// move_tetro
-fn (mut game Game) move_tetro() {
-	// Check each block in current tetro
-	for block in game.tetro {
-		y := block.y + game.pos_y + 1
-		x := block.x + game.pos_x
-		// Reached the bottom of the screen or another block?
-		// TODO: if game.field[y][x] != 0
-		//if game.field[y][x] != 0 {
-		row := game.field[y]
-		if row[x] != 0 {
-			// The new tetro has no space to drop => end of the game
-			if game.pos_y < 2 {
-				game.state = .gameover
-				game.tetro_total = 0
-				return
-			}
+fn (game Game) players_init() {
+	for p in 0..game.players.len {
+		mut player := &game.players[p]
+		player.init()
+	}
+}
 
-			// Drop it and generate a new one
-			game.drop_tetro()
-			game.generate_tetro()
-			game.events <- "play_block"
-			return
+fn (mut game Game) players_pause() {
+	for p in 0..game.players.len {
+		mut player := &game.players[p]
+		player.pause()
+	}
+
+	game.state = .paused
+}
+
+fn (game Game) players_ready() bool {
+	for p in 0..game.players.len {
+		mut player := &game.players[p]
+		if !player.ready {
+			return false
 		}
 	}
 
-	game.pos_y++
+	return true
 }
 
-fn parse_binary_tetro(t_ int) []Block {
-	mut res := []Block{ len: 4 }
-	mut t := t_
-	mut cnt := 0
-
-	horizontal := t == 9 // special case for the horizontal line
-	for i := 0; i <= 3; i++ {
-		// Get ith digit of t
-		p := int(math.pow(10, 3 - i))
-		mut digit := t / p
-		t %= p
-
-		// Convert the digit to binary
-		for j := 3; j >= 0; j-- {
-			bin := digit % 2
-			digit /= 2
-
-			if bin == 1 || (horizontal && i == tetro_size - 1) {
-				res[cnt].x = j
-				res[cnt].y = i
-				cnt++
-			}
-		}
+fn (mut game Game) players_resume() {
+	for p in 0..game.players.len {
+		mut player := &game.players[p]
+		player.resume()
 	}
 
-	return res
+	game.state = .playing
 }
 
-fn (mut game Game) parse_tetros() {
-	for b_tetros in tetros {
-		for b_tetro in b_tetros {
-			for t in parse_binary_tetro(b_tetro) {
-				game.tetros_cache << t
-			}
-		}
+fn (game Game) players_shutdown() {
+	for p in 0..game.players.len {
+		mut player := &game.players[p]
+		player.shutdown()
 	}
 }
 
-// rotate_tetro
-fn (mut game Game) rotate_tetro() {
-	old_rotation_idx := game.rotation_idx
-	game.rotation_idx++
-	if game.rotation_idx == tetro_size {
-		game.rotation_idx = 0
+fn (mut game Game) players_start() {
+	for p in 0..game.players.len {
+		mut player := &game.players[p]
+		player.start()
 	}
 
-	game.get_tetro()
-	if !game.move_right(0) {
-		game.rotation_idx = old_rotation_idx
-		game.get_tetro()
-	}
-
-	if game.pos_x < 0 {
-		game.pos_x = 1
-	}
-}
-
-// rand_tetro generates a new tetro to use
-fn (mut game Game) rand_tetro() int {
-	cur := game.tetro_next
-	game.tetro_next = int(game.rng.u32() % u32(tetros.len))
-	return cur
-}
-
-// start resets all game variables and sets the game state to active
-pub fn (mut game Game) start() {
-	game.score = 0
-	game.tetro_total = 0
-	game.tetro_stats = [0, 0, 0, 0, 0, 0, 0]
-	game.parse_tetros()
-	game.generate_tetro()
-	game.field = []
-
-	// Generate the field, fill it with 0's, add -1's on each edge
-	for _ in 0..field_height + 2 {
-		mut row := []int{ init: 0, len: field_width + 2, }
-		row[0] = -1
-		row[field_width + 1] = -1
-		game.field << row
-	}
-
-	mut first_row := game.field[0]
-	mut last_row := game.field[field_height + 1]
-	for j in 0..field_width + 2 {
-		first_row[j] = -1
-		last_row[j] = -1
-	}
-	
-	game.state = .running
-}
-
-// update manages this game's state
-// This is run in a separate thread
-fn (mut game Game) update() {
-	for game.state != .shutdown {
-		if game.state == .running {
-			game.move_tetro()
-			n := game.delete_completed_lines()
-			if n > 0 {
-				game.lines += n
-			} else {
-				if game.lines > 0 {
-					if game.lines > 1 {
-						game.events <- "play_double"
-					} else if game.lines == 1 {
-						game.events <- "play_single"
-					}
-
-					game.score += 10 * game.lines * game.lines
-					game.lines = 0
-				}
-			}
-		}
-
-		vsdl.delay(game.update_rate)
-	}
-
-	game.wg.done()
-}
-
-pub fn (mut game Game) shutdown() {
-	game.state = .shutdown
-	game.wg.wait()
+	game.state = .playing
 }

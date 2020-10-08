@@ -4,7 +4,6 @@ import math
 import os
 import rand
 import rand.util
-import time
 import vsdl
 import vsdl.events
 import vsdl.gfx
@@ -36,19 +35,6 @@ const (
 	tetro_size = 4
 	win_width = block_size * field_width * 3
 	win_height = block_size * field_height
-
-	// Controls
-	p1_fire  = events.KeyCode.key_q
-	p1_up    = events.KeyCode.key_w
-	p1_down  = events.KeyCode.key_s
-	p1_left  = events.KeyCode.key_a
-	p1_right = events.KeyCode.key_d
-
-	p2_fire  = events.KeyCode.key_l
-	p2_up    = events.KeyCode.key_up
-	p2_down  = events.KeyCode.key_down
-	p2_left  = events.KeyCode.key_left
-	p2_right = events.KeyCode.key_right
 
 	// Tetros' 4 possible states are encoded in binaries
 	tetros = [
@@ -100,9 +86,10 @@ const (
 		gfx.Color{ r: 0,    g: 170,  b: 170, },	// unused ?
 	]
 
-	bg_color =   gfx.Color{}
-	fg_color =   gfx.Color{ r: 0,    g: 170,  b: 170  }
-	text_color = gfx.Color{ r: 0xCA, g: 0x7D, b: 0x5F }
+	bg_color          = gfx.Color{}
+	dialog_color      = gfx.Color{ r: 125, g: 125, b: 125 }
+	fg_color          = gfx.Color{ r: 0,   g: 170, b: 170 }
+	text_color        = gfx.Color{ r: 255, g: 255, b: 255 }
 )
 
 struct Block {
@@ -112,7 +99,7 @@ mut:
 }
 
 enum GameState {
-	gameover gamestart init paused running shutdown
+	gameover init playing paused running shutdown
 }
 
 fn main() {
@@ -122,107 +109,51 @@ fn main() {
 
 	// Load in our assets and initialize basic game properties
 	mut fonts := map[string]ttf.Font{}
+	fonts["header"] = ttf.open_font(os.resource_abs_path("PTMono-Regular.ttf"), 32)?
+	fonts["subheader"] = ttf.open_font(os.resource_abs_path("PTMono-Regular.ttf"), 24)?
 	fonts["body"] = ttf.open_font(os.resource_abs_path("PTMono-Regular.ttf"), 18)?
 
 	// Load in music and effects
 	mixer.open(44100, .default, 2, 1024)?
-	music1 := mixer.load_music(music_path)?
-	music1.fade_in(999, 2000)
+
+	mut music := map[string]mixer.Music
+	music["bg"] = mixer.load_music(music_path)?
 
 	mut effects := map[string]&mixer.Chunk
 	effects["block"] = mixer.load_chunk(sound_block_path)?
 	effects["double"] = mixer.load_chunk(sound_double_path)?
 	effects["line"] = mixer.load_chunk(sound_line_path)?
 
-	// Create a channel the "games" can use to communicate back to the main thread with
-	// This can be used for playing sound effects or update other aspects of the game
-	game_events := chan string{}
+	// Load in images
+	mut images := map[string]&gfx.Surface
+	images["v-logo"] = image.load(v_logo_path)?
 
-	// Initialize our games
-	mut game1 := Game{
-		events: game_events
+	mut game := Game{
+		effects: effects
 		fonts: fonts
-		input: events.create_watcher(100, .key)
-		k_fire: p1_fire
-		k_up: p1_up
-		k_down: p1_down
-		k_left: p1_left
-		k_right: p1_right
-		name: "Player 1"
-		rng: rand.new_default({ seed: seed })
+		images: images
+		music: music
 		renderer: renderer
 	}
 
-	mut game2 := Game{
-		events: game_events
-		fonts: fonts
-		input: events.create_watcher(100, .key)
-		k_fire: p2_fire
-		k_up: p2_up
-		k_down: p2_down
-		k_left: p2_left
-		k_right: p2_right
-		name: "Player 2"
-		rng: rand.new_default({ seed: seed })
-		renderer: renderer
-	}
+	game.run()
 
-	game1.init()
-	game2.init()
-
-	//v_image := gfx.load_bmp(os.resource_abs_path("v-logo.bmp"))?
-	//v_texture := v_image.create_texture(renderer)?
-
-	game1.start()
-	game2.start()
-
-	for events.run(false) {
-
-		renderer.fill(bg_color)
-		renderer.set_draw_color(fg_color)
-		renderer.draw_line({ x: game_width - 2, y: 0 }, { x: game_width - 2, y: win_height })
-		renderer.draw_line({ x: game_width * 2 - 4, y: 0 }, { x: game_width * 2 - 4, y: win_height })
-
-		// Set left viewport and draw game 1
-		renderer.set_viewport({ x: 0, y: 0, w: game_width, h: win_height })
-		game1.draw()
-
-		// Set middle viewport
-		renderer.set_viewport({ x: game_width, y: 0, w: block_size * field_width, h: win_height })
-
-		// Set right viewport and draw game 2
-		renderer.set_viewport({ x: win_width - (block_size * field_width) + 2, y: 0, w: game_width, h: win_height })
-		game2.draw()
-
-		// Reset the viewport back to the whole window
-		renderer.set_viewport({ x: 0, y: 0, w: win_width, h: win_height })
-
-		draw_pause(renderer)
-
-		// Handle queued up events
-		for {
-			select {
-				event := <-game_events {
-					match event {
-						"pause"       {
-							
-						}
-						"play_block"  { effects["block"].play(0, 0)  }
-						"play_double" { effects["double"].play(0, 0) }
-						"play_single" { effects["single"].play(0, 0) }
-						else {}
-					}
-				}
-				else { break }
-			}
+	unsafe {
+		for k, _ in fonts {
+			mut f := &fonts[k]
+			f.free()
 		}
 
-		renderer.present()
-		vsdl.delay(target_fps)
-	}
+		for k, _ in music {
+			mut m := &music[k]
+			m.free()
+		}
 
-	game1.shutdown()
-	game2.shutdown()
+		for k, _ in effects {
+			mut e := &effects[k]
+			e.free()
+		}
+	}
 
 	renderer.destroy()
 	window.destroy()
@@ -232,10 +163,4 @@ fn main() {
 
 	window.update()
 	events.loop()
-}
-
-fn draw_pause(renderer gfx.Renderer) {
-	renderer.set_draw_color({ r: 0, g: 0, b: 0, a: 175})
-	renderer.set_blend_mode(.blend)
-	renderer.draw_fill_rect({ x: 0, y: 0, w: win_width, h: win_height })
 }

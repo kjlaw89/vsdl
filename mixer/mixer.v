@@ -4,22 +4,6 @@ import vsdl.audio
 
 #flag -I @VROOT/headers
 #flag -L .
-#flag linux -lFLAC
-#flag linux -lmodplug
-#flag linux -lmpg123
-#flag linux -logg
-#flag linux -lopus
-#flag linux -lopusfile
-#flag linux -lvorbis
-#flag linux -lvorbisfile
-#flag windows -llibFLAC-8
-#flag windows -llibmodplug-1
-#flag windows -llibmpg123-0
-#flag windows -llibogg-0
-#flag windows -llibopus-0
-#flag windows -llibopusfile-0
-#flag windows -llibvorbis-0
-#flag windows -llibvorbisfile-3
 #flag -lSDL2_mixer
 #flag -lSDL2
 #include "mixer/SDL_mixer.h"

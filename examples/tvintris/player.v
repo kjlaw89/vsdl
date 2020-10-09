@@ -1,6 +1,7 @@
 module main
 
 import math
+import rand
 import rand.wyrand
 import sync
 import vsdl
@@ -20,6 +21,56 @@ const (
 	p2_down  = events.KeyCode.key_down
 	p2_left  = events.KeyCode.key_left
 	p2_right = events.KeyCode.key_right
+
+	// Tetros' 4 possible states are encoded in binaries
+	tetros = [
+		// 0000 0
+		// 0000 0
+		// 0110 6
+		// 0110 6
+		[66, 66, 66, 66],
+		// 0000 0
+		// 0000 0
+		// 0010 2
+		// 0111 7
+		[27, 131, 72, 232],
+		// 0000 0
+		// 0000 0
+		// 0011 3
+		// 0110 6
+		[36, 231, 36, 231],
+		// 0000 0
+		// 0000 0
+		// 0110 6
+		// 0011 3
+		[63, 132, 63, 132],
+		// 0000 0
+		// 0011 3
+		// 0001 1
+		// 0001 1
+		[311, 17, 223, 74],
+		// 0000 0
+		// 0011 3
+		// 0010 2
+		// 0010 2
+		[322, 71, 113, 47],
+		// Special case since 15 can't be used
+		// 1111
+		[1111, 9, 1111, 9],
+	]
+
+	// Each tetro has its unique color
+	tetro_colors = [
+		gfx.Color{ r: 0,    g: 0,    b: 0    },	// unused ?
+		gfx.Color{ r: 0,    g: 0x62, b: 0xC0 },	// quad : darkblue 0062c0
+		gfx.Color{ r: 0xCA, g: 0x7D, b: 0x5F },	// tricorn : lightbrown ca7d5f
+		gfx.Color{ r: 0,    g: 0xC1, b: 0xBF },	// short topright : lightblue 00c1bf
+		gfx.Color{ r: 0,    g: 0xC1, b: 0    },	// short topleft : lightgreen 00c100
+		gfx.Color{ r: 0xBF, g: 0xBE, b: 0    },	// long topleft : yellowish bfbe00
+		gfx.Color{ r: 0xD1, g: 0,    b: 0xBF },	// long topright : pink d100bf
+		gfx.Color{ r: 0xD1, g: 0,    b: 0    },	// longest : lightr d10000
+		gfx.Color{ r: 0,    g: 170,  b: 170, },	// unused ?
+	]
 )
 
 struct Player {
@@ -37,11 +88,11 @@ mut:
 	pos_x        int                     // X Position of the current tetro
 	pos_y        int                     // Y Position of the current tetro
 	ready        bool
-	rng          &wyrand.WyRandRNG
+	rng          &wyrand.WyRandRNG = 0
 	score        int                     // Score of the current game
-	state        GameState       = .init // State of the current game
-	update_rate  u32             = 250
-	wg           &sync.WaitGroup = sync.new_waitgroup()
+	state        GameState         = .init // State of the current game
+	update_rate  u32               = 250
+	wg           &sync.WaitGroup   = sync.new_waitgroup()
 	
 	// field[y][x] contains the color of the block with (x,y) coordinates
 	// "-1" border is to avoid bounds checking.
@@ -106,9 +157,6 @@ fn (mut player Player) delete_completed_lines() int {
 
 // draw draws this game to the renderer
 pub fn (mut player Player) draw() {
-
-	player.renderer.set_draw_color(bg_color)
-	player.renderer.draw_fill_rect({ x: 0, y: 0, w: game_width -2, h: game_height })
 
 	// Draw tetro
 	for i in 0..tetro_size {
@@ -342,7 +390,8 @@ pub fn (mut player Player) resume() {
 }
 
 // start resets all game variables and sets the game state to active
-pub fn (mut player Player) start() {
+pub fn (mut player Player) start(seed []u32) {
+	player.rng = rand.new_default({ seed: seed })  // restart our seed so all players start the game
 	player.score = 0
 	player.tetro_total = 0
 	player.tetro_stats = [0, 0, 0, 0, 0, 0, 0]

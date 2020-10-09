@@ -140,6 +140,12 @@ pub enum RendererFlip {
 	vertical = 2
 }
 
+pub enum TextureAccess {
+	@static
+	streaming
+	target
+}
+
 pub enum WindowFlags {
     fullscreen = 0x00000001
     opengl = 0x00000002

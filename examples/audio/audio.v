@@ -33,7 +33,7 @@ fn main() {
 
 	key_chan := events.create_watcher(10, .key)
 
-	for events.run() {
+	for events.run(true) {
 		select {
 			event := <-key_chan {
 				match event.key.input.key {

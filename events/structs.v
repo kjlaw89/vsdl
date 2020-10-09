@@ -2,10 +2,9 @@ module events
 
 struct EventSystem {
 mut:
-	channels    map[string][]chan Event
+	channels     map[string][]chan Event
 	delay        u32  = 16
 	running      bool = true
-	test         bool
 }
 
 struct Keysym {

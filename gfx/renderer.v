@@ -5,6 +5,7 @@ fn C.SDL_DestroyRenderer(voidptr)
 fn C.SDL_GetRenderDrawColor(voidptr, voidptr, voidptr, voidptr, voidptr) int
 fn C.SDL_GetRenderTarget(voidptr) voidptr
 fn C.SDL_RenderGetScale(voidptr, voidptr, voidptr)
+fn C.SDL_RenderGetViewport(voidptr, voidptr)
 fn C.SDL_RenderDrawLine(voidptr, int, int, int, int) int
 fn C.SDL_RenderDrawLines(voidptr, voidptr, int) int
 fn C.SDL_RenderDrawPoint(voidptr, int, int) int
@@ -41,7 +42,7 @@ pub fn (renderer Renderer) copy_ex(texture Texture, src_rect, dst_rect Rect, ang
 }
 
 // create_texture creates a new texture from the renderer
-pub fn (renderer Renderer) create_texture(format PixelFormats, access, width, height int) ?Texture {
+pub fn (renderer Renderer) create_texture(format PixelFormats, access TextureAccess, width, height int) ?Texture {
 	texture := Texture{ h: height, ptr: C.SDL_CreateTexture(renderer.ptr, format, access, width, height), w: width }
 
 	if texture.ptr == 0 {
@@ -111,6 +112,16 @@ pub fn (renderer Renderer) fill(color Color) {
 	renderer.set_draw_color(existing_color)
 }
 
+// fill_viewport fills in the current renderer viewport with
+// the provided color without affecting the existing draw color
+pub fn (renderer Renderer) fill_viewport(color Color) {
+	existing_color := renderer.get_draw_color()
+
+	renderer.set_draw_color(color)
+	renderer.draw_fill_rect(renderer.get_viewport())
+	renderer.set_draw_color(existing_color)
+}
+
 // get_draw_color returns back the currently set draw color
 pub fn (renderer Renderer) get_draw_color() Color {
 	r := byte(0)
@@ -150,6 +161,14 @@ pub fn (renderer Renderer) get_scale() (f32, f32) {
 	return scale_x, scale_y
 }
 
+// get_viewport gets the a rect for the current viewport
+pub fn (renderer Renderer) get_viewport() Rect {
+	rect := Rect{}
+
+	C.SDL_RenderGetViewport(renderer.ptr, &rect)
+	return rect
+}
+
 // present updates the screen with any rendering performed since the previous call
 pub fn (renderer Renderer) present() {
 	C.SDL_RenderPresent(renderer.ptr)
@@ -178,5 +197,10 @@ pub fn (renderer Renderer) set_scale(scale_x, scale_y f32) {
 }
 
 pub fn (renderer Renderer) set_viewport(rect Rect) {
+	if !rect.has_area() {
+		C.SDL_RenderSetViewport(renderer.ptr, 0)
+		return
+	}
+	
 	C.SDL_RenderSetViewport(renderer.ptr, &rect)
 }

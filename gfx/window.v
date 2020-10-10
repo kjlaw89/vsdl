@@ -200,7 +200,7 @@ pub fn (window Window) get_size() (int, int) {
 	w := 0
 	h := 0
 
-	C.SDL_GetWindowPosition(window.ptr, &w, &h)
+	C.SDL_GetWindowSize(window.ptr, &w, &h)
 
 	return w, h
 }

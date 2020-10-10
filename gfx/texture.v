@@ -1,7 +1,7 @@
 module gfx
 
 fn C.SDL_DestroyTexture(voidptr)
-//fn C.SDL_LockTexture(voidptr)
+fn C.SDL_LockTexture(voidptr, voidptr, voidptr, voidptr) int
 fn C.SDL_GetTextureAlphaMod(voidptr, byte) byte
 fn C.SDL_GetTextureBlendMode(voidptr, u32) int
 fn C.SDL_GetTextureColorMod(voidptr, byte, byte, byte) int
@@ -9,7 +9,7 @@ fn C.SDL_QueryTexture(voidptr, voidptr, voidptr, voidptr, voidptr)
 fn C.SDL_SetTextureAlphaMod(voidptr, byte) int
 fn C.SDL_SetTextureBlendMode(voidptr, u32) int
 fn C.SDL_SetTextureColorMod(voidptr, byte, byte, byte) int
-//fn C.SDL_UnlockTexture(voidptr)
+fn C.SDL_UnlockTexture(voidptr)
 fn C.SDL_UpdateTexture(voidptr)
 
 pub fn (texture Texture) free() {
@@ -83,4 +83,30 @@ pub fn (texture Texture) set_color_mod(color Color) int {
 
 pub fn (texture Texture) update(rect Rect, pixels voidptr, pitch int) {
 	C.SDL_UpdateTexture(texture.ptr, &rect, pixels, pitch)
+}
+
+// write_lock locks the texture for directly writing to
+// This method returns a byteptr that can be written to directly
+// and the pitch, which is the length of one row in bytes
+pub fn (texture Texture) write_lock(rect Rect) ?(byteptr, int) {
+	ptr := byteptr(0)
+	pitch := 0
+	mut result := 0
+
+	if rect.has_area() {
+		result = C.SDL_LockTexture(texture.ptr, &rect, &ptr, &pitch)
+	} else {
+		result = C.SDL_LockTexture(texture.ptr, C.NULL, &ptr, &pitch)
+	}
+
+	if result != 0 {
+		return error(serror("Unable to lock texture"))
+	}
+
+	return ptr, pitch
+}
+
+// write_unlock unlocks the texture
+pub fn (texture Texture) write_unlock() {
+	C.SDL_UnlockTexture(texture.ptr)
 }

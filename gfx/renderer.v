@@ -2,6 +2,7 @@ module gfx
 
 fn C.SDL_CreateTexture(voidptr, u32, int, int, int) voidptr
 fn C.SDL_DestroyRenderer(voidptr)
+fn C.SDL_GetRendererOutputSize(voidptr, voidptr, voidptr) int
 fn C.SDL_GetRenderDrawColor(voidptr, voidptr, voidptr, voidptr, voidptr) int
 fn C.SDL_GetRenderTarget(voidptr) voidptr
 fn C.SDL_RenderGetScale(voidptr, voidptr, voidptr)
@@ -159,6 +160,14 @@ pub fn (renderer Renderer) get_scale() (f32, f32) {
 	C.SDL_RenderGetScale(renderer.ptr, &scale_x, &scale_y)
 
 	return scale_x, scale_y
+}
+
+pub fn (renderer Renderer) get_size() (int, int) {
+	w := 0
+	h := 0
+	C.SDL_GetRendererOutputSize(renderer.ptr, &w, &h)
+
+	return w, h
 }
 
 // get_viewport gets the a rect for the current viewport

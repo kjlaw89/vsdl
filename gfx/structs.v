@@ -81,7 +81,8 @@ mut:
 
 struct Window {
 mut:
-	ptr voidptr
+	fullscreen_mode  FullscreenMode
+	ptr              voidptr
 }
 
 /* Formatting structures */

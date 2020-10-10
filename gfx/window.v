@@ -68,14 +68,21 @@ pub fn (window Window) create_renderer(index int, flags u32) ?Renderer {
 pub fn create_window(title string, x, y, width, height int, flags ...WindowFlags) ?Window {
 	x_adj := if x == -1 { C.SDL_WINDOWPOS_CENTERED } else { x }
 	y_adj := if y == -1 { C.SDL_WINDOWPOS_CENTERED } else { y }
+	mut fullscreen_mode := FullscreenMode.windowed
 
 	// Sum the flags
 	mut flag := u32(0)
 	for f in flags {
+		if f == .fullscreen {
+			fullscreen_mode = .fullscreen
+		} else if f == .borderless {
+			fullscreen_mode = .fullscreen_desktop
+		}
+
 		flag = flag | f
 	}
 
-	window := Window{ ptr: C.SDL_CreateWindow(title.str, x_adj, y_adj, width, height, flag) }
+	window := Window{ fullscreen_mode: fullscreen_mode, ptr: C.SDL_CreateWindow(title.str, x_adj, y_adj, width, height, flag) }
 
 	if window.ptr == 0 {
 		return error(serror("Unable to create new window"))
@@ -155,6 +162,10 @@ pub fn (window Window) get_index() int {
 
 pub fn (window Window) get_flags() u32 {
 	return C.SDL_GetWindowFlags(window.ptr)
+}
+
+pub fn (window Window) get_fullscreen() FullscreenMode {
+	return window.fullscreen_mode
 }
 
 pub fn (window Window) get_maximum_size() (int, int) {
@@ -266,7 +277,8 @@ pub fn (window Window) set_focus(focus bool) {
 	C.SDL_SetWindowGrab(window.ptr, focus)
 }
 
-pub fn (window Window) set_fullscreen(fullscreen FullscreenMode) int {
+pub fn (mut window Window) set_fullscreen(fullscreen FullscreenMode) int {
+	window.fullscreen_mode = fullscreen
 	return C.SDL_SetWindowFullscreen(window.ptr, fullscreen)
 }
 

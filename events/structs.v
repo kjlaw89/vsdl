@@ -1,18 +1,20 @@
 module events
 
+import sync
+
 struct EventSystem {
 mut:
-	channels     map[string][]chan Event
-	delay        u32  = 16
-	running      bool = true
+	channels map[string][]chan Event
+	delay    u32 = 16
+	running  bool = true
 }
 
 struct Keysym {
 pub:
-	code     ScanCode
-	key      KeyCode
-	mod      u16
-	unused   u32
+	code   ScanCode
+	key    KeyCode
+	mod    u16
+	unused u32
 }
 
 pub union Event {
@@ -44,7 +46,7 @@ pub:
 	mgesture MultiGestureEvent
 	dgesture DollarGestureEvent
 	drop     DropEvent
-	padding_  [56]byte
+	padding_ [56]byte
 }
 
 struct CommonEvent {

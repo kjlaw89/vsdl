@@ -1,22 +1,37 @@
 module mixer
 
-pub type ChannelFinishedCallback = fn(int)
+pub type ChannelFinishedCallback = fn ( int)
 
 fn C.Mix_AllocateChannels(int) int
+
 fn C.Mix_ChannelFinished(ChannelFinishedCallback)
+
 fn C.Mix_ExpireChannel(int, int) int
+
 fn C.Mix_FadingChannel(u32) int
+
 fn C.Mix_FadeInChannel(int, voidptr, int, int) int
+
 fn C.Mix_FadeInChannelTimed(int, voidptr, int, int, int) int
+
 fn C.Mix_FadeOutChannel(int, int) int
+
 fn C.Mix_GetChunk(int) voidptr
+
 fn C.Mix_HaltChannel(int) int
+
 fn C.Mix_Pause(int)
+
 fn C.Mix_Paused(int) int
+
 fn C.Mix_Playing(int) int
+
 fn C.Mix_PlayChannel(int, voidptr, int) int
+
 fn C.Mix_PlayChannelTimed(int, voidptr, int, int) int
+
 fn C.Mix_Resume(int)
+
 fn C.Mix_Volume(int) int
 
 pub fn channel_allocate(count int) int {
@@ -28,7 +43,7 @@ pub fn channel_done(callback ChannelFinishedCallback) {
 }
 
 // channel_expire expires the channel in the specified amount of time
-pub fn channel_expire(channel, ms int) int {
+pub fn channel_expire(channel int, ms int) int {
 	return C.Mix_ExpireChannel(channel, ms)
 }
 
@@ -39,30 +54,28 @@ pub fn channel_fading(channel u32) Fading {
 
 // channel_fade_in plays the provided `Chunk` on a channel (-1 is next free)
 // The returned value is the channel the chunk is being played on
-pub fn channel_fade_in(channel int, chunk &Chunk, loops, ms int) int {
+pub fn channel_fade_in(channel int, chunk &Chunk, loops int, ms int) int {
 	return C.Mix_FadeInChannel(channel, chunk, loops, ms)
 }
 
 // fade_in_timed plays the provided `Chunk` on a channel (-1 is next free)
 // `time` is specified in miliseconds
 // The returned value is the channel the chunk is being played on
-pub fn channel_fade_in_timed(channel int, chunk &Chunk, loops, ms, time int) int {
+pub fn channel_fade_in_timed(channel int, chunk &Chunk, loops int, ms int, time int) int {
 	return C.Mix_FadeInChannelTimed(channel, chunk, loops, ms, time)
 }
 
 // channel_fade_out fades out the provided channel
-pub fn channel_fade_out(channel, ms int) int {
+pub fn channel_fade_out(channel int, ms int) int {
 	return C.Mix_FadeOutChannel(channel, ms)
 }
 
 // channel_get_chunk gets the latest chunk played on this channel if available
 pub fn channel_get_chunk(channel int) ?&Chunk {
 	chunk := C.Mix_GetChunk(channel)
-
 	if chunk == 0 {
 		return error(serror("Unable to get channel's chunk"))
 	}
-
 	return chunk
 }
 
@@ -97,7 +110,7 @@ pub fn channel_playing(channel int) int {
 // channel_play_timed plays the provided `Chunk` on a channel (-1 is next free)
 // `time` is specified in miliseconds
 // The returned value is the channel the chunk is being played on
-pub fn channel_play_timed(channel int, chunk &Chunk, loops, ms int) int {
+pub fn channel_play_timed(channel int, chunk &Chunk, loops int, ms int) int {
 	return C.Mix_PlayChannelTimed(channel, chunk, loops, ms)
 }
 

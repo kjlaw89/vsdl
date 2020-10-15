@@ -1,36 +1,56 @@
 module mixer
 
-pub type MusicCallback = fn(voidptr, voidptr, int)
-pub type MusicFinishedCallback = fn()
+pub type MusicCallback = fn (voidptr, voidptr, int)
+
+pub type MusicFinishedCallback = fn ()
 
 fn C.Mix_FadingMusic() int
+
 fn C.Mix_FadeInMusic(voidptr, int, int) int
+
 fn C.Mix_FadeInMusicPos(voidptr, int, int, f64) int
+
 fn C.Mix_FadeOutMusic(int) int
+
 fn C.Mix_FreeMusic(voidptr)
+
 fn C.Mix_GetNumMusicDecoders() int
+
 fn C.Mix_GetMusicDecoder(int) charptr
+
 fn C.Mix_GetMusicType(voidptr) int
+
 fn C.Mix_HaltMusic()
+
 fn C.Mix_HookMusicFinished(voidptr)
+
 fn C.Mix_HookMusic(voidptr, voidptr)
+
 fn C.Mix_LoadMUS(charptr) voidptr
+
 fn C.Mix_PauseMusic()
+
 fn C.Mix_PausedMusic() bool
+
 fn C.Mix_PlayMusic(voidptr, int) int
+
 fn C.Mix_PlayingMusic() bool
+
 fn C.Mix_ResumeMusic()
+
 fn C.Mix_RewindMusic()
+
 fn C.Mix_SetMusicPosition(f64) int
+
 fn C.Mix_VolumeMusic(int) int
 
 // fade_in fades the music in over `ms`
-pub fn (music Music) fade_in(loops, ms int) bool {
+pub fn (music Music) fade_in(loops int, ms int) bool {
 	return C.Mix_FadeInMusic(music.ptr, loops, ms) == 0
 }
 
 // fade_in_pos fades in the music at `position`
-pub fn (music Music) fade_in_pos(loops, ms int, position f64) bool {
+pub fn (music Music) fade_in_pos(loops int, ms int, position f64) bool {
 	return C.Mix_FadeInMusicPos(music.ptr, loops, ms, position) == 0
 }
 
@@ -44,7 +64,6 @@ pub fn (mut music Music) free() {
 	if music.ptr == 0 {
 		return
 	}
-
 	C.Mix_FreeMusic(music.ptr)
 	music.ptr = 0
 }
@@ -88,10 +107,12 @@ pub fn is_playing_music() bool {
 pub fn load_music(path string) ?Music {
 	ptr := C.Mix_LoadMUS(path.str)
 	if ptr == 0 {
-		return error(serror("Unable to load music from $path"))
+		return error(serror('Unable to load music from $path'))
 	}
-
-	return Music{ ptr: ptr, @type: C.Mix_GetMusicType(ptr) }
+	return Music{
+		ptr: ptr
+		@type: C.Mix_GetMusicType(ptr)
+	}
 }
 
 // pause_music pauses all currently playing music

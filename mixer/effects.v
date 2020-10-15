@@ -1,15 +1,23 @@
 module mixer
 
-pub type EffectCallback = fn(int, voidptr, int, voidptr)
-pub type EffectDoneCallback = fn(int, voidptr)
-pub type PostMixCallback = fn(voidptr, voidptr, int)
+pub type EffectCallback = fn (int, voidptr, int, voidptr)
+
+pub type EffectDoneCallback = fn (int, voidptr)
+
+pub type PostMixCallback = fn (voidptr, voidptr, int)
 
 fn C.Mix_RegisterEffect(int, EffectCallback, EffectDoneCallback, voidptr) int
+
 fn C.Mix_SetPanning(int, byte, byte) int
+
 fn C.Mix_SetPosition(int, i16, byte) int
+
 fn C.Mix_SetPostMix(PostMixCallback, voidptr)
+
 fn C.Mix_SetReverseStereo(int, bool) int
+
 fn C.Mix_UnregisterEffect(int, EffectCallback) int
+
 fn C.Mix_UnregisterAllEffects(int) int
 
 // register_effect registers an effect callback to the provided channel
@@ -18,7 +26,7 @@ pub fn register_effect(channel int, effect_cb EffectCallback, effect_done_cb Eff
 }
 
 // channel_set_panning sets the panning for the channel
-pub fn channel_set_panning(channel int, left, right byte) int {
+pub fn channel_set_panning(channel int, left byte, right byte) int {
 	return C.Mix_SetPanning(channel, left, right)
 }
 

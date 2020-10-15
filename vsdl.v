@@ -5,12 +5,16 @@ module vsdl
 #flag -lSDL2
 #include "SDL.h"
 #include "SDL_vulkan.h"
-
 fn C.SDL_Init(u32)
+
 fn C.SDL_InitSubSystem(u32)
+
 fn C.SDL_Delay(u32)
+
 fn C.SDL_GetError() charptr
+
 fn C.SDL_GetTicks() u32
+
 fn C.SDL_Quit()
 
 fn init() {
@@ -31,5 +35,5 @@ pub fn quit() {
 
 fn serror(text string) string {
 	msg := tos3(C.SDL_GetError())
-	return "$text: $msg"
+	return '$text: $msg'
 }

@@ -1,7 +1,9 @@
 module system
 
 fn C.SDL_GetClipboardText() charptr
+
 fn C.SDL_HasClipboardText() bool
+
 fn C.SDL_SetClipboardText(charptr) int
 
 pub fn clipboard_get_text() string {

@@ -1,9 +1,9 @@
 module gfx
 
-/* Top-level structures */
+// Top-level structures
 struct Cursor {
 mut:
-	ptr   voidptr
+	ptr voidptr
 }
 
 struct Display {
@@ -19,7 +19,8 @@ mut:
 	ptr voidptr
 }
 
-struct C.SDL_MessageBoxData
+struct C.SDL_MessageBoxData {
+}
 
 struct MessageBox {
 pub mut:
@@ -34,21 +35,21 @@ pub mut:
 
 pub struct MessageBoxButton {
 mut:
-	flag        MessageBoxButtonFlags
-	id          int
-	text        voidptr
+	flag MessageBoxButtonFlags
+	id   int
+	text voidptr
 }
 
 pub struct MessageBoxColor {
 pub mut:
-	r  byte
-	g  byte
-	b  byte
+	r byte
+	g byte
+	b byte
 }
 
 pub struct MessageBoxColorScheme {
 pub mut:
-	colors  []MessageBoxColor = []MessageBoxColor{ len: 5, cap: 5 }
+	colors []MessageBoxColor = []MessageBoxColor{len: 5, cap: 5}
 }
 
 struct Renderer {
@@ -66,7 +67,7 @@ mut:
 	pixels    voidptr
 	userdata  voidptr
 	locked    int
- 	lock_data voidptr
+	lock_data voidptr
 	clip_rect Rect
 	blit_map  voidptr
 	refcount  int
@@ -74,18 +75,18 @@ mut:
 
 struct Texture {
 mut:
-	h  int
+	h   int
 	ptr voidptr
-	w  int
+	w   int
 }
 
 struct Window {
 mut:
-	fullscreen_mode  FullscreenMode
-	ptr              voidptr
+	fullscreen_mode FullscreenMode
+	ptr             voidptr
 }
 
-/* Formatting structures */
+// Formatting structures
 struct PixelFormat {
 mut:
 	format         u32
@@ -131,7 +132,7 @@ pub mut:
 	h int
 }
 
-/* C Struct References */
+// C Struct References
 struct C.SDL_Color {
 pub mut:
 	r byte

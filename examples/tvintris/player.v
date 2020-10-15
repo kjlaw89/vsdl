@@ -184,7 +184,7 @@ pub fn (mut player Player) draw() {
 }
 
 // draw_block is a simple helper function to draw a single block based on the provided details
-fn (player Player) draw_block(x, y, color_index int) {
+fn (player Player) draw_block(x int, y int, color_index int) {
 	rect := gfx.Rect{
 		x: (x - 1) * block_size
 		y: (y - 1) * block_size

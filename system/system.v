@@ -1,23 +1,41 @@
 module system
 
 fn C.SDL_GetCPUCacheLineSize() int
+
 fn C.SDL_GetCPUCount() int
+
 fn C.SDL_GetSystemRAM() int
+
 fn C.SDL_GetPlatform() charptr
+
 fn C.SDL_GetPowerInfo(voidptr, voidptr) int
+
 fn C.SDL_Has3DNow() bool
+
 fn C.SDL_HasAVX() bool
+
 fn C.SDL_HasAVX2() bool
+
 fn C.SDL_HasAltiVec() bool
+
 fn C.SDL_HasMMX() bool
+
 fn C.SDL_HasRDTSC() bool
+
 fn C.SDL_HasSSE() bool
+
 fn C.SDL_HasSSE2() bool
+
 fn C.SDL_HasSSE3() bool
+
 fn C.SDL_HasSSE41() bool
+
 fn C.SDL_HasSSE42() bool
+
 fn C.SDL_LoadFunction(voidptr, charptr) voidptr
+
 fn C.SDL_LoadObject(charptr) voidptr
+
 fn C.SDL_UnloadObject(voidptr)
 
 pub fn get_cpu_cache_line_size() int {
@@ -45,7 +63,6 @@ pub fn get_power_state() (PowerState, int, int) {
 	secs := 0
 	pct := 0
 	result := C.SDL_GetPowerInfo(&secs, &pct)
-
 	return result, secs, pct
 }
 
@@ -101,21 +118,17 @@ pub fn has_sse42() bool {
 
 pub fn load_function(handle voidptr, name string) ?voidptr {
 	result := C.SDL_LoadFunction(handle, name.str)
-
 	if result == 0 {
-		return error(serror("Unable to load function $name"))
+		return error(serror('Unable to load function $name'))
 	}
-
 	return result
 }
 
 pub fn load_object(file string) ?voidptr {
 	result := C.SDL_LoadObject(file.str)
-
 	if result == 0 {
-		return error(serror("Unable to load object $file"))
+		return error(serror('Unable to load object $file'))
 	}
-
 	return result
 }
 
@@ -125,5 +138,5 @@ pub fn unload_object(ptr voidptr) {
 
 fn serror(text string) string {
 	msg := tos3(C.SDL_GetError())
-	return "$text: $msg"
+	return '$text: $msg'
 }

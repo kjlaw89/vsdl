@@ -1,16 +1,27 @@
 module system
 
-fn C.SDL_Swap16(i16) i16 
-fn C.SDL_Swap32(int) int 
-fn C.SDL_Swap64(i64) i64 
-fn C.SDL_SwapBE16(i16) i16 
+fn C.SDL_Swap16(i16) i16
+
+fn C.SDL_Swap32(int) int
+
+fn C.SDL_Swap64(i64) i64
+
+fn C.SDL_SwapBE16(i16) i16
+
 fn C.SDL_SwapBE32(int) int
+
 fn C.SDL_SwapBE64(i64) i64
-fn C.SDL_SwapFloat(f32) f32 
-fn C.SDL_SwapFloatBE(f32) f32 
+
+fn C.SDL_SwapFloat(f32) f32
+
+fn C.SDL_SwapFloatBE(f32) f32
+
 fn C.SDL_SwapFloatLE(f32) f32
-fn C.SDL_SwapLE16(i16) i16 
+
+fn C.SDL_SwapLE16(i16) i16
+
 fn C.SDL_SwapLE32(int) int
+
 fn C.SDL_SwapLE64(i64) i64
 
 pub fn swap_16(swap i16) i16 {

@@ -1,23 +1,25 @@
 module audio
 
 fn C.SDL_AudioInit(charptr) int
+
 fn C.SDL_GetAudioDeviceName(int, int) charptr
+
 fn C.SDL_GetAudioDriver(int) charptr
+
 fn C.SDL_GetNumAudioDevices(int) int
+
 fn C.SDL_GetNumAudioDrivers(int) int
+
 fn C.SDL_AudioQuit()
 
 fn init() {
 	C.SDL_InitSubSystem(C.SDL_INIT_AUDIO)
-
 	drivers := get_drivers()
-
 	for i := 0; i < drivers.len; i++ {
 		if C.SDL_AudioInit(drivers[i].str) < 0 {
-			println("Failed it initialize driver ${drivers[i]}")
+			println('Failed it initialize driver ${drivers[i]}')
 			continue
 		}
-
 		break
 	}
 }
@@ -26,7 +28,7 @@ fn init() {
 // Note: This should not be necessary
 pub fn initialize_driver(driver string) ? {
 	if C.SDL_AudioInit(driver.str) == 0 {
-		return error(serror("Failed it initialize driver $driver"))
+		return error(serror('Failed it initialize driver $driver'))
 	}
 }
 
@@ -35,11 +37,12 @@ pub fn initialize_driver(driver string) ? {
 pub fn get_devices() []AudioDevice {
 	mut devices := []AudioDevice{}
 	count := get_device_count()
-
 	for i := 0; i < count; i++ {
-		devices << AudioDevice{ index: i, name: get_device_name(i) }
+		devices << AudioDevice{
+			index: i
+			name: get_device_name(i)
+		}
 	}
-
 	return devices
 }
 
@@ -48,11 +51,9 @@ pub fn get_devices() []AudioDevice {
 pub fn get_drivers() []string {
 	mut drivers := []string{}
 	count := C.SDL_GetNumAudioDrivers()
-
 	for i := 0; i < count; i++ {
 		drivers << tos3(C.SDL_GetAudioDriver(i))
 	}
-
 	return drivers
 }
 
@@ -73,5 +74,5 @@ pub fn quit() {
 
 fn serror(text string) string {
 	msg := tos3(C.SDL_GetError())
-	return "$text: $msg"
+	return '$text: $msg'
 }

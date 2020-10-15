@@ -1,22 +1,30 @@
 module mixer
 
 fn C.Mix_FadeOutGroup(int, int) int
+
 fn C.Mix_GroupAvailable(int) int
+
 fn C.Mix_GroupChannel(int, int) int
+
 fn C.Mix_GroupChannels(int, int, int) int
+
 fn C.Mix_GroupCount(int) int
+
 fn C.Mix_GroupNewer(int) int
+
 fn C.Mix_GroupOldest(int) int
+
 fn C.Mix_HaltGroup(int) int
+
 fn C.Mix_ReserveChannels(int) int
 
 // group assign a group id to a channel
-pub fn group(index, tag int) int {
+pub fn group(index int, tag int) int {
 	return C.Mix_GroupChannel(index, tag)
 }
 
 // groups assign a group id to a sequence of channels
-pub fn groups(from, to, tag int) int {
+pub fn groups(from int, to int, tag int) int {
 	return C.Mix_GroupChannels(from, to, tag)
 }
 
@@ -31,7 +39,7 @@ pub fn group_count(tag int) int {
 }
 
 // group_fade fades out playback on all channesl in group
-pub fn group_fade(tag, time int) int {
+pub fn group_fade(tag int, time int) int {
 	return C.Mix_FadeOutGroup(tag, time)
 }
 

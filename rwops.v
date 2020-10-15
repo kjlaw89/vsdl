@@ -1,23 +1,41 @@
 module vsdl
 
 fn C.SDL_RWclose(voidptr) int
+
 fn C.SDL_RWFromConstMem(voidptr, int) voidptr
+
 fn C.SDL_RWFromFile(charptr, charptr) voidptr
+
 fn C.SDL_RWFromFP(voidptr, bool) voidptr
+
 fn C.SDL_RWFromMem(voidptr, int) voidptr
+
 fn C.SDL_ReadBE16(voidptr) i16
+
 fn C.SDL_ReadBE32(voidptr) int
+
 fn C.SDL_ReadBE64(voidptr) i64
+
 fn C.SDL_ReadLE16(voidptr) i16
+
 fn C.SDL_ReadLE32(voidptr) int
+
 fn C.SDL_ReadLE64(voidptr) i64
+
 fn C.SDL_ReadU8(voidptr) byte
+
 fn C.SDL_WriteBE16(voidptr, i16) bool
+
 fn C.SDL_WriteBE32(voidptr, int) bool
+
 fn C.SDL_WriteBE64(voidptr, i64) bool
+
 fn C.SDL_WriteLE16(voidptr, i16) bool
+
 fn C.SDL_WriteLE32(voidptr, int) bool
+
 fn C.SDL_WriteLE64(voidptr, i64) bool
+
 fn C.SDL_WriteU8(voidptr, byte) bool
 
 pub fn (ops &RWops) close() int {
@@ -27,49 +45,40 @@ pub fn (ops &RWops) close() int {
 
 pub fn rw_from_const_mem(stream voidptr, size int) ?&RWops {
 	ops := C.SDL_RWFromConstMem(stream, size)
-
 	if ops == 0 {
-		return error(serror("Unable to open memory stream"))
+		return error(serror('Unable to open memory stream'))
 	}
-
 	return ops
 }
 
-pub fn rw_from_file(file, mode string) ?&RWops {
+pub fn rw_from_file(file string, mode string) ?&RWops {
 	ops := C.SDL_RWFromFile(file.str, mode.str)
-
 	if ops == 0 {
-		return error(serror("Unable to open file $file"))
+		return error(serror('Unable to open file $file'))
 	}
-
 	return ops
 }
 
 pub fn rw_from_fp(fp voidptr, autoclose bool) ?&RWops {
 	ops := C.SDL_RWFromFP(fp, autoclose)
-
 	if ops == 0 {
-		return error(serror("Unable to open file pointer"))
+		return error(serror('Unable to open file pointer'))
 	}
-
 	return ops
 }
 
 pub fn rw_from_mem(stream voidptr, size int) ?&RWops {
 	ops := C.SDL_RWFromMem(stream, size)
-
 	if ops == 0 {
-		return error(serror("Unable to open memory stream"))
+		return error(serror('Unable to open memory stream'))
 	}
-
 	return ops
 }
 
 // read reads in a `max` amount of objects of `size` into a byte array
-pub fn (ops &RWops) read(size, max u32) ([]byte, u32) {
-	data := []byte{ init: 0, len: int(size) * int(max) }
+pub fn (ops &RWops) read(size u32, max u32) ([]byte, u32) {
+	data := []byte{len: int(size) * int(max), init: 0}
 	count := ops.read_cb(ops, data.data, size, max)
-
 	return data, count
 }
 
@@ -119,7 +128,7 @@ pub fn (ops &RWops) tell() i64 {
 }
 
 // write writes the provided data buffer based on `size` of object and `num`
-pub fn (ops &RWops) write(data []byte, size, num u32) u32 {
+pub fn (ops &RWops) write(data []byte, size u32, num u32) u32 {
 	return ops.write_cb(ops, data.data, size, num)
 }
 

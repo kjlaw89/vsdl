@@ -1,32 +1,49 @@
 module gfx
 
 fn C.SDL_GL_BindTexture(voidptr, voidptr, voidptr) int
+
 fn C.SDL_GL_CreateContext(voidptr) voidptr
+
 fn C.SDL_GL_DeleteContext(voidptr)
+
 fn C.SDL_GL_ExtensionSupported(charptr) bool
+
 fn C.SDL_GL_GetAttribute(int, voidptr) int
+
 fn C.SDL_GL_GetCurrentContext() voidptr
+
 fn C.SDL_GL_GetCurrentWindow() voidptr
+
 fn C.SDL_GL_GetDrawableSize(voidptr, voidptr, voidptr)
+
 fn C.SDL_GL_GetProcAddress(charptr) voidptr
+
 fn C.SDL_GL_GetSwapInterval() int
+
 fn C.SDL_GL_LoadLibrary(charptr) int
+
 fn C.SDL_GL_MakeCurrent(voidptr, voidptr) int
+
 fn C.SDL_GL_ResetAttributes()
+
 fn C.SDL_GL_SetAttribute(int, int) int
+
 fn C.SDL_GL_SetSwapInterval(int) int
+
 fn C.SDL_GL_SwapWindow(voidptr)
+
 fn C.SDL_GL_UnbindTexture(voidptr)
+
 fn C.SDL_GL_UnloadLibrary()
 
 // create_gl_context gets a new GL context object for the `Window`
 pub fn (window Window) create_gl_context() ?GLContext {
-	context := GLContext{ ptr: C.SDL_GL_CreateContext(window.ptr) }
-
-	if context.ptr == 0 {
-		return error(serror("Unable to get GL context"))
+	context := GLContext{
+		ptr: C.SDL_GL_CreateContext(window.ptr)
 	}
-
+	if context.ptr == 0 {
+		return error(serror('Unable to get GL context'))
+	}
 	return context
 }
 
@@ -35,7 +52,6 @@ pub fn (mut context GLContext) destroy() {
 	if context.ptr == 0 {
 		return
 	}
-
 	C.SDL_GL_DeleteContext(context.ptr)
 	context.ptr = 0
 }
@@ -44,7 +60,6 @@ pub fn (mut context GLContext) destroy() {
 pub fn (window Window) get_gl_drawsize() (int, int) {
 	w := 0
 	h := 0
-
 	C.SDL_GL_GetDrawableSize(window.ptr, &w, &h)
 	return w, h
 }
@@ -53,7 +68,6 @@ pub fn (window Window) get_gl_drawsize() (int, int) {
 pub fn (texture Texture) gl_bind_texture() (f32, f32) {
 	w := f32(0)
 	h := f32(0)
-
 	C.SDL_GL_BindTexture(texture.ptr, &w, &h)
 	return w, h
 }
@@ -66,30 +80,29 @@ pub fn gl_extension_supported(extension string) bool {
 // gl_get_attribute returns the value of the provided attribute
 pub fn gl_get_attribute(attribute GLAttr) int {
 	value := 0
-
 	C.SDL_GL_GetAttribute(attribute, &value)
 	return value
 }
 
 // gl_get_current_context returns a copy of the current `GLContext`
 pub fn gl_get_current_context() ?GLContext {
-	context := GLContext{ ptr: C.SDL_GL_GetCurrentContext() }
-
-	if context.ptr == 0 {
-		return error(serror("Unable to get current context"))
+	context := GLContext{
+		ptr: C.SDL_GL_GetCurrentContext()
 	}
-
+	if context.ptr == 0 {
+		return error(serror('Unable to get current context'))
+	}
 	return context
 }
 
 // gl_get_current_window Gets the `Window` associated with the current `GLContext`
 pub fn gl_get_current_window() ?Window {
-	window := Window{ ptr: C.SDL_GL_GetCurrentWindow() }
-
-	if window.ptr == 0 {
-		return error(serror("Unable to get current window"))
+	window := Window{
+		ptr: C.SDL_GL_GetCurrentWindow()
 	}
-
+	if window.ptr == 0 {
+		return error(serror('Unable to get current window'))
+	}
 	return window
 }
 
@@ -107,15 +120,13 @@ pub fn gl_get_swap_interval() int {
 // If an empty string is provided it will attempt to load via the system path
 pub fn gl_load_library(path string) ? {
 	mut result := 0
-
-	if path == "" {
+	if path == '' {
 		result = C.SDL_GL_LoadLibrary(C.NULL)
 	} else {
 		result = C.SDL_GL_LoadLibrary(path.str)
 	}
-
 	if result < 0 {
-		return error(serror("Unable to load GL library at $path"))
+		return error(serror('Unable to load GL library at $path'))
 	}
 }
 

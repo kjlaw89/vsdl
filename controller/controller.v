@@ -1,24 +1,42 @@
 module controller
 
 fn C.SDL_GameControllerAddMapping(charptr) int
+
 fn C.SDL_GameControllerAddMappingsFromFile(charptr) int
+
 fn C.SDL_GameControllerAddMappingsFromRW(voidptr, int) int
+
 fn C.SDL_GameControllerClose(voidptr)
+
 fn C.SDL_GameControllerEventState(int) int
-//fn C.SDL_GameControllerFromInstanceID(int) voidptr
+
+// fn C.SDL_GameControllerFromInstanceID(int) voidptr
 fn C.SDL_GameControllerGetAttached(voidptr) bool
+
 fn C.SDL_GameControllerGetAxis(voidptr, int) i16
+
 fn C.SDL_GameControllerGetBindForAxis(voidptr, int) ControllerButtonBind
+
 fn C.SDL_GameControllerGetBindForButton(voidptr, int) ControllerButtonBind
+
 fn C.SDL_GameControllerGetButton(voidptr, int) byte
+
 fn C.SDL_GameControllerGetJoystick(voidptr) voidptr
+
 fn C.SDL_GameControllerGetStringForAxis(int) charptr
+
 fn C.SDL_GameControllerGetStringForButton(int) charptr
+
 fn C.SDL_GameControllerMapping(voidptr) charptr
+
 fn C.SDL_GameControllerMappingForGUID(voidptr) charptr
+
 fn C.SDL_GameControllerName(voidptr) charptr
+
 fn C.SDL_GameControllerNameForIndex(int) charptr
+
 fn C.SDL_GameControllerOpen(int) voidptr
+
 fn C.SDL_GameControllerUpdate()
 
 fn init() {
@@ -27,7 +45,7 @@ fn init() {
 
 fn serror(text string) string {
 	msg := tos3(C.SDL_GetError())
-	return "$text: $msg"
+	return '$text: $msg'
 }
 
 pub fn add_mapping(data string) int {
@@ -36,7 +54,7 @@ pub fn add_mapping(data string) int {
 
 pub fn add_mappings_from_file(path string) ? {
 	if C.SDL_GameControllerAddMappingsFromFile(path.str) == -1 {
-		return error(serror("Unable to add mappings for $path"))
+		return error(serror('Unable to add mappings for $path'))
 	}
 }
 
@@ -44,7 +62,6 @@ pub fn (mut controller Controller) close() {
 	if controller.ptr == 0 {
 		return
 	}
-
 	C.SDL_GameControllerClose(controller.ptr)
 	controller.ptr = 0
 	controller.is_open = false
@@ -62,14 +79,12 @@ pub fn controller_update() {
 pub fn get_controllers() []Controller {
 	mut controllers := []Controller{}
 	mut joysticks := get_joysticks().filter(it.is_controller)
-
 	for joystick in joysticks {
 		controllers << Controller{
 			index: joystick.index
 			name: joystick.name
 		}
 	}
-
 	return controllers
 }
 
@@ -111,13 +126,13 @@ pub fn controller_get_name_for_index(index int) string {
 
 pub fn (mut controller Controller) open() ? {
 	controller.ptr = C.SDL_GameControllerOpen(controller.index)
-
 	if controller.ptr == 0 {
-		return error(serror("Unable to open Controller $controller.index"))
+		return error(serror('Unable to open Controller $controller.index'))
 	}
-
 	controller.is_open = true
-	controller.joystick = Joystick { ptr: C.SDL_GameControllerGetJoystick(controller.ptr) }
+	controller.joystick = Joystick{
+		ptr: C.SDL_GameControllerGetJoystick(controller.ptr)
+	}
 	controller.joystick.is_controller = true
 	controller.joystick.is_open = true
 	controller.joystick.name = controller.name

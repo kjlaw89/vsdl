@@ -2,26 +2,27 @@ module controller
 
 pub struct Controller {
 mut:
-	joystick     Joystick
-	ptr          voidptr
+	joystick Joystick
+	ptr      voidptr
 pub mut:
-	index        int
-	is_open      bool
-	name         string
+	index    int
+	is_open  bool
+	name     string
 }
 
 pub struct C.SDL_GameControllerButtonBind {
 mut:
-	bind_type    int
-	button       int
-	axis         int
-	hat          int
-	hat_mask     int
+	bind_type int
+	button    int
+	axis      int
+	hat       int
+	hat_mask  int
 }
 
 pub type ControllerButtonBind = C.SDL_GameControllerButtonBind
 
-struct C._SDL_Joystick
+struct C._SDL_Joystick {
+}
 
 pub struct Joystick {
 mut:
@@ -42,5 +43,5 @@ pub mut:
 
 pub struct JoystickGUID {
 mut:
-	data    [16]byte
+	data [16]byte
 }

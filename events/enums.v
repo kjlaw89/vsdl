@@ -54,27 +54,26 @@ pub enum EventType {
 }
 
 pub enum EventCategory {
-	app        = 0x0001
-	display    = 0x0002
-	window     = 0x0004
-	system     = 0x0008
-	key        = 0x0010
-	text       = 0x0020
-	mouse      = 0x0040
-	joystick   = 0x0080
+	app = 0x0001
+	display = 0x0002
+	window = 0x0004
+	system = 0x0008
+	key = 0x0010
+	text = 0x0020
+	mouse = 0x0040
+	joystick = 0x0080
 	controller = 0x0100
-	touch      = 0x0200
-	clipboard  = 0x0400
-	drop       = 0x0800
-	audio      = 0x1000
-	sensor     = 0x2000
-	renderer   = 0x4000
-	all        = 0xFFFF
+	touch = 0x0200
+	clipboard = 0x0400
+	drop = 0x0800
+	audio = 0x1000
+	sensor = 0x2000
+	renderer = 0x4000
+	all = 0xFFFF
 }
 
 pub enum KeyCode {
 	key_unknown = 0
-
 	key_return = 13
 	key_escape = 27
 	key_backspace = 8
@@ -112,7 +111,6 @@ pub enum KeyCode {
 	key_greater = 62
 	key_question = 63
 	key_at = 64
-
 	key_leftbracket = 91
 	key_backslash = 92
 	key_rightbracket = 93
@@ -145,9 +143,7 @@ pub enum KeyCode {
 	key_x = 120
 	key_y = 121
 	key_z = 122
-
 	key_capslock = 1073741881
-
 	key_f1 = 1073741882
 	key_f2 = 1073741883
 	key_f3 = 1073741884
@@ -160,7 +156,6 @@ pub enum KeyCode {
 	key_f10 = 1073741891
 	key_f11 = 1073741892
 	key_f12 = 1073741893
-
 	key_printscreen = 1073741894
 	key_scrolllock = 1073741895
 	key_pause = 1073741896
@@ -175,25 +170,23 @@ pub enum KeyCode {
 	key_down = 1073741905
 	key_up = 1073741906
 	key_numlockclear = 1073741907
-
-	key_kp_divide   = 1073741908
+	key_kp_divide = 1073741908
 	key_kp_multiply = 1073741909
-	key_kp_minus    = 1073741910
-	key_kp_plus     = 1073741911
-	key_kp_enter    = 1073741912
-	key_kp_1        = 1073741913
-	key_kp_2        = 1073741914
-	key_kp_3        = 1073741915
-	key_kp_4        = 1073741916
-	key_kp_5        = 1073741917
-	key_kp_6        = 1073741918
-	key_kp_7        = 1073741919
-	key_kp_8        = 1073741920
-	key_kp_9        = 1073741921
-	key_kp_0        = 1073741922
-	key_kp_period   = 1073741923
-
-	/*key_application = sdl_scancode_to_keycode(sdl_scancode_application)
+	key_kp_minus = 1073741910
+	key_kp_plus = 1073741911
+	key_kp_enter = 1073741912
+	key_kp_1 = 1073741913
+	key_kp_2 = 1073741914
+	key_kp_3 = 1073741915
+	key_kp_4 = 1073741916
+	key_kp_5 = 1073741917
+	key_kp_6 = 1073741918
+	key_kp_7 = 1073741919
+	key_kp_8 = 1073741920
+	key_kp_9 = 1073741921
+	key_kp_0 = 1073741922
+	key_kp_period = 1073741923	/*
+	key_application = sdl_scancode_to_keycode(sdl_scancode_application)
 	key_power = sdl_scancode_to_keycode(sdl_scancode_power)
 	key_kp_equals = sdl_scancode_to_keycode(sdl_scancode_kp_equals)
 	key_f13 = sdl_scancode_to_keycode(sdl_scancode_f13)
@@ -295,19 +288,16 @@ pub enum KeyCode {
 	key_kp_hexadecimal =
 		sdl_scancode_to_keycode(sdl_scancode_kp_hexadecimal)
 	*/
-
-	key_lctrl  = 1073742048
+	key_lctrl = 1073742048
 	key_lshift = 1073742049
-	key_lalt   = 1073742050
-	key_lgui   = 1073742051
-	key_rctrl  = 1073742052
+	key_lalt = 1073742050
+	key_lgui = 1073742051
+	key_rctrl = 1073742052
 	key_rshift = 1073742053
-	key_ralt   = 1073742054
-	key_rgui   = 1073742055
-
-	key_mode   = 1073742081
-
-	/*key_audionext = sdl_scancode_to_keycode(sdl_scancode_audionext)
+	key_ralt = 1073742054
+	key_rgui = 1073742055
+	key_mode = 1073742081	/*
+	key_audionext = sdl_scancode_to_keycode(sdl_scancode_audionext)
 	key_audioprev = sdl_scancode_to_keycode(sdl_scancode_audioprev)
 	key_audiostop = sdl_scancode_to_keycode(sdl_scancode_audiostop)
 	key_audioplay = sdl_scancode_to_keycode(sdl_scancode_audioplay)
@@ -339,7 +329,8 @@ pub enum KeyCode {
 	key_app2 = sdl_scancode_to_keycode(sdl_scancode_app2)
 
 	key_audiorewind = sdl_scancode_to_keycode(sdl_scancode_audiorewind)
-	key_audiofastforward = sdl_scancode_to_keycode(sdl_scancode_audiofastforward)*/
+	key_audiofastforward = sdl_scancode_to_keycode(sdl_scancode_audiofastforward)
+	*/
 }
 
 pub enum ScanCode {

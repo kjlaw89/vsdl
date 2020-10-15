@@ -5,9 +5,10 @@ module ttf
 #flag -lSDL2_ttf
 #flag -lSDL2
 #include "ttf/SDL_ttf.h"
-
 fn C.TTF_Init()
+
 fn C.TTF_Quit()
+
 fn C.TTF_GetError() charptr
 
 fn init() {
@@ -20,5 +21,5 @@ pub fn quit() {
 
 fn serror(text string) string {
 	msg := tos3(C.TTF_GetError())
-	return "$text: $msg"
+	return '$text: $msg'
 }

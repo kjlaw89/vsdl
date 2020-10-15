@@ -1,9 +1,13 @@
 module gfx
 
 fn C.SDL_AndroidGetActivity() voidptr
+
 fn C.SDL_AndroidGetExternalStoragePath() charptr
+
 fn C.SDL_AndroidGetExternalStorageState() int
+
 fn C.SDL_AndroidGetInternalStoragePath() charptr
+
 fn C.SDL_AndroidGetJNIEnv() voidptr
 
 pub fn android_get_activity() voidptr {

@@ -3,28 +3,51 @@ module ttf
 import vsdl.gfx
 
 fn C.TTF_CloseFont(voidptr)
+
 fn C.TTF_FontAscent(voidptr) int
+
 fn C.TTF_FontDescent(voidptr) int
+
 fn C.TTF_FontHeight(voidptr) int
+
 fn C.TTF_FontFaceFamilyName(voidptr) charptr
+
 fn C.TTF_FontFaces(voidptr) int
+
 fn C.TTF_FontFaceIsFixedWidth(voidptr) int
+
 fn C.TTF_FontFaceStyleName(voidptr) charptr
+
 fn C.TTF_FontLineSkip(voidptr) int
+
 fn C.TTF_GetFontHinting(voidptr) u32
+
 fn C.TTF_GetFontKerning(voidptr) int
+
 fn C.TTF_GetFontOutline(voidptr) int
+
 fn C.TTF_GetFontStyle(voidptr) u32
+
 fn C.TTF_GlyphMetrics(voidptr, u16, voidptr, voidptr, voidptr, voidptr, voidptr) int
+
 fn C.TTF_OpenFont(charptr, int) voidptr
+
 fn C.TTF_OpenFontIndex(charptr, int, int) voidptr
+
 fn C.TTF_RenderUTF8_Solid(voidptr, charptr, voidptr) voidptr
+
 fn C.TTF_RenderUTF8_Shaded(voidptr, charptr, voidptr, voidptr) voidptr
+
 fn C.TTF_RenderUTF8_Blended(voidptr, charptr, voidptr) voidptr
+
 fn C.TTF_SetFontHinting(voidptr, u32)
+
 fn C.TTF_SetFontKerning(voidptr, u32)
+
 fn C.TTF_SetFontOutline(voidptr, int)
+
 fn C.TTF_SetFontStyle(voidptr, u32)
+
 fn C.TTF_SizeUTF8(voidptr, charptr, voidptr, voidptr) int
 
 pub fn (font Font) free() {
@@ -56,7 +79,7 @@ pub fn (font Font) get_face_style() string {
 	return tos3(C.TTF_FontFaceStyleName(font.ptr))
 }
 
-// get_height returns the max height of the entire font 
+// get_height returns the max height of the entire font
 pub fn (font Font) get_height() int {
 	return C.TTF_FontHeight(font.ptr)
 }
@@ -74,11 +97,9 @@ pub fn (font Font) get_glyph_metrics(char u16) (int, int, int, int, int) {
 	miny := 0
 	maxy := 0
 	advance := 0
-
 	if C.TTF_GlyphMetrics(font.ptr, char, &minx, &maxx, &miny, &maxy, &advance) == -1 {
 		return -1, -1, -1, -1, -1
 	}
-
 	return minx, maxx, miny, maxy, advance
 }
 
@@ -101,7 +122,6 @@ pub fn (font Font) get_outline() int {
 pub fn (font Font) get_size(text string) (int, int) {
 	w := 0
 	h := 0
-
 	C.TTF_SizeUTF8(font.ptr, text.str, &w, &h)
 	return w, h
 }
@@ -118,56 +138,50 @@ pub fn (font Font) is_fixed() bool {
 
 // open_font opens the provided font `name` at `size`
 pub fn open_font(name string, size int) ?Font {
-	font := Font{ ptr: C.TTF_OpenFont(name.str, size) }
-
-	if font.ptr == 0 {
-		return error(serror("Unable to open font $name"))
+	font := Font{
+		ptr: C.TTF_OpenFont(name.str, size)
 	}
-
+	if font.ptr == 0 {
+		return error(serror('Unable to open font $name'))
+	}
 	return font
 }
 
 // open_font_index opens the provided font `name` at `size` at `index`
-pub fn open_font_index(name string, size, index int) ?Font {
-	font := Font{ ptr: C.TTF_OpenFontIndex(name.str, size, index) }
-
-	if font.ptr == 0 {
-		return error(serror("Unable to open font $name"))
+pub fn open_font_index(name string, size int, index int) ?Font {
+	font := Font{
+		ptr: C.TTF_OpenFontIndex(name.str, size, index)
 	}
-
+	if font.ptr == 0 {
+		return error(serror('Unable to open font $name'))
+	}
 	return font
 }
 
 // render_solid renders `text` in a lower quality to a `Surface`
 pub fn (font Font) render_solid(text string, color gfx.Color) ?&gfx.Surface {
 	surface := C.TTF_RenderUTF8_Solid(font.ptr, text.str, color)
-
 	if surface == 0 {
 		return error(serror("Unable to render '$text' to surface"))
 	}
-
 	return surface
 }
 
 // render_shaded renders `text` in a good quality to a `Surface` with a background
 pub fn (font Font) render_shaded(text string, fg gfx.Color, bg gfx.Color) ?&gfx.Surface {
 	surface := C.TTF_RenderUTF8_Shaded(font.ptr, text.str, fg, bg)
-
 	if surface == 0 {
 		return error(serror("Unable to render '$text' to surface"))
 	}
-
 	return surface
 }
 
 // render_blended renders `text` in a good quality with alpha to a `Surface`
 pub fn (font Font) render_blended(text string, color gfx.Color) ?&gfx.Surface {
 	surface := C.TTF_RenderUTF8_Blended(font.ptr, text.str, color)
-
 	if surface == 0 {
 		return error(serror("Unable to render '$text' to surface"))
 	}
-
 	return surface
 }
 

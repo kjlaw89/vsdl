@@ -1,6 +1,7 @@
 module mixer
 
 import vsdl
+import vsdl.system
 
 fn C.Mix_FreeChunk(voidptr)
 
@@ -49,7 +50,7 @@ pub fn load_chunk(path string) ?&Chunk {
 }
 
 // load_chunk_rw loads in a chunk via a `RWops` object
-pub fn load_chunk_rw(ops &vsdl.RWops, autofree bool) ?&Chunk {
+pub fn load_chunk_rw(ops &system.RWops, autofree bool) ?&Chunk {
 	chunk := C.Mix_LoadWAV_RW(ops, autofree)
 	if chunk == 0 {
 		return error(serror('Unable to load file from RW'))

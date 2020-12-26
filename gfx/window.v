@@ -132,6 +132,7 @@ pub fn create_window(title string, x int, y int, width int, height int, flags ..
 	return window
 }
 
+// create_window_and_renderer calls into `create_window` and initializes a `renderer` for use automatically
 pub fn create_window_and_renderer(title string, x int, y int, width int, height int, flags ...WindowFlags) ?(Window, Renderer) {
 	window := create_window(title, x, y, width, height, flags) ?
 	renderer := window.create_renderer(-1, 0) ?
@@ -143,7 +144,7 @@ pub fn (mut window Window) destroy() {
 		return
 	}
 	C.SDL_DestroyWindow(window.ptr)
-	window.ptr = 0
+	window.ptr = voidptr(0)
 }
 
 // focus sets the window to the actively focused window

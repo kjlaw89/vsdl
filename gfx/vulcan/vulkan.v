@@ -1,4 +1,7 @@
-module gfx
+module vulkan
+
+import vsdl
+import vsdl.gfx
 
 pub type SDL_vulkanInstance = voidptr
 
@@ -16,7 +19,11 @@ fn C.SDL_Vulkan_LoadLibrary(charptr) int
 
 fn C.SDL_Vulkan_UnloadLibrary()
 
-pub fn (window Window) create_vulkan_surface(instance SDL_vulkanInstance) ?SDL_vulkanSurface {
+fn init() {
+	load_library("")
+}
+
+pub fn create_surface(window gfx.Window, instance SDL_vulkanInstance) ?SDL_vulkanSurface {
 	surface := SDL_vulkanSurface(0)
 	if !C.SDL_Vulkan_CreateSurface(window.ptr, instance, &surface) {
 		return error(serror('Unable to initialize Vulkan surface'))
@@ -24,14 +31,14 @@ pub fn (window Window) create_vulkan_surface(instance SDL_vulkanInstance) ?SDL_v
 	return surface
 }
 
-pub fn (window Window) get_vulkan_drawsize() (int, int) {
+pub fn get_drawsize(window gfx.Window) (int, int) {
 	w := 0
 	h := 0
 	C.SDL_Vulkan_GetDrawableSize(window.ptr, &w, &h)
 	return w, h
 }
 
-pub fn (window Window) get_vulkan_extensions() []string {
+pub fn get_extensions(window gfx.Window) []string {
 	count := 0
 	C.SDL_Vulkan_GetInstanceExtensions(window.ptr, &count, C.NULL)
 	if count == 0 {
@@ -46,7 +53,7 @@ pub fn (window Window) get_vulkan_extensions() []string {
 	return extensions
 }
 
-pub fn vulkan_load(path string) ? {
+pub fn load_library(path string) ? {
 	mut result := -1
 	if path.len > 0 {
 		result = C.SDL_Vulkan_LoadLibrary(path.str)
@@ -58,10 +65,10 @@ pub fn vulkan_load(path string) ? {
 	}
 }
 
-pub fn vulkan_get_procaddr() voidptr {
+pub fn get_procaddr() voidptr {
 	return C.SDL_Vulkan_GetVkGetInstanceProcAddr()
 }
 
-pub fn vulkan_unload() {
+pub fn unload_library() {
 	C.SDL_Vulkan_UnloadLibrary()
 }

@@ -87,7 +87,7 @@ pub fn poll_events(event &Event) int {
 	return C.SDL_PollEvent(event)
 }
 
-// run runs the input loop to update all events
+// run the input loop to update all events
 // if `delay` is set to true, loop will pause for `EventSystem.delay` time
 pub fn run(delay bool) bool {
 	if !system.running {

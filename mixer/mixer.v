@@ -7,6 +7,7 @@ import vsdl.audio
 #flag -lSDL2_mixer
 #flag -lSDL2
 #include "mixer/SDL_mixer.h"
+
 fn C.Mix_CloseAudio()
 
 fn C.Mix_GetError() charptr

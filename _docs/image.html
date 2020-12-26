@@ -1,0 +1,193 @@
+
+	<!DOCTYPE html>
+	<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="x-ua-compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>image | vdoc</title>
+		<link rel="preconnect" href="https://fonts.gstatic.com">
+		<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+		<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+		<link rel="manifest" href="site.webmanifest">
+		<link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5">
+		<meta name="msapplication-TileColor" content="#da532c">
+		<meta name="theme-color" content="#ffffff">
+		
+    <link rel="stylesheet" href="doc.css" />
+	<link rel="stylesheet" href="normalize.css" />
+</style>
+    <script src="dark-mode.js"></script>
+	</head>
+	<body>
+		<div id="page">
+			<header class="doc-nav hidden">
+				<div class="heading-container">
+					<div class="heading">
+						<input type="text" id="search" placeholder="Search...">
+						<div class="module"></div>
+						<div class="toggle-version-container">
+							<span>0.6.1</span>
+							<div id="dark-mode-toggle" role="switch" aria-checked="false" aria-label="Toggle dark mode"><svg xmlns="http://www.w3.org/2000/svg" class="light-icon" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.79 1.42-1.41zM4 10.5H1v2h3v-2zm9-9.95h-2V3.5h2V.55zm7.45 3.91l-1.41-1.41-1.79 1.79 1.41 1.41 1.79-1.79zm-3.21 13.7l1.79 1.8 1.41-1.41-1.8-1.79-1.4 1.4zM20 10.5v2h3v-2h-3zm-8-5c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm-1 16.95h2V19.5h-2v2.95zm-7.45-3.91l1.41 1.41 1.79-1.8-1.41-1.41-1.79 1.8z"/></svg><svg xmlns="http://www.w3.org/2000/svg" class="dark-icon" enable-background="new 0 0 24 24" height="24" viewBox="0 0 24 24" width="24"><g><rect fill="none" height="24" width="24"/></g><g><g><g><path d="M11.1,12.08C8.77,7.57,10.6,3.6,11.63,2.01C6.27,2.2,1.98,6.59,1.98,12c0,0.14,0.02,0.28,0.02,0.42 C2.62,12.15,3.29,12,4,12c1.66,0,3.18,0.83,4.1,2.15C9.77,14.63,11,16.17,11,18c0,1.52-0.87,2.83-2.12,3.51 c0.98,0.32,2.03,0.5,3.11,0.5c3.5,0,6.58-1.8,8.37-4.52C18,17.72,13.38,16.52,11.1,12.08z"/></g><path d="M7,16l-0.18,0C6.4,14.84,5.3,14,4,14c-1.66,0-3,1.34-3,3s1.34,3,3,3c0.62,0,2.49,0,3,0c1.1,0,2-0.9,2-2 C9,16.9,8.1,16,7,16z"/></g></g></svg></div>
+						</div>
+						<svg xmlns="http://www.w3.org/2000/svg" id="toggle-menu" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+					</div>
+				</div>
+				<nav class="content hidden">
+					<ul>
+						<li class="open"><div class="menu-row"><a href="./vsdl.html">vsdl</a></div></li><li class="open"><div class="menu-row"><a href="./audio.html">audio</a></div></li><li class="open"><div class="menu-row"><a href="./controller.html">controller</a></div></li><li class="open"><div class="menu-row"><a href="./events.html">events</a></div></li><li class="open"><div class="menu-row"><a href="./main.html">main</a></div></li><li class="open"><div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a href="./gfx.html">gfx</a></div><ul><li><a href="./gfx.gl.html">gl</a></li><li><a href="./gfx.platform.html">platform</a></li><li><a href="./gfx.vulkan.html">vulkan</a></li></ul></li><li class="open active"><div class="menu-row"><a href="./image.html">image</a></div></li><li class="open"><div class="menu-row"><a href="./mixer.html">mixer</a></div></li><li class="open"><div class="menu-row"><a href="./system.html">system</a></div></li><li class="open"><div class="menu-row"><a href="./ttf.html">ttf</a></div></li>
+					</ul>
+				</nav>
+			</header>
+			<div class="doc-container">
+				<div class="doc-content">
+					<section id="image" class="doc-node">
+<div class="title"><h1>image</h1></div>
+</section>
+
+<section id="is_png" class="doc-node">
+<div class="title"><h2>is_png <a href="#is_png">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">is_png</span><span class="token punctuation">(</span>ops <span class="token operator">&</span>system<span class="token punctuation">.</span>RWops<span class="token punctuation">)</span> <span class="token builtin">bool</span></code></pre>
+
+</section>
+<section id="init" class="doc-node">
+<div class="title"><h2>init <a href="#init">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">init</span><span class="token punctuation">(</span>flags ...ImgFlags<span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>init initializes the img library with the provided flags  Note: This can be used to preload libraries. If not called  it will automatically be called once when needed for a filetype</p>
+</section>
+<section id="is_bmp" class="doc-node">
+<div class="title"><h2>is_bmp <a href="#is_bmp">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">is_bmp</span><span class="token punctuation">(</span>ops <span class="token operator">&</span>system<span class="token punctuation">.</span>RWops<span class="token punctuation">)</span> <span class="token builtin">bool</span></code></pre>
+
+</section>
+<section id="is_cur" class="doc-node">
+<div class="title"><h2>is_cur <a href="#is_cur">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">is_cur</span><span class="token punctuation">(</span>ops <span class="token operator">&</span>system<span class="token punctuation">.</span>RWops<span class="token punctuation">)</span> <span class="token builtin">bool</span></code></pre>
+
+</section>
+<section id="is_gif" class="doc-node">
+<div class="title"><h2>is_gif <a href="#is_gif">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">is_gif</span><span class="token punctuation">(</span>ops <span class="token operator">&</span>system<span class="token punctuation">.</span>RWops<span class="token punctuation">)</span> <span class="token builtin">bool</span></code></pre>
+
+</section>
+<section id="is_ico" class="doc-node">
+<div class="title"><h2>is_ico <a href="#is_ico">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">is_ico</span><span class="token punctuation">(</span>ops <span class="token operator">&</span>system<span class="token punctuation">.</span>RWops<span class="token punctuation">)</span> <span class="token builtin">bool</span></code></pre>
+
+</section>
+<section id="is_jpg" class="doc-node">
+<div class="title"><h2>is_jpg <a href="#is_jpg">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">is_jpg</span><span class="token punctuation">(</span>ops <span class="token operator">&</span>system<span class="token punctuation">.</span>RWops<span class="token punctuation">)</span> <span class="token builtin">bool</span></code></pre>
+
+</section>
+<section id="is_lbm" class="doc-node">
+<div class="title"><h2>is_lbm <a href="#is_lbm">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">is_lbm</span><span class="token punctuation">(</span>ops <span class="token operator">&</span>system<span class="token punctuation">.</span>RWops<span class="token punctuation">)</span> <span class="token builtin">bool</span></code></pre>
+
+</section>
+<section id="is_pcx" class="doc-node">
+<div class="title"><h2>is_pcx <a href="#is_pcx">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">is_pcx</span><span class="token punctuation">(</span>ops <span class="token operator">&</span>system<span class="token punctuation">.</span>RWops<span class="token punctuation">)</span> <span class="token builtin">bool</span></code></pre>
+
+</section>
+<section id="quit" class="doc-node">
+<div class="title"><h2>quit <a href="#quit">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">quit</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+
+</section>
+<section id="is_tif" class="doc-node">
+<div class="title"><h2>is_tif <a href="#is_tif">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">is_tif</span><span class="token punctuation">(</span>ops <span class="token operator">&</span>system<span class="token punctuation">.</span>RWops<span class="token punctuation">)</span> <span class="token builtin">bool</span></code></pre>
+
+</section>
+<section id="is_xcf" class="doc-node">
+<div class="title"><h2>is_xcf <a href="#is_xcf">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">is_xcf</span><span class="token punctuation">(</span>ops <span class="token operator">&</span>system<span class="token punctuation">.</span>RWops<span class="token punctuation">)</span> <span class="token builtin">bool</span></code></pre>
+
+</section>
+<section id="is_xpm" class="doc-node">
+<div class="title"><h2>is_xpm <a href="#is_xpm">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">is_xpm</span><span class="token punctuation">(</span>ops <span class="token operator">&</span>system<span class="token punctuation">.</span>RWops<span class="token punctuation">)</span> <span class="token builtin">bool</span></code></pre>
+
+</section>
+<section id="is_xv" class="doc-node">
+<div class="title"><h2>is_xv <a href="#is_xv">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">is_xv</span><span class="token punctuation">(</span>ops <span class="token operator">&</span>system<span class="token punctuation">.</span>RWops<span class="token punctuation">)</span> <span class="token builtin">bool</span></code></pre>
+
+</section>
+<section id="load" class="doc-node">
+<div class="title"><h2>load <a href="#load">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">load</span><span class="token punctuation">(</span>path <span class="token builtin">string</span><span class="token punctuation">)</span> ?<span class="token operator">&</span>gfx<span class="token punctuation">.</span>Surface</code></pre>
+<p>load loads in an image based on the provided path  file type is determined automatically and TGA can  be automatically detected if file ends in &quot;.tga&quot;</p>
+</section>
+<section id="load_rw" class="doc-node">
+<div class="title"><h2>load_rw <a href="#load_rw">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">load_rw</span><span class="token punctuation">(</span>ops <span class="token operator">&</span>system<span class="token punctuation">.</span>RWops<span class="token punctuation">,</span> autofree <span class="token builtin">bool</span><span class="token punctuation">)</span> ?<span class="token operator">&</span>gfx<span class="token punctuation">.</span>Surface</code></pre>
+<p>load_rw loads in an image via a <code>RWops</code> object</p>
+</section>
+<section id="load_typed_rw" class="doc-node">
+<div class="title"><h2>load_typed_rw <a href="#load_typed_rw">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">load_typed_rw</span><span class="token punctuation">(</span>ops <span class="token operator">&</span>system<span class="token punctuation">.</span>RWops<span class="token punctuation">,</span> autofree <span class="token builtin">bool</span><span class="token punctuation">,</span> img_type <span class="token builtin">string</span><span class="token punctuation">)</span> ?<span class="token operator">&</span>gfx<span class="token punctuation">.</span>Surface</code></pre>
+<p>load_rw loads in an image via a <code>RWops</code> object with specified image type</p>
+</section>
+<section id="ImgFlags" class="doc-node">
+<div class="title"><h2>ImgFlags <a href="#ImgFlags">#</a></h2></div><pre class="signature"><code><span class="token keyword">enum</span> <span class="token symbol">ImgFlags</span> <span class="token punctuation">{</span>
+	jpg <span class="token operator">=</span> <span class="token number">0x0001</span>
+	png <span class="token operator">=</span> <span class="token number">0x0002</span>
+	tif <span class="token operator">=</span> <span class="token number">0x0004</span>
+	webp <span class="token operator">=</span> <span class="token number">0x0008</span>
+<span class="token punctuation">}</span></code></pre>
+
+</section>
+
+					<div class="footer">
+						Powered by vdoc. Generated on: 26 Dec 2020 00:38:06
+					</div>
+				</div>
+				<div class="doc-toc"><ul><li class="open"><a href="#is_png">is_png</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#init">init</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#is_bmp">is_bmp</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#is_cur">is_cur</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#is_gif">is_gif</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#is_ico">is_ico</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#is_jpg">is_jpg</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#is_lbm">is_lbm</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#is_pcx">is_pcx</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#quit">quit</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#is_tif">is_tif</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#is_xcf">is_xcf</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#is_xpm">is_xpm</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#is_xv">is_xv</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#load">load</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#load_rw">load_rw</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#load_typed_rw">load_typed_rw</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#ImgFlags">ImgFlags</a>        <ul>
+</ul>
+</li>
+</ul></div>
+			</div>
+		</div>
+		<script src="doc.js"></script>
+	</body>
+	</html>
+	

@@ -1,0 +1,646 @@
+
+	<!DOCTYPE html>
+	<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="x-ua-compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>mixer | vdoc</title>
+		<link rel="preconnect" href="https://fonts.gstatic.com">
+		<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+		<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+		<link rel="manifest" href="site.webmanifest">
+		<link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5">
+		<meta name="msapplication-TileColor" content="#da532c">
+		<meta name="theme-color" content="#ffffff">
+		
+    <link rel="stylesheet" href="doc.css" />
+	<link rel="stylesheet" href="normalize.css" />
+</style>
+    <script src="dark-mode.js"></script>
+	</head>
+	<body>
+		<div id="page">
+			<header class="doc-nav hidden">
+				<div class="heading-container">
+					<div class="heading">
+						<input type="text" id="search" placeholder="Search...">
+						<div class="module"></div>
+						<div class="toggle-version-container">
+							<span>0.6.1</span>
+							<div id="dark-mode-toggle" role="switch" aria-checked="false" aria-label="Toggle dark mode"><svg xmlns="http://www.w3.org/2000/svg" class="light-icon" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.79 1.42-1.41zM4 10.5H1v2h3v-2zm9-9.95h-2V3.5h2V.55zm7.45 3.91l-1.41-1.41-1.79 1.79 1.41 1.41 1.79-1.79zm-3.21 13.7l1.79 1.8 1.41-1.41-1.8-1.79-1.4 1.4zM20 10.5v2h3v-2h-3zm-8-5c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm-1 16.95h2V19.5h-2v2.95zm-7.45-3.91l1.41 1.41 1.79-1.8-1.41-1.41-1.79 1.8z"/></svg><svg xmlns="http://www.w3.org/2000/svg" class="dark-icon" enable-background="new 0 0 24 24" height="24" viewBox="0 0 24 24" width="24"><g><rect fill="none" height="24" width="24"/></g><g><g><g><path d="M11.1,12.08C8.77,7.57,10.6,3.6,11.63,2.01C6.27,2.2,1.98,6.59,1.98,12c0,0.14,0.02,0.28,0.02,0.42 C2.62,12.15,3.29,12,4,12c1.66,0,3.18,0.83,4.1,2.15C9.77,14.63,11,16.17,11,18c0,1.52-0.87,2.83-2.12,3.51 c0.98,0.32,2.03,0.5,3.11,0.5c3.5,0,6.58-1.8,8.37-4.52C18,17.72,13.38,16.52,11.1,12.08z"/></g><path d="M7,16l-0.18,0C6.4,14.84,5.3,14,4,14c-1.66,0-3,1.34-3,3s1.34,3,3,3c0.62,0,2.49,0,3,0c1.1,0,2-0.9,2-2 C9,16.9,8.1,16,7,16z"/></g></g></svg></div>
+						</div>
+						<svg xmlns="http://www.w3.org/2000/svg" id="toggle-menu" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+					</div>
+				</div>
+				<nav class="content hidden">
+					<ul>
+						<li class="open"><div class="menu-row"><a href="./vsdl.html">vsdl</a></div></li><li class="open"><div class="menu-row"><a href="./audio.html">audio</a></div></li><li class="open"><div class="menu-row"><a href="./controller.html">controller</a></div></li><li class="open"><div class="menu-row"><a href="./events.html">events</a></div></li><li class="open"><div class="menu-row"><a href="./main.html">main</a></div></li><li class="open"><div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a href="./gfx.html">gfx</a></div><ul><li><a href="./gfx.gl.html">gl</a></li><li><a href="./gfx.platform.html">platform</a></li><li><a href="./gfx.vulkan.html">vulkan</a></li></ul></li><li class="open"><div class="menu-row"><a href="./image.html">image</a></div></li><li class="open active"><div class="menu-row"><a href="./mixer.html">mixer</a></div></li><li class="open"><div class="menu-row"><a href="./system.html">system</a></div></li><li class="open"><div class="menu-row"><a href="./ttf.html">ttf</a></div></li>
+					</ul>
+				</nav>
+			</header>
+			<div class="doc-container">
+				<div class="doc-content">
+					<section id="mixer" class="doc-node">
+<div class="title"><h1>mixer</h1></div><h1>VSDL Mixer</h1>
+<p>VSDL implements the full SDL2 Mixer extension. Calling <code>load_music</code> or <code>load_chunk</code> will return back a wrapped <code>Music</code> or <code>Chunk</code> object. <code>Chunk</code>s can be played on various channels, while only one <code>Music</code> track can be played at any given time.</p>
+<p><code>load_chunk</code> can load <code>.wav</code>, <code>.aiff</code>, <code>.riff</code>, <code>.ogg</code> and <code>.vof</code> files</p>
+<p><code>load_music</code> can load <code>.wav</code>, <code>.mod</code>, <code>.mid</code>/<code>.midi</code>, <code>.ogg</code>, <code>.mp3</code> and <code>.flac</code> files</p>
+<pre><code class="language-v">module main
+
+import vsdl
+import vsdl.events
+import vsdl.gfx
+import vsdl.mixer
+
+fn main() {
+    mut window := gfx.create_window(&quot;VSDL Mixer Demo&quot;, -1, -1, 640, 480, .shown)?
+    surface := window.get_surface()?
+    surface.fill(r: 255, g: 255, b: 255)
+
+    mixer.open(44100, .default, 2, 1024)?
+    music := mixer.load_music(os.resource_abs_path(&quot;music-regular.mid&quot;))?
+    music.play(999)
+
+    defer {
+        mixer.close()
+        surface.free()
+        window.destroy()
+        mixer.quit()
+        vsdl.quit()
+    }
+    
+    window.update()
+    events.loop()
+}
+</code></pre>
+</section>
+
+<section id="channel_allocate" class="doc-node">
+<div class="title"><h2>channel_allocate <a href="#channel_allocate">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">channel_allocate</span><span class="token punctuation">(</span>count <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+
+</section>
+<section id="channel_done" class="doc-node">
+<div class="title"><h2>channel_done <a href="#channel_done">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">channel_done</span><span class="token punctuation">(</span>callback ChannelFinishedCallback<span class="token punctuation">)</span></code></pre>
+
+</section>
+<section id="channel_expire" class="doc-node">
+<div class="title"><h2>channel_expire <a href="#channel_expire">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">channel_expire</span><span class="token punctuation">(</span>channel <span class="token builtin">int</span><span class="token punctuation">,</span> ms <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>channel_expire expires the channel in the specified amount of time</p>
+</section>
+<section id="channel_fade_in" class="doc-node">
+<div class="title"><h2>channel_fade_in <a href="#channel_fade_in">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">channel_fade_in</span><span class="token punctuation">(</span>channel <span class="token builtin">int</span><span class="token punctuation">,</span> chunk <span class="token operator">&</span>Chunk<span class="token punctuation">,</span> loops <span class="token builtin">int</span><span class="token punctuation">,</span> ms <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>channel_fade_in plays the provided <code>Chunk</code> on a channel (-1 is next free)  The returned value is the channel the chunk is being played on</p>
+</section>
+<section id="channel_fade_in_timed" class="doc-node">
+<div class="title"><h2>channel_fade_in_timed <a href="#channel_fade_in_timed">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">channel_fade_in_timed</span><span class="token punctuation">(</span>channel <span class="token builtin">int</span><span class="token punctuation">,</span> chunk <span class="token operator">&</span>Chunk<span class="token punctuation">,</span> loops <span class="token builtin">int</span><span class="token punctuation">,</span> ms <span class="token builtin">int</span><span class="token punctuation">,</span> time <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>fade_in_timed plays the provided <code>Chunk</code> on a channel (-1 is next free)  <code>time</code> is specified in miliseconds  The returned value is the channel the chunk is being played on</p>
+</section>
+<section id="channel_fade_out" class="doc-node">
+<div class="title"><h2>channel_fade_out <a href="#channel_fade_out">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">channel_fade_out</span><span class="token punctuation">(</span>channel <span class="token builtin">int</span><span class="token punctuation">,</span> ms <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>channel_fade_out fades out the provided channel</p>
+</section>
+<section id="channel_fading" class="doc-node">
+<div class="title"><h2>channel_fading <a href="#channel_fading">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">channel_fading</span><span class="token punctuation">(</span>channel <span class="token builtin">u32</span><span class="token punctuation">)</span> Fading</code></pre>
+<p>channel_fading returns back the fading status of the provided channel</p>
+</section>
+<section id="channel_get_chunk" class="doc-node">
+<div class="title"><h2>channel_get_chunk <a href="#channel_get_chunk">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">channel_get_chunk</span><span class="token punctuation">(</span>channel <span class="token builtin">int</span><span class="token punctuation">)</span> ?<span class="token operator">&</span>Chunk</code></pre>
+<p>channel_get_chunk gets the latest chunk played on this channel if available</p>
+</section>
+<section id="channel_halt" class="doc-node">
+<div class="title"><h2>channel_halt <a href="#channel_halt">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">channel_halt</span><span class="token punctuation">(</span>channel <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>channel_halt stops play on the specified channel</p>
+</section>
+<section id="channel_pause" class="doc-node">
+<div class="title"><h2>channel_pause <a href="#channel_pause">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">channel_pause</span><span class="token punctuation">(</span>channel <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>channel_pause pauses the provided channel (-1 pauses all channels)</p>
+</section>
+<section id="channel_paused" class="doc-node">
+<div class="title"><h2>channel_paused <a href="#channel_paused">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">channel_paused</span><span class="token punctuation">(</span>channel <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>channel_paused returns back if the provided channel is paused  If -1 is passed in the number of channels playing is returned</p>
+</section>
+<section id="channel_play" class="doc-node">
+<div class="title"><h2>channel_play <a href="#channel_play">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">channel_play</span><span class="token punctuation">(</span>channel <span class="token builtin">int</span><span class="token punctuation">,</span> chunk <span class="token operator">&</span>Chunk<span class="token punctuation">,</span> loops <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>channel_play plays the provided <code>Chunk</code> on a channel (-1 is next free)  The returned value is the channel the chunk is being played on</p>
+</section>
+<section id="channel_play_timed" class="doc-node">
+<div class="title"><h2>channel_play_timed <a href="#channel_play_timed">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">channel_play_timed</span><span class="token punctuation">(</span>channel <span class="token builtin">int</span><span class="token punctuation">,</span> chunk <span class="token operator">&</span>Chunk<span class="token punctuation">,</span> loops <span class="token builtin">int</span><span class="token punctuation">,</span> ms <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>channel_play_timed plays the provided <code>Chunk</code> on a channel (-1 is next free)  <code>time</code> is specified in miliseconds  The returned value is the channel the chunk is being played on</p>
+</section>
+<section id="channel_playing" class="doc-node">
+<div class="title"><h2>channel_playing <a href="#channel_playing">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">channel_playing</span><span class="token punctuation">(</span>channel <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>channel_playing returns back if the provided channel is playing  If -1 is passed in the number of channels playing is returned</p>
+</section>
+<section id="channel_resume" class="doc-node">
+<div class="title"><h2>channel_resume <a href="#channel_resume">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">channel_resume</span><span class="token punctuation">(</span>channel <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>channel_resume resumes playback on provided channel (-1 resumes all)</p>
+</section>
+<section id="channel_set_panning" class="doc-node">
+<div class="title"><h2>channel_set_panning <a href="#channel_set_panning">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">channel_set_panning</span><span class="token punctuation">(</span>channel <span class="token builtin">int</span><span class="token punctuation">,</span> left <span class="token builtin">byte</span><span class="token punctuation">,</span> right <span class="token builtin">byte</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>channel_set_panning sets the panning for the channel</p>
+</section>
+<section id="channel_set_position" class="doc-node">
+<div class="title"><h2>channel_set_position <a href="#channel_set_position">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">channel_set_position</span><span class="token punctuation">(</span>channel <span class="token builtin">int</span><span class="token punctuation">,</span> angle <span class="token builtin">i16</span><span class="token punctuation">,</span> distance <span class="token builtin">byte</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>channel_set_position sets the 'position' of the sound based on the 'camera'  being in the center. Angle is 0-360, distance is 0-255</p>
+</section>
+<section id="channel_set_stereo_reverse" class="doc-node">
+<div class="title"><h2>channel_set_stereo_reverse <a href="#channel_set_stereo_reverse">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">channel_set_stereo_reverse</span><span class="token punctuation">(</span>channel <span class="token builtin">int</span><span class="token punctuation">,</span> flip <span class="token builtin">bool</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>channel_set_stereo_reverse flips the left and right audio channels for stereo</p>
+</section>
+<section id="channel_volume" class="doc-node">
+<div class="title"><h2>channel_volume <a href="#channel_volume">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">channel_volume</span><span class="token punctuation">(</span>index <span class="token builtin">int</span><span class="token punctuation">,</span> volume <span class="token builtin">byte</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>channel_volume sets the volume for the specied channel  If channel is -1, volume is applied to all channels  If channel and volume are -1, average volume is returned</p>
+</section>
+<section id="unregister_all_effects" class="doc-node">
+<div class="title"><h2>unregister_all_effects <a href="#unregister_all_effects">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">unregister_all_effects</span><span class="token punctuation">(</span>channel <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>unregister_all_effects unregisters all event callbacks from the provided channel</p>
+</section>
+<section id="stop_music" class="doc-node">
+<div class="title"><h2>stop_music <a href="#stop_music">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">stop_music</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<p>stop_music stops all playing music</p>
+</section>
+<section id="close" class="doc-node">
+<div class="title"><h2>close <a href="#close">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<p>close closes mixer audio</p>
+</section>
+<section id="set_post_mix" class="doc-node">
+<div class="title"><h2>set_post_mix <a href="#set_post_mix">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">set_post_mix</span><span class="token punctuation">(</span>callback PostMixCallback<span class="token punctuation">,</span> data <span class="token builtin">voidptr</span><span class="token punctuation">)</span></code></pre>
+<p>set_post_mix sets a callback for post mix</p>
+</section>
+<section id="set_music_volume" class="doc-node">
+<div class="title"><h2>set_music_volume <a href="#set_music_volume">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">set_music_volume</span><span class="token punctuation">(</span>volume <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>set_music_volume sets the currently playing music's volume</p>
+</section>
+<section id="fade_out_music" class="doc-node">
+<div class="title"><h2>fade_out_music <a href="#fade_out_music">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">fade_out_music</span><span class="token punctuation">(</span>ms <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">bool</span></code></pre>
+<p>fade_out_music fades out music over <code>ms</code></p>
+</section>
+<section id="set_music_position" class="doc-node">
+<div class="title"><h2>set_music_position <a href="#set_music_position">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">set_music_position</span><span class="token punctuation">(</span>position <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">bool</span></code></pre>
+<p>set_music_position sets the currently playing music's position</p>
+</section>
+<section id="rewind_music" class="doc-node">
+<div class="title"><h2>rewind_music <a href="#rewind_music">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">rewind_music</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<p>rewind_music rewinds all music to the beginning</p>
+</section>
+<section id="get_chunk_decoder" class="doc-node">
+<div class="title"><h2>get_chunk_decoder <a href="#get_chunk_decoder">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">get_chunk_decoder</span><span class="token punctuation">(</span>index <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">string</span></code></pre>
+<p>get_chunk_decoder returns back the name of the decoder for the chunk</p>
+</section>
+<section id="get_music_decoder" class="doc-node">
+<div class="title"><h2>get_music_decoder <a href="#get_music_decoder">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">get_music_decoder</span><span class="token punctuation">(</span>index <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">string</span></code></pre>
+<p>get_music_decoder gets the name of the provided music decoder</p>
+</section>
+<section id="get_num_chunk_decoders" class="doc-node">
+<div class="title"><h2>get_num_chunk_decoders <a href="#get_num_chunk_decoders">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">get_num_chunk_decoders</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>get_num_chunk_decoders gets the number of available decoders</p>
+</section>
+<section id="get_num_music_decoders" class="doc-node">
+<div class="title"><h2>get_num_music_decoders <a href="#get_num_music_decoders">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">get_num_music_decoders</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>get_num_music_decoders gets the numbers of music decoders</p>
+</section>
+<section id="group" class="doc-node">
+<div class="title"><h2>group <a href="#group">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">group</span><span class="token punctuation">(</span>index <span class="token builtin">int</span><span class="token punctuation">,</span> tag <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+
+</section>
+<section id="group_available" class="doc-node">
+<div class="title"><h2>group_available <a href="#group_available">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">group_available</span><span class="token punctuation">(</span>tag <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>group_available returns the first available (not playing) channel in the group</p>
+</section>
+<section id="group_count" class="doc-node">
+<div class="title"><h2>group_count <a href="#group_count">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">group_count</span><span class="token punctuation">(</span>tag <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>group_count returns back the amount of channels assigned to the current tag</p>
+</section>
+<section id="group_fade" class="doc-node">
+<div class="title"><h2>group_fade <a href="#group_fade">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">group_fade</span><span class="token punctuation">(</span>tag <span class="token builtin">int</span><span class="token punctuation">,</span> time <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>group_fade fades out playback on all channesl in group</p>
+</section>
+<section id="group_halt" class="doc-node">
+<div class="title"><h2>group_halt <a href="#group_halt">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">group_halt</span><span class="token punctuation">(</span>tag <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>group_halt stops playback on all channels in group</p>
+</section>
+<section id="group_newer" class="doc-node">
+<div class="title"><h2>group_newer <a href="#group_newer">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">group_newer</span><span class="token punctuation">(</span>tag <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>group_newer returns the channel that has played something most recently</p>
+</section>
+<section id="group_oldest" class="doc-node">
+<div class="title"><h2>group_oldest <a href="#group_oldest">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">group_oldest</span><span class="token punctuation">(</span>tag <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>group_oldest returns the channel that hasn't played recently</p>
+</section>
+<section id="group_reserve" class="doc-node">
+<div class="title"><h2>group_reserve <a href="#group_reserve">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">group_reserve</span><span class="token punctuation">(</span>num <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>group_reserve reserves the specified <code>num</code> of channels from playing  when -1 is passed in. If 0 is passed, all channels are reserved</p>
+</section>
+<section id="groups" class="doc-node">
+<div class="title"><h2>groups <a href="#groups">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">groups</span><span class="token punctuation">(</span>from <span class="token builtin">int</span><span class="token punctuation">,</span> to <span class="token builtin">int</span><span class="token punctuation">,</span> tag <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>groups assign a group id to a sequence of channels</p>
+</section>
+<section id="hook_music" class="doc-node">
+<div class="title"><h2>hook_music <a href="#hook_music">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">hook_music</span><span class="token punctuation">(</span>callback MusicCallback<span class="token punctuation">,</span> data <span class="token builtin">voidptr</span><span class="token punctuation">)</span></code></pre>
+<p>hook_music allows hooking into the playback process by providing a <code>callback</code></p>
+</section>
+<section id="hook_music_finished" class="doc-node">
+<div class="title"><h2>hook_music_finished <a href="#hook_music_finished">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">hook_music_finished</span><span class="token punctuation">(</span>callback MusicFinishedCallback<span class="token punctuation">)</span></code></pre>
+<p>hook_music_finished calls a function when the current music is finished playing</p>
+</section>
+<section id="init" class="doc-node">
+<div class="title"><h2>init <a href="#init">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">init</span><span class="token punctuation">(</span>flags ...MixerFlags<span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+
+</section>
+<section id="is_fading_music" class="doc-node">
+<div class="title"><h2>is_fading_music <a href="#is_fading_music">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">is_fading_music</span><span class="token punctuation">(</span><span class="token punctuation">)</span> Fading</code></pre>
+<p>is_fading_music returns back the current fading status</p>
+</section>
+<section id="is_paused_music" class="doc-node">
+<div class="title"><h2>is_paused_music <a href="#is_paused_music">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">is_paused_music</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">bool</span></code></pre>
+<p>is_paused_music returns back if music is paused</p>
+</section>
+<section id="is_playing_music" class="doc-node">
+<div class="title"><h2>is_playing_music <a href="#is_playing_music">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">is_playing_music</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">bool</span></code></pre>
+<p>is_playing_music returns back if music is actively playing</p>
+</section>
+<section id="load_chunk" class="doc-node">
+<div class="title"><h2>load_chunk <a href="#load_chunk">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">load_chunk</span><span class="token punctuation">(</span>path <span class="token builtin">string</span><span class="token punctuation">)</span> ?<span class="token operator">&</span>Chunk</code></pre>
+<p>load_chunk loads in a chunk from the provided <code>path</code></p>
+</section>
+<section id="load_chunk_rw" class="doc-node">
+<div class="title"><h2>load_chunk_rw <a href="#load_chunk_rw">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">load_chunk_rw</span><span class="token punctuation">(</span>ops <span class="token operator">&</span>system<span class="token punctuation">.</span>RWops<span class="token punctuation">,</span> autofree <span class="token builtin">bool</span><span class="token punctuation">)</span> ?<span class="token operator">&</span>Chunk</code></pre>
+<p>load_chunk_rw loads in a chunk via a <code>RWops</code> object</p>
+</section>
+<section id="load_music" class="doc-node">
+<div class="title"><h2>load_music <a href="#load_music">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">load_music</span><span class="token punctuation">(</span>path <span class="token builtin">string</span><span class="token punctuation">)</span> ?Music</code></pre>
+<p>load_music loads a music track from <code>path</code></p>
+</section>
+<section id="resume_music" class="doc-node">
+<div class="title"><h2>resume_music <a href="#resume_music">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">resume_music</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<p>resume_music resumes any active music</p>
+</section>
+<section id="register_effect" class="doc-node">
+<div class="title"><h2>register_effect <a href="#register_effect">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">register_effect</span><span class="token punctuation">(</span>channel <span class="token builtin">int</span><span class="token punctuation">,</span> effect_cb EffectCallback<span class="token punctuation">,</span> effect_done_cb EffectDoneCallback<span class="token punctuation">,</span> data <span class="token builtin">voidptr</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+
+</section>
+<section id="quit" class="doc-node">
+<div class="title"><h2>quit <a href="#quit">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">quit</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<p>quit shuts down all mixer libraries</p>
+</section>
+<section id="pause_music" class="doc-node">
+<div class="title"><h2>pause_music <a href="#pause_music">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">pause_music</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<p>pause_music pauses all currently playing music</p>
+</section>
+<section id="open_device" class="doc-node">
+<div class="title"><h2>open_device <a href="#open_device">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">open_device</span><span class="token punctuation">(</span>device audio<span class="token punctuation">.</span>AudioDevice<span class="token punctuation">,</span> frequency <span class="token builtin">int</span><span class="token punctuation">,</span> format Format<span class="token punctuation">,</span> channels <span class="token builtin">int</span><span class="token punctuation">,</span> buffer_size <span class="token builtin">int</span><span class="token punctuation">,</span> allowed_changes <span class="token builtin">int</span><span class="token punctuation">)</span> ?<span class="token builtin">int</span></code></pre>
+<p>open_device opens the specified audio device for playing audio  Devices can be obtained via <code>audio.get_devices()</code></p>
+</section>
+<section id="open" class="doc-node">
+<div class="title"><h2>open <a href="#open">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">open</span><span class="token punctuation">(</span>frequency <span class="token builtin">int</span><span class="token punctuation">,</span> format Format<span class="token punctuation">,</span> channels <span class="token builtin">int</span><span class="token punctuation">,</span> buffer_size <span class="token builtin">int</span><span class="token punctuation">)</span> ?<span class="token builtin">int</span></code></pre>
+<p>open opens the default audio device for playing audio</p>
+</section>
+<section id="unregister_effect" class="doc-node">
+<div class="title"><h2>unregister_effect <a href="#unregister_effect">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">unregister_effect</span><span class="token punctuation">(</span>channel <span class="token builtin">int</span><span class="token punctuation">,</span> effect_cb EffectCallback<span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>unregister_effect unregisters the provided callback from the channel if it is set</p>
+</section>
+<section id="MusicFinishedCallback" class="doc-node">
+<div class="title"><h2>MusicFinishedCallback <a href="#MusicFinishedCallback">#</a></h2></div><pre class="signature"><code><span class="token keyword">type</span> MusicFinishedCallback <span class="token operator">=</span> <span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+
+</section>
+<section id="PostMixCallback" class="doc-node">
+<div class="title"><h2>PostMixCallback <a href="#PostMixCallback">#</a></h2></div><pre class="signature"><code><span class="token keyword">type</span> PostMixCallback <span class="token operator">=</span> <span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token builtin">voidptr</span><span class="token punctuation">,</span> <span class="token builtin">voidptr</span><span class="token punctuation">,</span> <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+
+</section>
+<section id="MusicCallback" class="doc-node">
+<div class="title"><h2>MusicCallback <a href="#MusicCallback">#</a></h2></div><pre class="signature"><code><span class="token keyword">type</span> MusicCallback <span class="token operator">=</span> <span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token builtin">voidptr</span><span class="token punctuation">,</span> <span class="token builtin">voidptr</span><span class="token punctuation">,</span> <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+
+</section>
+<section id="Music.fade_in" class="doc-node">
+<div class="title"><h2>(Music) fade_in <a href="#Music.fade_in">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>music Music<span class="token punctuation">)</span> <span class="token function">fade_in</span><span class="token punctuation">(</span>loops <span class="token builtin">int</span><span class="token punctuation">,</span> ms <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">bool</span></code></pre>
+
+</section>
+<section id="Music.fade_in_pos" class="doc-node">
+<div class="title"><h2>(Music) fade_in_pos <a href="#Music.fade_in_pos">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>music Music<span class="token punctuation">)</span> <span class="token function">fade_in_pos</span><span class="token punctuation">(</span>loops <span class="token builtin">int</span><span class="token punctuation">,</span> ms <span class="token builtin">int</span><span class="token punctuation">,</span> position <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">bool</span></code></pre>
+<p>fade_in_pos fades in the music at <code>position</code></p>
+</section>
+<section id="Music.free" class="doc-node">
+<div class="title"><h2>(Music) free <a href="#Music.free">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> music Music<span class="token punctuation">)</span> <span class="token function">free</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<p>free frees the <code>Music</code> object</p>
+</section>
+<section id="Music.play" class="doc-node">
+<div class="title"><h2>(Music) play <a href="#Music.play">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>music Music<span class="token punctuation">)</span> <span class="token function">play</span><span class="token punctuation">(</span>loops <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">bool</span></code></pre>
+<p>play plays the <code>Music</code> object</p>
+</section>
+<section id="Chunk.free" class="doc-node">
+<div class="title"><h2>(Chunk) free <a href="#Chunk.free">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>chunk <span class="token operator">&</span>Chunk<span class="token punctuation">)</span> <span class="token function">free</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+
+</section>
+<section id="Chunk.fade_in" class="doc-node">
+<div class="title"><h2>(Chunk) fade_in <a href="#Chunk.fade_in">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>chunk <span class="token operator">&</span>Chunk<span class="token punctuation">)</span> <span class="token function">fade_in</span><span class="token punctuation">(</span>channel <span class="token builtin">int</span><span class="token punctuation">,</span> loop <span class="token builtin">int</span><span class="token punctuation">,</span> ms <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>fade_in fades the chunk in on the provided channel</p>
+</section>
+<section id="Chunk.fade_in_timed" class="doc-node">
+<div class="title"><h2>(Chunk) fade_in_timed <a href="#Chunk.fade_in_timed">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>chunk <span class="token operator">&</span>Chunk<span class="token punctuation">)</span> <span class="token function">fade_in_timed</span><span class="token punctuation">(</span>channel <span class="token builtin">int</span><span class="token punctuation">,</span> loop <span class="token builtin">int</span><span class="token punctuation">,</span> ms <span class="token builtin">int</span><span class="token punctuation">,</span> time <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>fade_in_timed fades in the chunk and runs it for the specified <code>time</code></p>
+</section>
+<section id="Chunk.play" class="doc-node">
+<div class="title"><h2>(Chunk) play <a href="#Chunk.play">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>chunk <span class="token operator">&</span>Chunk<span class="token punctuation">)</span> <span class="token function">play</span><span class="token punctuation">(</span>channel <span class="token builtin">int</span><span class="token punctuation">,</span> loops <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>play plays the chunk on the provided channel</p>
+</section>
+<section id="Chunk.play_timed" class="doc-node">
+<div class="title"><h2>(Chunk) play_timed <a href="#Chunk.play_timed">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>chunk <span class="token operator">&</span>Chunk<span class="token punctuation">)</span> <span class="token function">play_timed</span><span class="token punctuation">(</span>channel <span class="token builtin">int</span><span class="token punctuation">,</span> loops <span class="token builtin">int</span><span class="token punctuation">,</span> time <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>play_timed plays the chunk on the provided channel for <code>time</code></p>
+</section>
+<section id="Chunk.set_volume" class="doc-node">
+<div class="title"><h2>(Chunk) set_volume <a href="#Chunk.set_volume">#</a></h2></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>chunk <span class="token operator">&</span>Chunk<span class="token punctuation">)</span> <span class="token function">set_volume</span><span class="token punctuation">(</span>volume <span class="token builtin">byte</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>set_volume sets the volume for this chunk</p>
+</section>
+<section id="ChannelFinishedCallback" class="doc-node">
+<div class="title"><h2>ChannelFinishedCallback <a href="#ChannelFinishedCallback">#</a></h2></div><pre class="signature"><code><span class="token keyword">type</span> ChannelFinishedCallback <span class="token operator">=</span> <span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+
+</section>
+<section id="EffectCallback" class="doc-node">
+<div class="title"><h2>EffectCallback <a href="#EffectCallback">#</a></h2></div><pre class="signature"><code><span class="token keyword">type</span> EffectCallback <span class="token operator">=</span> <span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token builtin">voidptr</span><span class="token punctuation">,</span> <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token builtin">voidptr</span><span class="token punctuation">)</span></code></pre>
+
+</section>
+<section id="EffectDoneCallback" class="doc-node">
+<div class="title"><h2>EffectDoneCallback <a href="#EffectDoneCallback">#</a></h2></div><pre class="signature"><code><span class="token keyword">type</span> EffectDoneCallback <span class="token operator">=</span> <span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token builtin">voidptr</span><span class="token punctuation">)</span></code></pre>
+
+</section>
+<section id="MixerFlags" class="doc-node">
+<div class="title"><h2>MixerFlags <a href="#MixerFlags">#</a></h2></div><pre class="signature"><code><span class="token keyword">enum</span> <span class="token symbol">MixerFlags</span> <span class="token punctuation">{</span>
+	flac <span class="token operator">=</span> <span class="token number">0x0001</span>
+	mod <span class="token operator">=</span> <span class="token number">0x0002</span>
+	mp3 <span class="token operator">=</span> <span class="token number">0x0008</span>
+	ogg <span class="token operator">=</span> <span class="token number">0x0010</span>
+	mid <span class="token operator">=</span> <span class="token number">0x0020</span>
+	opus <span class="token operator">=</span> <span class="token number">0x0040</span>
+<span class="token punctuation">}</span></code></pre>
+
+</section>
+<section id="Format" class="doc-node">
+<div class="title"><h2>Format <a href="#Format">#</a></h2></div><pre class="signature"><code><span class="token keyword">enum</span> <span class="token symbol">Format</span> <span class="token punctuation">{</span>
+	default <span class="token operator">=</span> <span class="token number">0x0000</span>
+	u8 <span class="token operator">=</span> <span class="token number">0x0008</span>
+	s8 <span class="token operator">=</span> <span class="token number">0x8008</span>
+	u16lsb <span class="token operator">=</span> <span class="token number">0x0010</span>
+	s16lsb <span class="token operator">=</span> <span class="token number">0x8010</span>
+	u16msb <span class="token operator">=</span> <span class="token number">0x1010</span>
+	s16msb <span class="token operator">=</span> <span class="token number">0x9010</span>
+	s32lsb <span class="token operator">=</span> <span class="token number">0x8020</span>
+	s32msb <span class="token operator">=</span> <span class="token number">0x9020</span>
+	f32lsb <span class="token operator">=</span> <span class="token number">0x8120</span>
+	f32msb <span class="token operator">=</span> <span class="token number">0x9120</span>
+<span class="token punctuation">}</span></code></pre>
+
+</section>
+<section id="Fading" class="doc-node">
+<div class="title"><h2>Fading <a href="#Fading">#</a></h2></div><pre class="signature"><code><span class="token keyword">enum</span> <span class="token symbol">Fading</span> <span class="token punctuation">{</span>
+	no_fading
+	fade_out
+	fade_in
+<span class="token punctuation">}</span></code></pre>
+
+</section>
+<section id="MusicType" class="doc-node">
+<div class="title"><h2>MusicType <a href="#MusicType">#</a></h2></div><pre class="signature"><code><span class="token keyword">enum</span> <span class="token symbol">MusicType</span> <span class="token punctuation">{</span>
+	<span class="token keyword">none</span>
+	cmd
+	wav
+	mod
+	mid
+	ogg
+	mp3
+	mp3_mad_unused
+	flac
+	modplug_unused
+	opus
+<span class="token punctuation">}</span></code></pre>
+
+</section>
+
+					<div class="footer">
+						Powered by vdoc. Generated on: 26 Dec 2020 00:38:06
+					</div>
+				</div>
+				<div class="doc-toc"><ul><li class="open"><a href="#channel_allocate">channel_allocate</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#channel_done">channel_done</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#channel_expire">channel_expire</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#channel_fade_in">channel_fade_in</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#channel_fade_in_timed">channel_fade_in_timed</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#channel_fade_out">channel_fade_out</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#channel_fading">channel_fading</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#channel_get_chunk">channel_get_chunk</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#channel_halt">channel_halt</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#channel_pause">channel_pause</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#channel_paused">channel_paused</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#channel_play">channel_play</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#channel_play_timed">channel_play_timed</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#channel_playing">channel_playing</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#channel_resume">channel_resume</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#channel_set_panning">channel_set_panning</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#channel_set_position">channel_set_position</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#channel_set_stereo_reverse">channel_set_stereo_reverse</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#channel_volume">channel_volume</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#unregister_all_effects">unregister_all_effects</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#stop_music">stop_music</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#close">close</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#set_post_mix">set_post_mix</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#set_music_volume">set_music_volume</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#fade_out_music">fade_out_music</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#set_music_position">set_music_position</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#rewind_music">rewind_music</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#get_chunk_decoder">get_chunk_decoder</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#get_music_decoder">get_music_decoder</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#get_num_chunk_decoders">get_num_chunk_decoders</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#get_num_music_decoders">get_num_music_decoders</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#group">group</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#group_available">group_available</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#group_count">group_count</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#group_fade">group_fade</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#group_halt">group_halt</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#group_newer">group_newer</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#group_oldest">group_oldest</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#group_reserve">group_reserve</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#groups">groups</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#hook_music">hook_music</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#hook_music_finished">hook_music_finished</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#init">init</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#is_fading_music">is_fading_music</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#is_paused_music">is_paused_music</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#is_playing_music">is_playing_music</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#load_chunk">load_chunk</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#load_chunk_rw">load_chunk_rw</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#load_music">load_music</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#resume_music">resume_music</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#register_effect">register_effect</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#quit">quit</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#pause_music">pause_music</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#open_device">open_device</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#open">open</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#unregister_effect">unregister_effect</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#MusicFinishedCallback">MusicFinishedCallback</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#PostMixCallback">PostMixCallback</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#MusicCallback">MusicCallback</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#Music.fade_in">Music</a>        <ul>
+<li><a href="#Music.fade_in">fade_in</a></li>
+<li><a href="#Music.fade_in_pos">fade_in_pos</a></li>
+<li><a href="#Music.free">free</a></li>
+<li><a href="#Music.play">play</a></li>
+</ul>
+</li>
+<li class="open"><a href="#Chunk.free">Chunk</a>        <ul>
+<li><a href="#Chunk.free">free</a></li>
+<li><a href="#Chunk.fade_in">fade_in</a></li>
+<li><a href="#Chunk.fade_in_timed">fade_in_timed</a></li>
+<li><a href="#Chunk.play">play</a></li>
+<li><a href="#Chunk.play_timed">play_timed</a></li>
+<li><a href="#Chunk.set_volume">set_volume</a></li>
+</ul>
+</li>
+<li class="open"><a href="#ChannelFinishedCallback">ChannelFinishedCallback</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#EffectCallback">EffectCallback</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#EffectDoneCallback">EffectDoneCallback</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#MixerFlags">MixerFlags</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#Format">Format</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#Fading">Fading</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#MusicType">MusicType</a>        <ul>
+</ul>
+</li>
+</ul></div>
+			</div>
+		</div>
+		<script src="doc.js"></script>
+	</body>
+	</html>
+	

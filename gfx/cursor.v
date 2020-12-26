@@ -37,7 +37,7 @@ pub fn (mut cursor Cursor) free() {
 		return
 	}
 	C.SDL_FreeCursor(cursor.ptr)
-	cursor.ptr = 0
+	cursor.ptr = voidptr(0)
 }
 
 pub fn get_cursor() ?Cursor {

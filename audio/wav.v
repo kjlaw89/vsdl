@@ -58,7 +58,7 @@ pub fn (mut data AudioData) free() bool {
 	}
 	C.SDL_FreeWAV(data.ptr)
 	data.len = 0
-	data.ptr = 0
+	data.ptr = voidptr(0)
 	data.pos = 0
 	return true
 }

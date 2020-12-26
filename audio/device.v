@@ -28,7 +28,7 @@ pub fn (mut device AudioDevice) close() {
 		return
 	}
 	C.SDL_CloseAudioDevice(device.ptr)
-	device.ptr = 0
+	device.ptr = voidptr(0)
 }
 
 // dequeue removes the provided `AudioData` track from the queue

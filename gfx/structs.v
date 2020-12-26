@@ -14,11 +14,6 @@ struct Display {
 	driverdata   voidptr
 }
 
-struct GLContext {
-mut:
-	ptr voidptr
-}
-
 struct C.SDL_MessageBoxData {
 }
 
@@ -76,13 +71,15 @@ mut:
 struct Texture {
 mut:
 	h   int
-	ptr voidptr
 	w   int
+pub mut:
+	ptr voidptr
 }
 
 struct Window {
 mut:
 	fullscreen_mode FullscreenMode
+pub mut:
 	ptr             voidptr
 }
 

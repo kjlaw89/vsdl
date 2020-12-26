@@ -1,4 +1,4 @@
-module gfx
+module platform
 
 fn C.SDL_AndroidGetActivity() voidptr
 

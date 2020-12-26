@@ -1,4 +1,4 @@
-module gfx
+module platform
 
 pub type WindowsMessageCallback = fn (voidptr, voidptr, u32, u64, i64)
 

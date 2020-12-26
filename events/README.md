@@ -92,7 +92,7 @@ In the above examples there are two kinds of loops:
 
 `events.run()` needs to be called to trigger the polling for the events. As long as `events.quit()` is not called it will always return true. `events.loop()` internally calls `for events.run()` and doesn't return until `events.quit()` is called (which is done internally when the Window is closed).
 
-**Note**: If using `events.run()` with `select`, the `select` *must* have an `else {}` or it will block until an event is received (can't won't be received if `events.run()` cannot be called).
+**Note**: If using `events.run()` with `select`, the `select` *must* have an `else {}` or it will block until an event is received (won't be received if `events.run()` cannot be called).
 
 ### Categories
 

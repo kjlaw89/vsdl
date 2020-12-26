@@ -3,6 +3,7 @@ module main
 import vsdl
 import vsdl.events
 import vsdl.gfx
+import vsdl.gfx.gl
 
 #flag linux -lGL
 #flag windows -lopengl32
@@ -16,10 +17,8 @@ fn C.glEnd()
 fn C.glFlush()
 
 fn main() {
-	gfx.gl_load_library("")
-
 	mut window := gfx.create_window("VSDL GL Demo", -1, -1, 640, 480, .shown, .opengl)?
-	mut context := window.create_gl_context()?
+	mut context := gl.create_context(window)?
 
 	defer {
 		context.destroy()
@@ -37,7 +36,7 @@ fn main() {
 
 	C.glFlush()
 	
-	window.swap_gl()
+	gl.swap(window)
 	window.update()
 	events.loop()
 }

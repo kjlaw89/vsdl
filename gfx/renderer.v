@@ -85,7 +85,7 @@ pub fn (mut renderer Renderer) destroy() {
 		return
 	}
 	C.SDL_DestroyRenderer(&renderer)
-	renderer.ptr = 0
+	renderer.ptr = voidptr(0)
 }
 
 // draw_line from `point1` to `point2`

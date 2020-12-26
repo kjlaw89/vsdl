@@ -1,4 +1,4 @@
-module gfx
+module platform
 
 // _ios.c.v is still being loaded in on Windows, so this won't compile
 pub type IPhoneAnimationCallback = fn ( voidptr)

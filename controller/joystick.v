@@ -55,7 +55,7 @@ pub fn (mut joystick Joystick) close() {
 		return
 	}
 	C.SDL_JoystickClose(joystick.ptr)
-	joystick.ptr = 0
+	joystick.ptr = voidptr(0)
 	joystick.is_open = false
 }
 
@@ -63,7 +63,7 @@ fn (mut joystick Joystick) close_by_parent() {
 	if joystick.ptr == 0 {
 		return
 	}
-	joystick.ptr = 0
+	joystick.ptr = voidptr(0)
 	joystick.is_open = false
 }
 

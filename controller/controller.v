@@ -63,7 +63,7 @@ pub fn (mut controller Controller) close() {
 		return
 	}
 	C.SDL_GameControllerClose(controller.ptr)
-	controller.ptr = 0
+	controller.ptr = voidptr(0)
 	controller.is_open = false
 	controller.joystick.close_by_parent()
 }

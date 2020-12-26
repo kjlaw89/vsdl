@@ -65,7 +65,7 @@ pub fn (mut music Music) free() {
 		return
 	}
 	C.Mix_FreeMusic(music.ptr)
-	music.ptr = 0
+	music.ptr = voidptr(0)
 }
 
 // get_num_music_decoders gets the numbers of music decoders

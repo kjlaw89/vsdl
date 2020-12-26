@@ -1,4 +1,4 @@
-module vsdl
+module system
 
 fn C.SDL_RWclose(voidptr) int
 

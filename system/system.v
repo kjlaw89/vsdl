@@ -54,7 +54,7 @@ pub fn get_memory() int {
 
 // get_platform returns the platform being run on
 pub fn get_platform() string {
-	return tos3(C.SDL_GetPlatform())
+	return unsafe { tos3(C.SDL_GetPlatform()) }
 }
 
 // get_power_state returns back the current `PowerState`, seconds, and percentage left
@@ -63,7 +63,7 @@ pub fn get_power_state() (PowerState, int, int) {
 	secs := 0
 	pct := 0
 	result := C.SDL_GetPowerInfo(&secs, &pct)
-	return result, secs, pct
+	return PowerState(result), secs, pct
 }
 
 // has_3d_now checks if the cpu supports AVX features
@@ -137,6 +137,6 @@ pub fn unload_object(ptr voidptr) {
 }
 
 fn serror(text string) string {
-	msg := tos3(C.SDL_GetError())
+	msg := unsafe { tos3(C.SDL_GetError()) }
 	return '$text: $msg'
 }

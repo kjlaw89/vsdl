@@ -40,7 +40,7 @@ fn C.SDL_GL_UnbindTexture(voidptr)
 fn C.SDL_GL_UnloadLibrary()
 
 fn init() {
-	load_library("")
+	load_library('') or { }
 }
 
 // create_context gets a new GL context object for the `Window`
@@ -162,6 +162,6 @@ pub fn swap(window gfx.Window) {
 }
 
 fn serror(text string) string {
-	msg := tos3(C.SDL_GetError())
+	msg := unsafe { tos3(C.SDL_GetError()) }
 	return '$text: $msg'
 }

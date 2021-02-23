@@ -7,7 +7,7 @@ fn C.SDL_HasClipboardText() bool
 fn C.SDL_SetClipboardText(charptr) int
 
 pub fn clipboard_get_text() string {
-	return tos3(C.SDL_GetClipboardText())
+	return unsafe { tos3(C.SDL_GetClipboardText()) }
 }
 
 pub fn clipboard_has_text() bool {

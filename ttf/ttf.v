@@ -5,6 +5,7 @@ module ttf
 #flag -lSDL2_ttf
 #flag -lSDL2
 #include "ttf/SDL_ttf.h"
+
 fn C.TTF_Init()
 
 fn C.TTF_Quit()
@@ -20,6 +21,6 @@ pub fn quit() {
 }
 
 fn serror(text string) string {
-	msg := tos3(C.TTF_GetError())
+	msg := unsafe { tos3(C.TTF_GetError()) }
 	return '$text: $msg'
 }

@@ -1,16 +1,15 @@
 module main
 
 // import time
-import rand.util
+import rand.seed as rseed
 import vsdl
 import vsdl.events
 import vsdl.gfx
 import vsdl.mixer
 import vsdl.ttf
-import sync
 
 struct Game {
-	events       chan string = chan string{}
+	events chan string = chan string{}
 mut:
 	effects      map[string]&mixer.Chunk
 	fonts        map[string]ttf.Font
@@ -28,7 +27,7 @@ mut:
 pub fn (mut game Game) run() ? {
 	game.music['bg'].fade_in(999, 2000)
 	game.logo_texture = game.images['v-logo'].create_texture(game.renderer) or {
-		game.renderer.create_texture(.rgba32, .@static, 1, 1)
+		game.renderer.create_texture(.rgba32, .@static, 1, 1) ?
 	}
 	// Initialize our players
 	mut player1 := Player{
@@ -63,52 +62,52 @@ pub fn (mut game Game) run() ? {
 		game.renderer.fill_viewport(bg_color)
 		// Clear the screen and re-draw the borders
 		game.renderer.set_draw_color(fg_color)
-		game.renderer.draw_line({
+		game.renderer.draw_line(gfx.Point{
 			x: game_width - 2
 			y: 0
-		}, {
+		}, gfx.Point{
 			x: game_width - 2
 			y: win_height
 		})
-		game.renderer.draw_line({
+		game.renderer.draw_line(gfx.Point{
 			x: game_width * 2 - 4
 			y: 0
-		}, {
+		}, gfx.Point{
 			x: game_width * 2 - 4
 			y: win_height
 		})
 		// Set left viewport and draw game 1
-		game.renderer.set_viewport({
+		game.renderer.set_viewport(
 			x: 0
 			y: 0
 			w: game_width
 			h: game_height
-		})
+		)
 		game.players[0].draw()
 		// Set middle viewport
-		game.renderer.set_viewport({
+		game.renderer.set_viewport(
 			x: game_width
 			y: 0
 			w: block_size * field_width
 			h: win_height
-		})
+		)
 		game.draw_center() ?
 		// Set right viewport and draw game 2
-		game.renderer.set_viewport({
+		game.renderer.set_viewport(
 			x: win_width - (block_size * field_width) + 2
 			y: 0
 			w: game_width
 			h: win_height
-		})
+		)
 		game.players[1].draw()
 		if game.state == .init {
-			game.draw_dialog('Start Game', "Hit 'Q' and 'L' to start.")
+			game.draw_dialog('Start Game', "Hit 'Q' and 'L' to start.") ?
 		}
 		if game.state == .paused {
-			game.draw_dialog('Game Paused', "Hit 'Q' or 'L' to resume.")
+			game.draw_dialog('Game Paused', "Hit 'Q' or 'L' to resume.") ?
 		}
 		if game.state == .gameover {
-			game.draw_dialog('Game Over', "Hit 'Q' and 'L' to start.")
+			game.draw_dialog('Game Over', "Hit 'Q' and 'L' to start.") ?
 		}
 		// Handle queued up events from the players
 		for {
@@ -163,56 +162,56 @@ fn (game Game) draw_dialog(header string, body string) ? {
 	width := 350
 	height := 130
 	// Draw transparent BG
-	game.renderer.set_viewport({
+	game.renderer.set_viewport(
 		x: 0
 		y: 0
 		w: win_width
 		h: win_height
-	})
-	game.renderer.set_draw_color({
+	)
+	game.renderer.set_draw_color(
 		r: 0
 		g: 0
 		b: 0
 		a: 175
-	})
+	)
 	game.renderer.set_blend_mode(.blend)
-	game.renderer.draw_fill_rect({
+	game.renderer.draw_fill_rect(
 		x: 0
 		y: 0
 		w: win_width
 		h: win_height
-	})
+	)
 	// Render dialog
-	game.renderer.set_viewport({
+	game.renderer.set_viewport(
 		x: win_width / 2 - 175
 		y: win_height / 3 - 65
 		w: width
 		h: height
-	})
+	)
 	game.renderer.set_blend_mode(.@none)
 	game.renderer.set_draw_color(dialog_color)
-	game.renderer.draw_fill_rect({
+	game.renderer.draw_fill_rect(
 		x: 0
 		y: 0
 		w: width
 		h: height
-	})
+	)
 	h_text := game.fonts['subheader'].render_blended(header, text_color) ?
 	h_text_texture := h_text.create_texture(game.renderer) ?
 	b_text := game.fonts['body'].render_blended(body, text_color) ?
 	b_text_texture := b_text.create_texture(game.renderer) ?
-	game.renderer.render(h_text_texture, {
+	game.renderer.render(h_text_texture, 
 		x: (width / 2) - (h_text.get_width() / 2)
 		y: 20
 		w: h_text.get_width()
 		h: h_text.get_height()
-	})
-	game.renderer.render(b_text_texture, {
+	)
+	game.renderer.render(b_text_texture, 
 		x: (width / 2) - (b_text.get_width() / 2)
 		y: 80
 		w: b_text.get_width()
 		h: b_text.get_height()
-	})
+	)
 	h_text_texture.free()
 	b_text_texture.free()
 	h_text.free()
@@ -221,20 +220,20 @@ fn (game Game) draw_dialog(header string, body string) ? {
 
 // draw_center draws the center section (logo, title and play info)
 fn (game Game) draw_center() ? {
-	game.renderer.render(game.logo_texture, {
+	game.renderer.render(game.logo_texture, 
 		x: game_width / 2 - game.logo_texture.get_width() / 2
 		y: 20
 		w: game.logo_texture.get_width()
 		h: game.logo_texture.get_height()
-	})
+	)
 	h_text := game.fonts['header'].render_blended(title, text_color) ?
 	h_text_texture := h_text.create_texture(game.renderer) ?
-	game.renderer.render(h_text_texture, {
+	game.renderer.render(h_text_texture, 
 		x: (game_width / 2) - (h_text.get_width() / 2)
 		y: 80
 		w: h_text.get_width()
 		h: h_text.get_height()
-	})
+	)
 	h_text_texture.free()
 	h_text.free()
 	mut y_offset := 200
@@ -247,18 +246,18 @@ fn (game Game) draw_center() ? {
 		}
 		s_text := game.fonts['subheader'].render_blended(score, text_color) ?
 		s_text_texture := s_text.create_texture(game.renderer) ?
-		game.renderer.render(p_text_texture, {
+		game.renderer.render(p_text_texture, 
 			x: (game_width / 2) - (p_text.get_width() / 2)
 			y: y_offset
 			w: p_text.get_width()
 			h: p_text.get_height()
-		})
-		game.renderer.render(s_text_texture, {
+		)
+		game.renderer.render(s_text_texture, 
 			x: (game_width / 2) - (s_text.get_width() / 2)
 			y: y_offset + 60
 			w: s_text.get_width()
 			h: s_text.get_height()
-		})
+		)
 		y_offset += 200
 		p_text_texture.free()
 		s_text_texture.free()
@@ -325,7 +324,7 @@ fn (game Game) players_shutdown() {
 
 // players_start starts the game for both players
 fn (mut game Game) players_start() {
-	seed := util.time_seed_array(2)
+	seed := rseed.time_seed_array(2)
 	for p in 0 .. game.players.len {
 		mut player := &game.players[p]
 		player.start(seed)

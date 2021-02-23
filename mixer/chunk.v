@@ -32,7 +32,7 @@ pub fn (chunk &Chunk) fade_in_timed(channel int, loop int, ms int, time int) int
 
 // get_chunk_decoder returns back the name of the decoder for the chunk
 pub fn get_chunk_decoder(index int) string {
-	return tos3(C.Mix_GetChunkDecoder(index))
+	return unsafe { tos3(C.Mix_GetChunkDecoder(index)) }
 }
 
 // get_num_chunk_decoders gets the number of available decoders

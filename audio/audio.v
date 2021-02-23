@@ -52,7 +52,7 @@ pub fn get_drivers() []string {
 	mut drivers := []string{}
 	count := C.SDL_GetNumAudioDrivers()
 	for i := 0; i < count; i++ {
-		drivers << tos3(C.SDL_GetAudioDriver(i))
+		drivers << unsafe { tos3(C.SDL_GetAudioDriver(i)) }
 	}
 	return drivers
 }
@@ -64,7 +64,7 @@ pub fn get_device_count() int {
 
 // get_device_name returns the name of the device at the provided `index`
 pub fn get_device_name(index int) string {
-	return tos3(C.SDL_GetAudioDeviceName(index, 0))
+	return unsafe { tos3(C.SDL_GetAudioDeviceName(index, 0)) }
 }
 
 // quit shuts down the SDL Audio engine
@@ -73,6 +73,6 @@ pub fn quit() {
 }
 
 fn serror(text string) string {
-	msg := tos3(C.SDL_GetError())
+	msg := unsafe { tos3(C.SDL_GetError()) }
 	return '$text: $msg'
 }

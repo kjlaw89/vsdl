@@ -68,7 +68,7 @@ fn (mut joystick Joystick) close_by_parent() {
 }
 
 pub fn (joystick Joystick) get_power_level() JoystickPowerLevel {
-	return C.SDL_JoystickCurrentPowerLevel(joystick.ptr)
+	return JoystickPowerLevel(C.SDL_JoystickCurrentPowerLevel(joystick.ptr))
 }
 
 pub fn (joystick Joystick) get_attached() bool {
@@ -91,7 +91,7 @@ pub fn (joystick Joystick) get_button(button int) bool {
 }
 
 pub fn (joystick Joystick) get_hat(hat int) JoystickHatPos {
-	return C.SDL_JoystickGetHat(joystick.ptr, hat)
+	return JoystickHatPos(C.SDL_JoystickGetHat(joystick.ptr, hat))
 }
 
 pub fn get_joystick_from_id(id int) ?Joystick {
@@ -135,7 +135,7 @@ pub fn joystick_update() {
 }
 
 pub fn name_for_index(index int) string {
-	return tos3(C.SDL_JoystickNameForIndex(index))
+	return unsafe { tos3(C.SDL_JoystickNameForIndex(index)) }
 }
 
 pub fn (mut joystick Joystick) open() ? {

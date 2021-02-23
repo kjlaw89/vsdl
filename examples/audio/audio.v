@@ -7,17 +7,17 @@ import vsdl.gfx
 import vsdl.events
 
 fn main() {
-	mut window := gfx.create_window("VSDL Sound Demo", -1, -1, 640, 480, .shown)?
-	surface := window.get_surface()?
+	mut window := gfx.create_window('VSDL Sound Demo', -1, -1, 640, 480, .shown) ?
+	surface := window.get_surface() ?
 	surface.fill(r: 255, g: 255, b: 255)
-	
+
 	window.update()
 
-	mut audio_song := audio.load_wav(os.resource_abs_path("song.wav"))?
-	audio_devices  := audio.get_devices() 				// returns a list of available output devices
+	mut audio_song := audio.load_wav(os.resource_abs_path('song.wav')) ?
+	audio_devices := audio.get_devices() // returns a list of available output devices
 
 	mut device := audio_devices[0]
-	device.open(audio_song.get_spec())
+	device.open(audio_song.get_spec()) ?
 	device.unpause()
 
 	defer {
@@ -36,8 +36,8 @@ fn main() {
 	for events.run(true) {
 		select {
 			event := <-key_chan {
-				match event.key.input.key {
-					.key_up { 
+				match unsafe { event.key.input.key } {
+					.key_up {
 						volume := song.get_volume()
 						song.set_volume(volume + 1)
 					}
@@ -53,7 +53,7 @@ fn main() {
 						pos := song.get_pos()
 						song.set_pos(pos + 1)
 					}
-					else { }
+					else {}
 				}
 			}
 			else {}

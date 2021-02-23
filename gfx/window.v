@@ -33,7 +33,7 @@ fn C.SDL_GetWindowMaximumSize(voidptr, voidptr, voidptr)
 
 fn C.SDL_GetWindowMinimumSize(voidptr, voidptr, voidptr)
 
-fn C.SDL_GetWindowOpacity(voidptr, voidptr) float
+fn C.SDL_GetWindowOpacity(voidptr, voidptr) f32
 
 fn C.SDL_GetWindowPixelFormat(voidptr) u32
 
@@ -120,7 +120,7 @@ pub fn create_window(title string, x int, y int, width int, height int, flags ..
 		} else if f == .borderless {
 			fullscreen_mode = .fullscreen_desktop
 		}
-		flag = flag | f
+		flag = flag | u32(f)
 	}
 	window := Window{
 		fullscreen_mode: fullscreen_mode
@@ -134,7 +134,7 @@ pub fn create_window(title string, x int, y int, width int, height int, flags ..
 
 // create_window_and_renderer calls into `create_window` and initializes a `renderer` for use automatically
 pub fn create_window_and_renderer(title string, x int, y int, width int, height int, flags ...WindowFlags) ?(Window, Renderer) {
-	window := create_window(title, x, y, width, height, flags) ?
+	window := create_window(title, x, y, width, height, ...flags) ?
 	renderer := window.create_renderer(-1, 0) ?
 	return window, renderer
 }
@@ -225,7 +225,7 @@ pub fn (window Window) get_opacity() f32 {
 }
 
 pub fn (window Window) get_pixel_format() PixelFormats {
-	return C.SDL_GetWindowPixelFormat(window.ptr)
+	return PixelFormats(C.SDL_GetWindowPixelFormat(window.ptr))
 }
 
 pub fn (window Window) get_position() Point {
@@ -254,7 +254,7 @@ pub fn (window Window) get_surface() ?&Surface {
 }
 
 pub fn (window Window) get_title() string {
-	return tos3(C.SDL_GetWindowTitle(window.ptr))
+	return unsafe { tos3(C.SDL_GetWindowTitle(window.ptr)) }
 }
 
 pub fn get_window_from_id(id u32) ?Window {

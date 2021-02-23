@@ -66,7 +66,7 @@ pub fn (format &PixelFormat) map_rgba(r byte, g byte, b byte, a byte) u32 {
 }
 
 pub fn masks_to_pixel_formats(bpp int, rmask u32, gmask u32, bmask u32, amask u32) PixelFormats {
-	return C.SDL_MasksToPixelFormatEnum(bpp, rmask, gmask, bmask, amask)
+	return PixelFormats(C.SDL_MasksToPixelFormatEnum(bpp, rmask, gmask, bmask, amask))
 }
 
 pub fn new_pixel_format(format u32) &PixelFormat {

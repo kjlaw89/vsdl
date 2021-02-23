@@ -27,7 +27,7 @@ pub fn init(flags ...MixerFlags) int {
 	// Sum the flags
 	mut flag := 0
 	for f in flags {
-		flag = flag | f
+		flag = flag | int(f)
 	}
 	return C.Mix_Init(flag)
 }
@@ -81,6 +81,6 @@ pub fn open_device(device audio.AudioDevice, frequency int, format Format, chann
 }
 
 fn serror(text string) string {
-	msg := tos3(C.Mix_GetError())
+	msg := unsafe { tos3(C.Mix_GetError()) }
 	return '$text: $msg'
 }

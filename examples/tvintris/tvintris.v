@@ -91,7 +91,7 @@ fn main() {
 		renderer: renderer
 	}
 	// Once `run` is called the game will continue until the window is closed
-	game.run()
+	game.run() ?
 	mixer.close()
 	renderer.destroy()
 	window.destroy()

@@ -10,90 +10,131 @@ import vsdl.gfx
 
 const (
 	// Controls
-	p1_fire  = events.KeyCode.key_q
-	p1_up    = events.KeyCode.key_w
-	p1_down  = events.KeyCode.key_s
-	p1_left  = events.KeyCode.key_a
-	p1_right = events.KeyCode.key_d
-
-	p2_fire  = events.KeyCode.key_l
-	p2_up    = events.KeyCode.key_up
-	p2_down  = events.KeyCode.key_down
-	p2_left  = events.KeyCode.key_left
-	p2_right = events.KeyCode.key_right
-
+	p1_fire      = events.KeyCode.key_q
+	p1_up        = events.KeyCode.key_w
+	p1_down      = events.KeyCode.key_s
+	p1_left      = events.KeyCode.key_a
+	p1_right     = events.KeyCode.key_d
+	p2_fire      = events.KeyCode.key_l
+	p2_up        = events.KeyCode.key_up
+	p2_down      = events.KeyCode.key_down
+	p2_left      = events.KeyCode.key_left
+	p2_right     = events.KeyCode.key_right
 	// Tetros' 4 possible states are encoded in binaries
-	tetros = [
-		// 0000 0
-		// 0000 0
-		// 0110 6
-		// 0110 6
+	tetros       = [
+		/* 0000 0 */
+		/* 0000 0 */
+		/* 0110 6 */
+		/* 0110 6 */
 		[66, 66, 66, 66],
-		// 0000 0
-		// 0000 0
-		// 0010 2
-		// 0111 7
+		/* 0000 0 */
+		/* 0000 0 */
+		/* 0010 2 */
+		/* 0111 7 */
 		[27, 131, 72, 232],
-		// 0000 0
-		// 0000 0
-		// 0011 3
-		// 0110 6
+		/* 0000 0 */
+		/* 0000 0 */
+		/* 0011 3 */
+		/* 0110 6 */
 		[36, 231, 36, 231],
-		// 0000 0
-		// 0000 0
-		// 0110 6
-		// 0011 3
+		/* 0000 0 */
+		/* 0000 0 */
+		/* 0110 6 */
+		/* 0011 3 */
 		[63, 132, 63, 132],
-		// 0000 0
-		// 0011 3
-		// 0001 1
-		// 0001 1
+		/* 0000 0 */
+		/* 0011 3 */
+		/* 0001 1 */
+		/* 0001 1 */
 		[311, 17, 223, 74],
-		// 0000 0
-		// 0011 3
-		// 0010 2
-		// 0010 2
+		/* 0000 0 */
+		/* 0011 3 */
+		/* 0010 2 */
+		/* 0010 2 */
 		[322, 71, 113, 47],
-		// Special case since 15 can't be used
-		// 1111
+		/* Special case since 15 can't be used */
+		/* 1111 */
 		[1111, 9, 1111, 9],
 	]
-
 	// Each tetro has its unique color
 	tetro_colors = [
-		gfx.Color{ r: 0,    g: 0,    b: 0    },	// unused ?
-		gfx.Color{ r: 0,    g: 0x62, b: 0xC0 },	// quad : darkblue 0062c0
-		gfx.Color{ r: 0xCA, g: 0x7D, b: 0x5F },	// tricorn : lightbrown ca7d5f
-		gfx.Color{ r: 0,    g: 0xC1, b: 0xBF },	// short topright : lightblue 00c1bf
-		gfx.Color{ r: 0,    g: 0xC1, b: 0    },	// short topleft : lightgreen 00c100
-		gfx.Color{ r: 0xBF, g: 0xBE, b: 0    },	// long topleft : yellowish bfbe00
-		gfx.Color{ r: 0xD1, g: 0,    b: 0xBF },	// long topright : pink d100bf
-		gfx.Color{ r: 0xD1, g: 0,    b: 0    },	// longest : lightr d10000
-		gfx.Color{ r: 0,    g: 170,  b: 170, },	// unused ?
+		gfx.Color{
+			r: 0
+			g: 0
+			b: 0
+		},
+		/* unused ? */
+		gfx.Color{
+			r: 0
+			g: 0x62
+			b: 0xC0
+		},
+		/* quad : darkblue 0062c0 */
+		gfx.Color{
+			r: 0xCA
+			g: 0x7D
+			b: 0x5F
+		},
+		/* tricorn : lightbrown ca7d5f */
+		gfx.Color{
+			r: 0
+			g: 0xC1
+			b: 0xBF
+		},
+		/* short topright : lightblue 00c1bf */
+		gfx.Color{
+			r: 0
+			g: 0xC1
+			b: 0
+		},
+		/* short topleft : lightgreen 00c100 */
+		gfx.Color{
+			r: 0xBF
+			g: 0xBE
+			b: 0
+		},
+		/* long topleft : yellowish bfbe00 */
+		gfx.Color{
+			r: 0xD1
+			g: 0
+			b: 0xBF
+		},
+		/* long topright : pink d100bf */
+		gfx.Color{
+			r: 0xD1
+			g: 0
+			b: 0
+		},
+		/* longest : lightr d10000 */
+		gfx.Color{
+			r: 0
+			g: 170
+			b: 170
+		},
+		/* unused ? */
 	]
 )
 
 struct Player {
-	events       chan string
-	input        chan events.Event
-	renderer     gfx.Renderer
+	events   chan string
+	input    chan events.Event
+	renderer gfx.Renderer
 mut:
-	k_fire       int
-	k_up         int
-	k_down       int
-	k_left       int
-	k_right      int
-	lines        int                     // Count consecutive lines for scoring
-	name         string
-	pos_x        int                     // X Position of the current tetro
-	pos_y        int                     // Y Position of the current tetro
-	ready        bool
-	rng          &wyrand.WyRandRNG = 0
-	score        int                     // Score of the current game
-	state        GameState         = .init // State of the current game
-	update_rate  u32               = 250
-	wg           &sync.WaitGroup   = sync.new_waitgroup()
-	
+	k_fire      events.KeyCode
+	k_up        events.KeyCode
+	k_down      events.KeyCode
+	k_left      events.KeyCode
+	k_right     events.KeyCode
+	lines       int // Count consecutive lines for scoring
+	name        string
+	pos_x       int // X Position of the current tetro
+	pos_y       int // Y Position of the current tetro
+	ready       bool
+	rng         &wyrand.WyRandRNG = 0
+	score       int       // Score of the current game
+	state       GameState       = .init // State of the current game
+	update_rate u32             = 250
+	wg          &sync.WaitGroup = sync.new_waitgroup()
 	// field[y][x] contains the color of the block with (x,y) coordinates
 	// "-1" border is to avoid bounds checking.
 	// -1 -1 -1 -1
@@ -101,18 +142,17 @@ mut:
 	// -1  0  0 -1
 	// -1 -1 -1 -1
 	field        [][]int
-	rotation_idx int                     // Index of the rotation (0-3)
-	tetro        []Block                 // TODO: tetro Tetro
-	tetro_idx    int                     // Index of the current tetro. Refers to its color.
-	tetro_next   int                     // Index of the next tetro. Refers to its color.
-	tetro_stats  []int                   // tetro stats : buckets of drawn tetros
-	tetro_total  int                     // total number of drawn tetros
-	tetros_cache []Block                 // TODO: tetros_cache []Tetro
+	rotation_idx int     // Index of the rotation (0-3)
+	tetro        []Block // TODO: tetro Tetro
+	tetro_idx    int     // Index of the current tetro. Refers to its color.
+	tetro_next   int     // Index of the next tetro. Refers to its color.
+	tetro_stats  []int   // tetro stats : buckets of drawn tetros
+	tetro_total  int     // total number of drawn tetros
+	tetros_cache []Block // TODO: tetros_cache []Tetro
 }
 
 // init initializes this game state
 pub fn (mut player Player) init() {
-
 	// Don't allow initializing the game more than once
 	if player.state != .init {
 		return
@@ -157,9 +197,8 @@ fn (mut player Player) delete_completed_lines() int {
 
 // draw draws this game to the renderer
 pub fn (mut player Player) draw() {
-
 	// Draw tetro
-	for i in 0..tetro_size {
+	for i in 0 .. tetro_size {
 		if player.tetro.len <= i {
 			continue
 		}
@@ -200,7 +239,7 @@ fn (player Player) draw_block(x int, y int, color_index int) {
 }
 
 fn (mut player Player) drop_tetro() {
-	for i in 0..tetro_size {
+	for i in 0 .. tetro_size {
 		tetro := player.tetro[i]
 		x := tetro.x + player.pos_x
 		y := tetro.y + player.pos_y
@@ -225,7 +264,7 @@ fn (mut player Player) generate_tetro() {
 // Get the right tetro from cache
 fn (mut player Player) get_tetro() {
 	idx := player.tetro_idx * tetro_size * tetro_size + player.rotation_idx * tetro_size
-	player.tetro = player.tetros_cache[idx .. idx + tetro_size]
+	player.tetro = player.tetros_cache[idx..idx + tetro_size]
 }
 
 // input manages this game's input data as it comes in
@@ -234,17 +273,25 @@ fn (mut player Player) input() {
 	for player.state != .shutdown {
 		select {
 			event := <-player.input {
-				match event.@type {
+				match unsafe { event.@type } {
 					.keydown {
-						match event.key.input.key {
-							player.k_fire  {
+						match events.KeyCode(unsafe { event.key.input.key }) {
+							player.k_fire {
 								player.ready = true
-								player.events <- "action"
+								player.events <- 'action'
 							}
-							player.k_up    { player.rotate_tetro()     }
-							player.k_left  { player.move_right(-1)     }
-							player.k_right { player.move_right(1)      }
-							player.k_down  { player.move_tetro()       } // drop faster when the player presses <down>
+							player.k_up {
+								player.rotate_tetro()
+							}
+							player.k_left {
+								player.move_right(-1)
+							}
+							player.k_right {
+								player.move_right(1)
+							}
+							player.k_down {
+								player.move_tetro()
+							} // drop faster when the player presses <down>
 							else {}
 						}
 					}
@@ -264,7 +311,7 @@ fn (mut player Player) move_right(dx int) bool {
 	}
 
 	// Reached left/right edge or another tetro?
-	for i in 0..tetro_size {
+	for i in 0 .. tetro_size {
 		tetro := player.tetro[i]
 		y := tetro.y + player.pos_y
 		x := tetro.x + player.pos_x + dx
@@ -290,7 +337,7 @@ fn (mut player Player) move_tetro() {
 		x := block.x + player.pos_x
 		// Reached the bottom of the screen or another block?
 		// TODO: if player.field[y][x] != 0
-		//if player.field[y][x] != 0 {
+		// if player.field[y][x] != 0 {
 		row := player.field[y]
 		if row[x] != 0 {
 			// The new tetro has no space to drop => end of the game
@@ -298,14 +345,14 @@ fn (mut player Player) move_tetro() {
 				player.ready = false
 				player.state = .gameover
 				player.tetro_total = 0
-				player.events <- "gameover"
+				player.events <- 'gameover'
 				return
 			}
 
 			// Drop it and generate a new one
 			player.drop_tetro()
 			player.generate_tetro()
-			player.events <- "play_block"
+			player.events <- 'play_block'
 			return
 		}
 	}
@@ -314,7 +361,7 @@ fn (mut player Player) move_tetro() {
 }
 
 fn parse_binary_tetro(t_ int) []Block {
-	mut res := []Block{ len: 4 }
+	mut res := []Block{len: 4}
 	mut t := t_
 	mut cnt := 0
 
@@ -391,7 +438,7 @@ pub fn (mut player Player) resume() {
 
 // start resets all game variables and sets the game state to active
 pub fn (mut player Player) start(seed []u32) {
-	player.rng = rand.new_default({ seed: seed })  // restart our seed so all players start the game
+	player.rng = rand.new_default(seed: seed) // restart our seed so all players start the game
 	player.score = 0
 	player.tetro_total = 0
 	player.tetro_stats = [0, 0, 0, 0, 0, 0, 0]
@@ -400,8 +447,8 @@ pub fn (mut player Player) start(seed []u32) {
 	player.field = []
 
 	// Generate the field, fill it with 0's, add -1's on each edge
-	for _ in 0..field_height + 2 {
-		mut row := []int{ init: 0, len: field_width + 2, }
+	for _ in 0 .. field_height + 2 {
+		mut row := []int{len: field_width + 2, init: 0}
 		row[0] = -1
 		row[field_width + 1] = -1
 		player.field << row
@@ -409,11 +456,11 @@ pub fn (mut player Player) start(seed []u32) {
 
 	mut first_row := player.field[0]
 	mut last_row := player.field[field_height + 1]
-	for j in 0..field_width + 2 {
+	for j in 0 .. field_width + 2 {
 		first_row[j] = -1
 		last_row[j] = -1
 	}
-	
+
 	player.state = .playing
 }
 
@@ -429,9 +476,9 @@ fn (mut player Player) update() {
 			} else {
 				if player.lines > 0 {
 					if player.lines > 1 {
-						player.events <- "play_double"
+						player.events <- 'play_double'
 					} else if player.lines == 1 {
-						player.events <- "play_single"
+						player.events <- 'play_single'
 					}
 
 					player.score += 10 * player.lines * player.lines

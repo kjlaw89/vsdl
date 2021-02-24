@@ -15,6 +15,6 @@ pub fn load_bmp(path string) ?&Surface {
 }
 
 fn serror(text string) string {
-	msg := tos3(C.SDL_GetError())
+	msg := unsafe { tos3(C.SDL_GetError()) }
 	return '$text: $msg'
 }

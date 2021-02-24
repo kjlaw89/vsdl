@@ -56,7 +56,7 @@ pub fn set_cursor(cursor Cursor) {
 
 pub fn show_cursor(mode CursorMode) CursorMode {
 	if mode == .query {
-		return C.SDL_ShowCursor(mode)
+		return CursorMode(C.SDL_ShowCursor(mode))
 	}
 	C.SDL_ShowCursor(mode)
 	return mode

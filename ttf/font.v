@@ -71,12 +71,12 @@ pub fn (font Font) get_faces() int {
 
 // get_face_name returns the name of the current face
 pub fn (font Font) get_face_name() string {
-	return tos3(C.TTF_FontFaceFamilyName(font.ptr))
+	return unsafe { tos3(C.TTF_FontFaceFamilyName(font.ptr)) }
 }
 
 // get_face_style returns the name of the current face's style
 pub fn (font Font) get_face_style() string {
-	return tos3(C.TTF_FontFaceStyleName(font.ptr))
+	return unsafe { tos3(C.TTF_FontFaceStyleName(font.ptr)) }
 }
 
 // get_height returns the max height of the entire font
@@ -86,7 +86,7 @@ pub fn (font Font) get_height() int {
 
 // get_hinting returns the current outline size of the font
 pub fn (font Font) get_hinting() FontHinting {
-	return C.TTF_GetFontHinting(font.ptr)
+	return FontHinting(C.TTF_GetFontHinting(font.ptr))
 }
 
 // get_glyph_metrics return the metrics (minX, maxX, minY, maxY, advance) on the provided character
@@ -128,7 +128,7 @@ pub fn (font Font) get_size(text string) (int, int) {
 
 // get_style returns the style of the current font (bold, italic, etc)
 pub fn (font Font) get_style() FontStyle {
-	return C.TTF_GetFontStyle(font.ptr)
+	return FontStyle(C.TTF_GetFontStyle(font.ptr))
 }
 
 // is_fixed checks if the current face is a fixed-width

@@ -75,7 +75,7 @@ pub fn get_num_music_decoders() int {
 
 // get_music_decoder gets the name of the provided music decoder
 pub fn get_music_decoder(index int) string {
-	return tos3(C.Mix_GetMusicDecoder(index))
+	return unsafe { tos3(C.Mix_GetMusicDecoder(index)) }
 }
 
 // hook_music allows hooking into the playback process by providing a `callback`
@@ -90,7 +90,7 @@ pub fn hook_music_finished(callback MusicFinishedCallback) {
 
 // is_fading_music returns back the current fading status
 pub fn is_fading_music() Fading {
-	return C.Mix_FadingMusic()
+	return Fading(C.Mix_FadingMusic())
 }
 
 // is_paused_music returns back if music is paused
@@ -111,7 +111,7 @@ pub fn load_music(path string) ?Music {
 	}
 	return Music{
 		ptr: ptr
-		@type: C.Mix_GetMusicType(ptr)
+		@type: MusicType(C.Mix_GetMusicType(ptr))
 	}
 }
 

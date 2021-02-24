@@ -44,7 +44,7 @@ fn init() {
 }
 
 fn serror(text string) string {
-	msg := tos3(C.SDL_GetError())
+	msg := unsafe { tos3(C.SDL_GetError()) }
 	return '$text: $msg'
 }
 
@@ -89,7 +89,7 @@ pub fn get_controllers() []Controller {
 }
 
 pub fn (controller Controller) get_mapping() string {
-	return tos3(C.SDL_GameControllerMapping(controller.ptr))
+	return unsafe { tos3(C.SDL_GameControllerMapping(controller.ptr)) }
 }
 
 pub fn (controller Controller) get_attached() bool {
@@ -121,7 +121,7 @@ pub fn (controller Controller) get_power_level() JoystickPowerLevel {
 }
 
 pub fn controller_get_name_for_index(index int) string {
-	return tos3(C.SDL_GameControllerNameForIndex(index))
+	return unsafe { tos3(C.SDL_GameControllerNameForIndex(index)) }
 }
 
 pub fn (mut controller Controller) open() ? {

@@ -7,13 +7,13 @@ import vsdl.gfx
 import vsdl.mixer
 
 fn main() {
-	mut window := gfx.create_window("VSDL Mixer Demo", -1, -1, 640, 480, .shown)?
-	surface := window.get_surface()?
+	mut window := gfx.create_window('VSDL Mixer Demo', -1, -1, 640, 480, .shown) ?
+	surface := window.get_surface() ?
 	surface.fill(r: 255, g: 255, b: 255)
 
-	mixer.open(44100, .default, 2, 1024)?
-	music1 := mixer.load_music(os.resource_abs_path("music-regular.mid"))?
-	music2 := mixer.load_music(os.resource_abs_path("music-fast.mid"))?
+	mixer.open(44100, .default, 2, 1024) ?
+	music1 := mixer.load_music(os.resource_abs_path('music-regular.mid')) ?
+	music2 := mixer.load_music(os.resource_abs_path('music-fast.mid')) ?
 	music1.fade_in(999, 5000)
 
 	defer {
@@ -23,7 +23,7 @@ fn main() {
 		mixer.quit()
 		vsdl.quit()
 	}
-	
+
 	window.update()
 
 	mut volume := 100
@@ -33,7 +33,7 @@ fn main() {
 	for events.run(true) {
 		select {
 			event := <-key_chan {
-				match event.key.input.key {
+				match unsafe { event.key.input.key } {
 					.key_up {
 						volume = if volume + 1 > 128 { 128 } else { volume + 1 }
 						mixer.set_music_volume(volume)
@@ -48,7 +48,7 @@ fn main() {
 					.key_2, .key_kp_2 {
 						music2.play(999)
 					}
-					else { }
+					else {}
 				}
 			}
 			else {}

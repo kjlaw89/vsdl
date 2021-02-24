@@ -9,6 +9,7 @@ import vsdl.system
 #flag -lSDL2_image
 #flag -lSDL2
 #include "image/SDL_image.h"
+
 fn C.IMG_GetError() charptr
 
 fn C.IMG_Init(int) int
@@ -61,7 +62,7 @@ pub fn init(flags ...ImgFlags) int {
 	// Sum the flags
 	mut flag := 0
 	for f in flags {
-		flag = flag | f
+		flag = flag | int(f)
 	}
 	return C.IMG_Init(flag)
 }
@@ -148,6 +149,6 @@ pub fn quit() {
 }
 
 fn serror(text string) string {
-	msg := tos3(C.IMG_GetError())
+	msg := unsafe { tos3(C.IMG_GetError()) }
 	return '$text: $msg'
 }

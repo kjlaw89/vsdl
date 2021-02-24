@@ -1,6 +1,6 @@
 module mixer
 
-pub type ChannelFinishedCallback = fn ( int)
+pub type ChannelFinishedCallback = fn (int)
 
 fn C.Mix_AllocateChannels(int) int
 
@@ -49,7 +49,7 @@ pub fn channel_expire(channel int, ms int) int {
 
 // channel_fading returns back the fading status of the provided channel
 pub fn channel_fading(channel u32) Fading {
-	return C.Mix_FadingChannel(channel)
+	return Fading(C.Mix_FadingChannel(channel))
 }
 
 // channel_fade_in plays the provided `Chunk` on a channel (-1 is next free)

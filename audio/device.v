@@ -43,7 +43,7 @@ pub fn (device &AudioDevice) empty() {
 
 // get_status returns the current play status of the `AudioDevice`
 pub fn (device &AudioDevice) get_status() AudioStatus {
-	return C.SDL_GetAudioDeviceStatus(device.ptr)
+	return AudioStatus(C.SDL_GetAudioDeviceStatus(device.ptr))
 }
 
 // get_queue_size returns the amount of bytes that are queued to be played
@@ -67,10 +67,10 @@ pub fn (mut device AudioDevice) open(spec AudioSpec, flags ...AudioChangeFlags) 
 	// Sum the flags
 	mut flag := u32(0)
 	for f in flags {
-		flag = flag | f
+		flag = flag | u32(f)
 	}
-	mut desired_spec := {
-		spec |
+	mut desired_spec := AudioSpec{
+		...spec
 		callback: play
 		userdata: device
 	}
@@ -93,7 +93,7 @@ pub fn (mut device AudioDevice) play(data AudioData, volume i8) &AudioData {
 	// copy := { data | copy: true, pos: 0, status: AudioStatus.playing, volume: if volume < 0 { 0 } else { volume } }
 	copy := &AudioData{
 		copy: true
-		device: &device
+		device: device
 		len: data.len
 		loop: false
 		path: data.path
@@ -127,7 +127,7 @@ pub fn (device &AudioDevice) unpause() {
 }
 
 fn play(mut device AudioDevice, stream &byte, len int) {
-	unsafe {C.memset(stream, 0, len)}
+	unsafe { C.memset(stream, 0, len) }
 	// Basic Mix Workflow:
 	// 1. Loop through each file in the play queue
 	// 2. Mix in the file's (buffer + pos) and len (or len - pos)
@@ -141,8 +141,10 @@ fn play(mut device AudioDevice, stream &byte, len int) {
 		}
 		mut remaining := data.get_remaining()
 		length := if len < data.get_remaining() { u32(len) } else { data.get_remaining() }
-		unsafe {C.SDL_MixAudioFormat(stream, data.ptr + data.pos, device.spec.format,
-			length, data.volume)}
+		unsafe {
+			C.SDL_MixAudioFormat(stream, data.ptr + data.pos, device.spec.format, length,
+				data.volume)
+		}
 		data.pos += u32(length)
 		remaining = data.get_remaining()
 		if remaining == 0 && !data.loop {

@@ -1,0 +1,35 @@
+name: Examples compile
+
+on: [push, pull_request]
+
+jobs:
+  ubuntu:
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Checkout Latest V
+      uses: actions/checkout@v2
+      with:
+        repository: vlang/v
+
+    - name: Checkout VSDL
+      uses: actions/checkout@v2
+      with:
+        path: vsdl
+
+    - name: Build V and symlink
+      run: |
+        make
+        sudo ./v symlink
+		
+    - name: V doctor
+      run: v doctor
+	  
+    - name: Install SDL2 and its dependencies
+      run: sudo apt --quiet -y install libsdl2{,-image,-mixer,-ttf}-dev zlib1g-dev libfreetype6-dev
+	  
+    - name: Symlink vsdl to .vmodules
+      run: ln -s $(realpath vsdl) ~/.vmodules/vsdl
+	  
+    - name: Build all examples
+      run: cd vsdl; ./build_all.sh

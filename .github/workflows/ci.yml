@@ -21,15 +21,15 @@ jobs:
       run: |
         make
         sudo ./v symlink
-		
-    - name: V doctor
+
+- name: V doctor
       run: v doctor
-	  
+
     - name: Install SDL2 and its dependencies
       run: sudo apt --quiet -y install libsdl2{,-image,-mixer,-ttf}-dev zlib1g-dev libfreetype6-dev
-	  
+
     - name: Symlink vsdl to .vmodules
       run: ln -s $(realpath vsdl) ~/.vmodules/vsdl
-	  
+
     - name: Build all examples
       run: cd vsdl; ./build_all.sh

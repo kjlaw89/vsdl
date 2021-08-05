@@ -97,19 +97,19 @@ pub fn (controller Controller) get_attached() bool {
 }
 
 pub fn (controller Controller) get_axis(axis ControllerAxis) i16 {
-	return C.SDL_GameControllerGetAxis(controller.ptr, axis)
+	return C.SDL_GameControllerGetAxis(controller.ptr, int(axis))
 }
 
 pub fn (controller Controller) get_axis_binding(axis ControllerAxis) ControllerButtonBind {
-	return C.SDL_GameControllerGetBindForAxis(controller.ptr, axis)
+	return C.SDL_GameControllerGetBindForAxis(controller.ptr, int(axis))
 }
 
 pub fn (controller Controller) get_button_binding(button ControllerButton) ControllerButtonBind {
-	return C.SDL_GameControllerGetBindForButton(controller.ptr, button)
+	return C.SDL_GameControllerGetBindForButton(controller.ptr, int(button))
 }
 
 pub fn (controller Controller) get_button(button ControllerButton) bool {
-	return C.SDL_GameControllerGetButton(controller.ptr, button) > 0
+	return C.SDL_GameControllerGetButton(controller.ptr, int(button)) > 0
 }
 
 pub fn (controller Controller) get_joystick() ?Joystick {

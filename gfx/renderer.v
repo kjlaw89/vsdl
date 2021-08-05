@@ -63,14 +63,14 @@ pub fn (renderer Renderer) copy(texture Texture, src_rect Rect, dst_rect Rect) i
 // the given center `Point` and optionally flipping it top-bottom or left-right
 pub fn (renderer Renderer) copy_ex(texture Texture, src_rect Rect, dst_rect Rect, angle f64, center Point, flip RendererFlip) int {
 	return C.SDL_RenderCopyEx(renderer.ptr, texture.ptr, &src_rect, &dst_rect, angle,
-		&center, flip)
+		&center, u32(flip))
 }
 
 // create_texture creates a new texture from the renderer
 pub fn (renderer Renderer) create_texture(format PixelFormats, access TextureAccess, width int, height int) ?Texture {
 	texture := Texture{
 		h: height
-		ptr: C.SDL_CreateTexture(renderer.ptr, format, access, width, height)
+		ptr: C.SDL_CreateTexture(renderer.ptr, u32(format), int(access), width, height)
 		w: width
 	}
 	if texture.ptr == 0 {
@@ -153,7 +153,7 @@ pub fn (renderer Renderer) get_draw_color() Color {
 	g := byte(0)
 	a := byte(0)
 	C.SDL_GetRenderDrawColor(renderer.ptr, &r, &b, &g, &a)
-	return {
+	return Color{
 		r: r
 		b: b
 		g: g
@@ -209,7 +209,7 @@ pub fn (renderer Renderer) present() {
 // render renders a texture in its entirety to the specified
 // size and position on this renderer
 pub fn (renderer Renderer) render(texture Texture, rect Rect) int {
-	return renderer.copy(texture, {
+	return renderer.copy(texture, Rect{
 		x: 0
 		y: 0
 		w: texture.w
@@ -218,7 +218,7 @@ pub fn (renderer Renderer) render(texture Texture, rect Rect) int {
 }
 
 pub fn (renderer Renderer) set_blend_mode(mode BlendMode) {
-	C.SDL_SetRenderDrawBlendMode(renderer.ptr, mode)
+	C.SDL_SetRenderDrawBlendMode(renderer.ptr, int(mode))
 }
 
 pub fn (renderer Renderer) set_draw_color(color Color) {

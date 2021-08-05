@@ -93,7 +93,7 @@ pub fn (mut device AudioDevice) play(data AudioData, volume i8) &AudioData {
 	// copy := { data | copy: true, pos: 0, status: AudioStatus.playing, volume: if volume < 0 { 0 } else { volume } }
 	copy := &AudioData{
 		copy: true
-		device: device
+		device: unsafe { device }
 		len: data.len
 		loop: false
 		path: data.path
@@ -142,7 +142,7 @@ fn play(mut device AudioDevice, stream &byte, len int) {
 		mut remaining := data.get_remaining()
 		length := if len < data.get_remaining() { u32(len) } else { data.get_remaining() }
 		unsafe {
-			C.SDL_MixAudioFormat(stream, data.ptr + data.pos, device.spec.format, length,
+			C.SDL_MixAudioFormat(stream, data.ptr + data.pos, u32(device.spec.format), length,
 				data.volume)
 		}
 		data.pos += u32(length)

@@ -187,7 +187,7 @@ pub fn (font Font) render_blended(text string, color gfx.Color) ?&gfx.Surface {
 
 // set_style sets the style for this font
 pub fn (font Font) set_style(style FontStyle) {
-	C.TTF_SetFontStyle(font.ptr, style)
+	C.TTF_SetFontStyle(font.ptr, u32(style))
 }
 
 // set_outline sets the outline for this font
@@ -197,7 +197,7 @@ pub fn (font Font) set_outline(outline int) {
 
 // set_hinting sets the hinting for this font
 pub fn (font Font) set_hinting(hinting FontHinting) {
-	C.TTF_SetFontHinting(font.ptr, hinting)
+	C.TTF_SetFontHinting(font.ptr, u32(hinting))
 }
 
 // set_kerning sets the kerning for this font

@@ -8,7 +8,7 @@ fn C.SDL_IntersectRect(voidptr, voidptr, voidptr) bool
 
 fn C.SDL_IntersectRectAndLine(voidptr, voidptr, voidptr, voidptr, voidptr) bool
 
-fn C.SDL_PointInRect(voidptr, voidptr, bool) bool
+fn C.SDL_PointInRect(voidptr, voidptr) bool
 
 fn C.UnionRect(voidptr, voidptr, voidptr)
 

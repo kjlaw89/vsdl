@@ -19,9 +19,9 @@ fn main() {
 	bg_texture := bg_image.create_texture(renderer)?
 
 	renderer.fill(r: 255, g: 255, b: 255)
-	renderer.render(bg_texture, { x: 0, y: 0, w: 640, h: 480 })
-	renderer.render(v_texture, { x: 110, y: 150, w: 120, h: 120 })
-	renderer.render(sdl_texture, { x: 340, y: 165, w: 179, h: 99 })
+	renderer.render(bg_texture, x: 0, y: 0, w: 640, h: 480)
+	renderer.render(v_texture, x: 110, y: 150, w: 120, h: 120)
+	renderer.render(sdl_texture, x: 340, y: 165, w: 179, h: 99)
 	renderer.present()
 
 	defer {
@@ -35,7 +35,7 @@ fn main() {
 		window.destroy()
 		vsdl.quit()
 	}
-	
+
 	window.update()
 	events.loop()
 }

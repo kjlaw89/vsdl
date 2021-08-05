@@ -6,7 +6,7 @@ fn C.SDL_LockTexture(voidptr, voidptr, voidptr, voidptr) int
 
 fn C.SDL_GetTextureAlphaMod(voidptr, byte) byte
 
-fn C.SDL_GetTextureBlendMode(voidptr, u32) int
+fn C.SDL_GetTextureBlendMode(voidptr, &u32) int
 
 fn C.SDL_GetTextureColorMod(voidptr, byte, byte, byte) int
 
@@ -38,9 +38,9 @@ pub fn (texture Texture) get_alpha() byte {
 
 // get_blend_mode for the texture
 pub fn (texture Texture) get_blend_mode() BlendMode {
-	mode := BlendMode.@none
+	mode := u32(BlendMode.@none)
 	C.SDL_GetTextureBlendMode(texture.ptr, &mode)
-	return mode
+	return BlendMode(mode)
 }
 
 // get_color_mod gets the color value that is multiplied into render copy operations
@@ -49,7 +49,7 @@ pub fn (texture Texture) get_color_mod() Color {
 	g := byte(0)
 	b := byte(0)
 	C.SDL_GetTextureColorMod(texture.ptr, &r, &g, &b)
-	return {
+	return Color{
 		r: r
 		g: g
 		b: b
@@ -71,7 +71,7 @@ pub fn (texture Texture) query(format &u32, access &int, w &int, h &int) {
 }
 
 pub fn (texture Texture) render(renderer Renderer, rect Rect) int {
-	return renderer.copy(texture, {
+	return renderer.copy(texture, Rect{
 		x: 0
 		y: 0
 		w: texture.w
@@ -86,7 +86,7 @@ pub fn (texture Texture) set_alpha(alpha byte) int {
 
 // set_blend_mode for the texture
 pub fn (texture Texture) set_blend_mode(mode BlendMode) int {
-	return C.SDL_SetTextureBlendMode(texture.ptr, mode)
+	return C.SDL_SetTextureBlendMode(texture.ptr, u32(mode))
 }
 
 // set_color_mod sets an additional color value multiplied into render copy operations

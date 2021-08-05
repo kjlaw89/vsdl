@@ -3,3 +3,14 @@
 *.exe
 *.dll
 *.def
+
+examples/audio/audio
+examples/controller/controller
+examples/gfx/gfx
+examples/gl/gl
+examples/image/image
+examples/messagebox/messagebox
+examples/mixer/mixer
+examples/system/system
+examples/ttf/ttf
+examples/tvintris/tvintris

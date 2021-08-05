@@ -4,7 +4,7 @@ fn C.SDL_BlitSurface(voidptr, voidptr, voidptr, voidptr)
 
 fn C.SDL_BlitScaled(voidptr, voidptr, voidptr, voidptr)
 
-fn C.SDL_ConvertSurface(voidptr, u32) voidptr
+fn C.SDL_ConvertSurface(voidptr, voidptr, u32) voidptr
 
 fn C.SDL_CreateRGBSurface(u32, int, int, int, u32, u32, u32, u32) voidptr
 
@@ -128,7 +128,7 @@ pub fn (surface &Surface) get_pitch() int {
 
 // get_rect returns a `Rect` for this `Surface`
 pub fn (surface &Surface) get_rect() Rect {
-	return {
+	return Rect{
 		x: 0
 		y: 0
 		w: surface.get_width()

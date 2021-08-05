@@ -58,7 +58,7 @@ pub fn (mut game Game) run() ? {
 	// Start our event loop (use `false` to allow us to manage the delay)
 	for events.run(false) {
 		// Reset the viewport back to the whole window and clear the screen
-		game.renderer.set_viewport({})
+		game.renderer.set_viewport()
 		game.renderer.fill_viewport(bg_color)
 		// Clear the screen and re-draw the borders
 		game.renderer.set_draw_color(fg_color)

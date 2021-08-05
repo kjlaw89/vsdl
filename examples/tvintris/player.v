@@ -2,7 +2,6 @@ module main
 
 import math
 import rand
-import rand.wyrand
 import sync
 import vsdl
 import vsdl.events
@@ -130,7 +129,7 @@ mut:
 	pos_x       int // X Position of the current tetro
 	pos_y       int // Y Position of the current tetro
 	ready       bool
-	rng         &wyrand.WyRandRNG = 0
+	rng         &rand.PRNG = rand.get_current_rng()
 	score       int       // Score of the current game
 	state       GameState       = .init // State of the current game
 	update_rate u32             = 250

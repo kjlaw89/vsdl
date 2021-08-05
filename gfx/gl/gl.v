@@ -87,7 +87,7 @@ pub fn extension_supported(extension string) bool {
 // get_attribute returns the value of the provided attribute
 pub fn get_attribute(attribute GLAttr) int {
 	value := 0
-	C.SDL_GL_GetAttribute(attribute, &value)
+	C.SDL_GL_GetAttribute(int(attribute), &value)
 	return value
 }
 
@@ -133,7 +133,7 @@ pub fn reset_attributes() {
 
 // set_attribute sets the value for the provided attribute
 pub fn set_attribute(attribute GLAttr, value int) {
-	C.SDL_GL_SetAttribute(attribute, value)
+	C.SDL_GL_SetAttribute(int(attribute), value)
 }
 
 // set_swap_interval sets the interval value

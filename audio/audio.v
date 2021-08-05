@@ -8,7 +8,7 @@ fn C.SDL_GetAudioDriver(int) charptr
 
 fn C.SDL_GetNumAudioDevices(int) int
 
-fn C.SDL_GetNumAudioDrivers(int) int
+fn C.SDL_GetNumAudioDrivers() int
 
 fn C.SDL_AudioQuit()
 

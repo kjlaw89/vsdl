@@ -148,16 +148,15 @@ fn (system &EventSystem) run(delay bool) {
 			.mousemotion, .mousewheel, .mousebuttonup, .mousebuttondown {
 				trigger_event('mouse', event)
 			}
-			.joyaxismotion, .joyballmotion, .joyhatmotion, .joybuttondown, .joybuttonup, .joydeviceadded,
-			.joydeviceremoved {
+			.joyaxismotion, .joyballmotion, .joyhatmotion, .joybuttondown, .joybuttonup,
+			.joydeviceadded, .joydeviceremoved {
 				trigger_event('joystick', event)
 			}
-			.controlleraxismotion, .controlleraxisbuttondown, .controlleraxisbuttonup, .controllerdeviceadded,
-			.controllerdeviceremapped, .controllerdeviceremoved {
+			.controlleraxismotion, .controlleraxisbuttondown, .controlleraxisbuttonup,
+			.controllerdeviceadded, .controllerdeviceremapped, .controllerdeviceremoved {
 				trigger_event('controller', event)
 			}
-			.fingerdown, .fingerup, .fingermotion, .dollargesture, .dollarrecord, .multigesture
-			 {
+			.fingerdown, .fingerup, .fingermotion, .dollargesture, .dollarrecord, .multigesture {
 				trigger_event('touch', event)
 			}
 			.clipboardupdate {

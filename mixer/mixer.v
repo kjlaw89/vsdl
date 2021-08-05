@@ -10,13 +10,13 @@ import vsdl.audio
 
 fn C.Mix_CloseAudio()
 
-fn C.Mix_GetError() charptr
+fn C.Mix_GetError() &char
 
 fn C.Mix_Init(int) int
 
 fn C.Mix_OpenAudio(int, u16, int, int) int
 
-fn C.Mix_OpenAudioDevice(int, u16, int, int, charptr, int) int
+fn C.Mix_OpenAudioDevice(int, u16, int, int, &char, int) int
 
 fn C.Mix_Quit()
 

@@ -83,7 +83,8 @@ pub fn pixel_formats_to_masks(format PixelFormats) (bool, int, u32, u32, u32, u3
 	gmask := u32(0)
 	bmask := u32(0)
 	amask := u32(0)
-	result := C.SDL_PixelFormatEnumToMasks(u32(format), &bpp, &rmask, &gmask, &bmask, &amask)
+	result := C.SDL_PixelFormatEnumToMasks(u32(format), &bpp, &rmask, &gmask, &bmask,
+		&amask)
 	return result, bpp, rmask, gmask, bmask, amask
 }
 

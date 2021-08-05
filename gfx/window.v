@@ -12,7 +12,7 @@ fn C.SDL_GetWindowBordersSize(voidptr, voidptr, voidptr, voidptr, voidptr) int
 
 fn C.SDL_GetWindowBrightness(voidptr) f32
 
-fn C.SDL_GetWindowData(voidptr, charptr) voidptr
+fn C.SDL_GetWindowData(voidptr, &char) voidptr
 
 fn C.SDL_GetWindowDisplayIndex(voidptr) int
 
@@ -43,7 +43,7 @@ fn C.SDL_GetWindowSize(voidptr, voidptr, voidptr)
 
 fn C.SDL_GetWindowSurface(voidptr) voidptr
 
-fn C.SDL_GetWindowTitle(voidptr) charptr
+fn C.SDL_GetWindowTitle(voidptr) &char
 
 fn C.SDL_GetWindowWMInfo(voidptr)
 
@@ -59,7 +59,7 @@ fn C.SDL_SetWindowBordered(voidptr, bool)
 
 fn C.SDL_SetWindowBrightness(voidptr, f32) int
 
-fn C.SDL_SetWindowData(voidptr, charptr, voidptr) voidptr
+fn C.SDL_SetWindowData(voidptr, &char, voidptr) voidptr
 
 fn C.SDL_SetWindowDisplayMode(voidptr, voidptr) int
 
@@ -87,7 +87,7 @@ fn C.SDL_SetWindowResizable(voidptr, bool)
 
 fn C.SDL_SetWindowSize(voidptr, int, int)
 
-fn C.SDL_SetWindowTitle(voidptr, charptr)
+fn C.SDL_SetWindowTitle(voidptr, &char)
 
 fn C.SDL_UpdateWindowSurface(voidptr)
 

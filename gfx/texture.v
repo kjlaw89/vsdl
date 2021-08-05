@@ -101,8 +101,8 @@ pub fn (texture Texture) update(rect Rect, pixels voidptr, pitch int) {
 // write_lock locks the texture for directly writing to
 // This method returns a byteptr that can be written to directly
 // and the pitch, which is the length of one row in bytes
-pub fn (texture Texture) write_lock(rect Rect) ?(byteptr, int) {
-	ptr := byteptr(0)
+pub fn (texture Texture) write_lock(rect Rect) ?(&byte, int) {
+	ptr := &byte(0)
 	pitch := 0
 	mut result := 0
 	if rect.has_area() {

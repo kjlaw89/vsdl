@@ -9,7 +9,7 @@ fn C.SDL_GL_CreateContext(voidptr) voidptr
 
 fn C.SDL_GL_DeleteContext(voidptr)
 
-fn C.SDL_GL_ExtensionSupported(charptr) bool
+fn C.SDL_GL_ExtensionSupported(&char) bool
 
 fn C.SDL_GL_GetAttribute(int, voidptr) int
 
@@ -19,11 +19,11 @@ fn C.SDL_GL_GetCurrentWindow() voidptr
 
 fn C.SDL_GL_GetDrawableSize(voidptr, voidptr, voidptr)
 
-fn C.SDL_GL_GetProcAddress(charptr) voidptr
+fn C.SDL_GL_GetProcAddress(&char) voidptr
 
 fn C.SDL_GL_GetSwapInterval() int
 
-fn C.SDL_GL_LoadLibrary(charptr) int
+fn C.SDL_GL_LoadLibrary(&char) int
 
 fn C.SDL_GL_MakeCurrent(voidptr, voidptr) int
 
@@ -40,7 +40,7 @@ fn C.SDL_GL_UnbindTexture(voidptr)
 fn C.SDL_GL_UnloadLibrary()
 
 fn init() {
-	load_library('') or { }
+	load_library('') or {}
 }
 
 // create_context gets a new GL context object for the `Window`

@@ -62,7 +62,7 @@ pub fn (rect Rect) intersects(rect_b Rect) bool {
 	return C.SDL_HasIntersection(&rect, &rect_b)
 }
 
-pub fn (rect Rect) +(rect_b Rect) Rect {
+pub fn (rect Rect) + (rect_b Rect) Rect {
 	if !rect.has_area() && !rect_b.has_area() {
 		return Rect{}
 	} else if !rect.has_area() {

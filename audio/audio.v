@@ -1,10 +1,10 @@
 module audio
 
-fn C.SDL_AudioInit(charptr) int
+fn C.SDL_AudioInit(&char) int
 
-fn C.SDL_GetAudioDeviceName(int, int) charptr
+fn C.SDL_GetAudioDeviceName(int, int) &char
 
-fn C.SDL_GetAudioDriver(int) charptr
+fn C.SDL_GetAudioDriver(int) &char
 
 fn C.SDL_GetNumAudioDevices(int) int
 

@@ -22,7 +22,7 @@ jobs:
         make
         sudo ./v symlink
 
-- name: V doctor
+    - name: V doctor
       run: v doctor
 
     - name: Install SDL2 and its dependencies

@@ -58,7 +58,7 @@ pub fn (mut game Game) run() ? {
 	// Start our event loop (use `false` to allow us to manage the delay)
 	for events.run(false) {
 		// Reset the viewport back to the whole window and clear the screen
-		game.renderer.set_viewport({})
+		game.renderer.set_viewport()
 		game.renderer.fill_viewport(bg_color)
 		// Clear the screen and re-draw the borders
 		game.renderer.set_draw_color(fg_color)
@@ -200,13 +200,13 @@ fn (game Game) draw_dialog(header string, body string) ? {
 	h_text_texture := h_text.create_texture(game.renderer) ?
 	b_text := game.fonts['body'].render_blended(body, text_color) ?
 	b_text_texture := b_text.create_texture(game.renderer) ?
-	game.renderer.render(h_text_texture, 
+	game.renderer.render(h_text_texture,
 		x: (width / 2) - (h_text.get_width() / 2)
 		y: 20
 		w: h_text.get_width()
 		h: h_text.get_height()
 	)
-	game.renderer.render(b_text_texture, 
+	game.renderer.render(b_text_texture,
 		x: (width / 2) - (b_text.get_width() / 2)
 		y: 80
 		w: b_text.get_width()
@@ -220,7 +220,7 @@ fn (game Game) draw_dialog(header string, body string) ? {
 
 // draw_center draws the center section (logo, title and play info)
 fn (game Game) draw_center() ? {
-	game.renderer.render(game.logo_texture, 
+	game.renderer.render(game.logo_texture,
 		x: game_width / 2 - game.logo_texture.get_width() / 2
 		y: 20
 		w: game.logo_texture.get_width()
@@ -228,7 +228,7 @@ fn (game Game) draw_center() ? {
 	)
 	h_text := game.fonts['header'].render_blended(title, text_color) ?
 	h_text_texture := h_text.create_texture(game.renderer) ?
-	game.renderer.render(h_text_texture, 
+	game.renderer.render(h_text_texture,
 		x: (game_width / 2) - (h_text.get_width() / 2)
 		y: 80
 		w: h_text.get_width()
@@ -246,13 +246,13 @@ fn (game Game) draw_center() ? {
 		}
 		s_text := game.fonts['subheader'].render_blended(score, text_color) ?
 		s_text_texture := s_text.create_texture(game.renderer) ?
-		game.renderer.render(p_text_texture, 
+		game.renderer.render(p_text_texture,
 			x: (game_width / 2) - (p_text.get_width() / 2)
 			y: y_offset
 			w: p_text.get_width()
 			h: p_text.get_height()
 		)
-		game.renderer.render(s_text_texture, 
+		game.renderer.render(s_text_texture,
 			x: (game_width / 2) - (s_text.get_width() / 2)
 			y: y_offset + 60
 			w: s_text.get_width()

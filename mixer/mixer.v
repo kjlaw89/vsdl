@@ -10,13 +10,13 @@ import vsdl.audio
 
 fn C.Mix_CloseAudio()
 
-fn C.Mix_GetError() charptr
+fn C.Mix_GetError() &char
 
 fn C.Mix_Init(int) int
 
 fn C.Mix_OpenAudio(int, u16, int, int) int
 
-fn C.Mix_OpenAudioDevice(int, u16, int, int, charptr, int) int
+fn C.Mix_OpenAudioDevice(int, u16, int, int, &char, int) int
 
 fn C.Mix_Quit()
 
@@ -54,7 +54,7 @@ pub fn open(frequency int, format Format, channels int, buffer_size int) ?int {
 			adjusted_format = Format.u16msb
 		}
 	}
-	result := C.Mix_OpenAudio(frequency, adjusted_format, channels, buffer_size)
+	result := C.Mix_OpenAudio(frequency, u16(adjusted_format), channels, buffer_size)
 	if result == -1 {
 		return error(serror('Unable to open audio'))
 	}
@@ -72,7 +72,7 @@ pub fn open_device(device audio.AudioDevice, frequency int, format Format, chann
 			adjusted_format = Format.u16msb
 		}
 	}
-	result := C.Mix_OpenAudioDevice(frequency, adjusted_format, channels, buffer_size,
+	result := C.Mix_OpenAudioDevice(frequency, u16(adjusted_format), channels, buffer_size,
 		device.name.str, allowed_changes)
 	if result == -1 {
 		return error(serror('Unable to open audio'))

@@ -10,13 +10,13 @@ fn C.TTF_FontDescent(voidptr) int
 
 fn C.TTF_FontHeight(voidptr) int
 
-fn C.TTF_FontFaceFamilyName(voidptr) charptr
+fn C.TTF_FontFaceFamilyName(voidptr) &char
 
 fn C.TTF_FontFaces(voidptr) int
 
 fn C.TTF_FontFaceIsFixedWidth(voidptr) int
 
-fn C.TTF_FontFaceStyleName(voidptr) charptr
+fn C.TTF_FontFaceStyleName(voidptr) &char
 
 fn C.TTF_FontLineSkip(voidptr) int
 
@@ -30,15 +30,15 @@ fn C.TTF_GetFontStyle(voidptr) u32
 
 fn C.TTF_GlyphMetrics(voidptr, u16, voidptr, voidptr, voidptr, voidptr, voidptr) int
 
-fn C.TTF_OpenFont(charptr, int) voidptr
+fn C.TTF_OpenFont(&char, int) voidptr
 
-fn C.TTF_OpenFontIndex(charptr, int, int) voidptr
+fn C.TTF_OpenFontIndex(&char, int, int) voidptr
 
-fn C.TTF_RenderUTF8_Solid(voidptr, charptr, voidptr) voidptr
+fn C.TTF_RenderUTF8_Solid(voidptr, &char, voidptr) voidptr
 
-fn C.TTF_RenderUTF8_Shaded(voidptr, charptr, voidptr, voidptr) voidptr
+fn C.TTF_RenderUTF8_Shaded(voidptr, &char, voidptr, voidptr) voidptr
 
-fn C.TTF_RenderUTF8_Blended(voidptr, charptr, voidptr) voidptr
+fn C.TTF_RenderUTF8_Blended(voidptr, &char, voidptr) voidptr
 
 fn C.TTF_SetFontHinting(voidptr, u32)
 
@@ -48,7 +48,7 @@ fn C.TTF_SetFontOutline(voidptr, int)
 
 fn C.TTF_SetFontStyle(voidptr, u32)
 
-fn C.TTF_SizeUTF8(voidptr, charptr, voidptr, voidptr) int
+fn C.TTF_SizeUTF8(voidptr, &char, voidptr, voidptr) int
 
 pub fn (font Font) free() {
 	C.TTF_CloseFont(font.ptr)
@@ -187,7 +187,7 @@ pub fn (font Font) render_blended(text string, color gfx.Color) ?&gfx.Surface {
 
 // set_style sets the style for this font
 pub fn (font Font) set_style(style FontStyle) {
-	C.TTF_SetFontStyle(font.ptr, style)
+	C.TTF_SetFontStyle(font.ptr, u32(style))
 }
 
 // set_outline sets the outline for this font
@@ -197,7 +197,7 @@ pub fn (font Font) set_outline(outline int) {
 
 // set_hinting sets the hinting for this font
 pub fn (font Font) set_hinting(hinting FontHinting) {
-	C.TTF_SetFontHinting(font.ptr, hinting)
+	C.TTF_SetFontHinting(font.ptr, u32(hinting))
 }
 
 // set_kerning sets the kerning for this font

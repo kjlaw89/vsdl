@@ -5,7 +5,7 @@ fn C.SDL_ShowMessageBox(voidptr, voidptr) int
 fn C.SDL_ShowSimpleMessageBox(int, voidptr, voidptr, voidptr) int
 
 pub fn (window Window) show_message(title string, message string, flag MessageBoxFlags) {
-	show_message(title, message, flag, window) or { }
+	show_message(title, message, flag, window) or {}
 }
 
 pub fn (window Window) show_message_custom(title string, message string, flag MessageBoxFlags, buttons []MessageBoxButton, scheme MessageBoxColorScheme) int {
@@ -15,9 +15,9 @@ pub fn (window Window) show_message_custom(title string, message string, flag Me
 pub fn show_message(title string, message string, flag MessageBoxFlags, window ...Window) ? {
 	mut result := 0
 	if window.len > 0 {
-		result = C.SDL_ShowSimpleMessageBox(flag, title.str, message.str, window[0].ptr)
+		result = C.SDL_ShowSimpleMessageBox(int(flag), title.str, message.str, window[0].ptr)
 	} else {
-		result = C.SDL_ShowSimpleMessageBox(flag, title.str, message.str, C.NULL)
+		result = C.SDL_ShowSimpleMessageBox(int(flag), title.str, message.str, C.NULL)
 	}
 	if result < 0 {
 		return error(serror('Unable to show message box'))

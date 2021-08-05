@@ -6,7 +6,7 @@ fn C.SDL_CreateSystemCursor(int) voidptr
 
 fn C.SDL_FreeCursor(voidptr)
 
-fn C.SDL_GetCursor(voidptr)
+fn C.SDL_GetCursor()
 
 fn C.SDL_SetCursor(voidptr)
 
@@ -24,7 +24,7 @@ pub fn create_cursor(color byte, mask byte, w int, h int, hot_x int, hot_y int) 
 
 pub fn create_system_cursor(cursor_type CursorType) ?Cursor {
 	cursor := Cursor{
-		ptr: C.SDL_CreateSystemCursor(cursor_type)
+		ptr: C.SDL_CreateSystemCursor(int(cursor_type))
 	}
 	if cursor.ptr == 0 {
 		return error(serror('Unable to create system cursor'))
@@ -56,8 +56,8 @@ pub fn set_cursor(cursor Cursor) {
 
 pub fn show_cursor(mode CursorMode) CursorMode {
 	if mode == .query {
-		return CursorMode(C.SDL_ShowCursor(mode))
+		return CursorMode(C.SDL_ShowCursor(int(mode)))
 	}
-	C.SDL_ShowCursor(mode)
+	C.SDL_ShowCursor(int(mode))
 	return mode
 }

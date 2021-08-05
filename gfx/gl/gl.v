@@ -9,7 +9,7 @@ fn C.SDL_GL_CreateContext(voidptr) voidptr
 
 fn C.SDL_GL_DeleteContext(voidptr)
 
-fn C.SDL_GL_ExtensionSupported(charptr) bool
+fn C.SDL_GL_ExtensionSupported(&char) bool
 
 fn C.SDL_GL_GetAttribute(int, voidptr) int
 
@@ -19,11 +19,11 @@ fn C.SDL_GL_GetCurrentWindow() voidptr
 
 fn C.SDL_GL_GetDrawableSize(voidptr, voidptr, voidptr)
 
-fn C.SDL_GL_GetProcAddress(charptr) voidptr
+fn C.SDL_GL_GetProcAddress(&char) voidptr
 
 fn C.SDL_GL_GetSwapInterval() int
 
-fn C.SDL_GL_LoadLibrary(charptr) int
+fn C.SDL_GL_LoadLibrary(&char) int
 
 fn C.SDL_GL_MakeCurrent(voidptr, voidptr) int
 
@@ -40,7 +40,7 @@ fn C.SDL_GL_UnbindTexture(voidptr)
 fn C.SDL_GL_UnloadLibrary()
 
 fn init() {
-	load_library('') or { }
+	load_library('') or {}
 }
 
 // create_context gets a new GL context object for the `Window`
@@ -87,7 +87,7 @@ pub fn extension_supported(extension string) bool {
 // get_attribute returns the value of the provided attribute
 pub fn get_attribute(attribute GLAttr) int {
 	value := 0
-	C.SDL_GL_GetAttribute(attribute, &value)
+	C.SDL_GL_GetAttribute(int(attribute), &value)
 	return value
 }
 
@@ -133,7 +133,7 @@ pub fn reset_attributes() {
 
 // set_attribute sets the value for the provided attribute
 pub fn set_attribute(attribute GLAttr, value int) {
-	C.SDL_GL_SetAttribute(attribute, value)
+	C.SDL_GL_SetAttribute(int(attribute), value)
 }
 
 // set_swap_interval sets the interval value

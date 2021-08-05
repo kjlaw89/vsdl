@@ -65,10 +65,6 @@ pub fn create_watcher(cap int, flags ...EventCategory) chan Event {
 }
 
 pub fn get_delay() u32 {
-	mut system_ref := &EventSystem(0)
-	unsafe {
-		system_ref = events.system
-	}
 	return events.system.delay
 }
 
@@ -125,10 +121,6 @@ pub fn quit() {
 
 fn (system &EventSystem) run(delay bool) {
 	event := &Event{}
-	mut system_ref := &EventSystem(0)
-	unsafe {
-		system_ref = events.system
-	}
 	for poll_events(event) != 0 {
 		match unsafe { event.@type } {
 			.quit {
@@ -156,16 +148,15 @@ fn (system &EventSystem) run(delay bool) {
 			.mousemotion, .mousewheel, .mousebuttonup, .mousebuttondown {
 				trigger_event('mouse', event)
 			}
-			.joyaxismotion, .joyballmotion, .joyhatmotion, .joybuttondown, .joybuttonup, .joydeviceadded,
-			.joydeviceremoved {
+			.joyaxismotion, .joyballmotion, .joyhatmotion, .joybuttondown, .joybuttonup,
+			.joydeviceadded, .joydeviceremoved {
 				trigger_event('joystick', event)
 			}
-			.controlleraxismotion, .controlleraxisbuttondown, .controlleraxisbuttonup, .controllerdeviceadded,
-			.controllerdeviceremapped, .controllerdeviceremoved {
+			.controlleraxismotion, .controlleraxisbuttondown, .controlleraxisbuttonup,
+			.controllerdeviceadded, .controllerdeviceremapped, .controllerdeviceremoved {
 				trigger_event('controller', event)
 			}
-			.fingerdown, .fingerup, .fingermotion, .dollargesture, .dollarrecord, .multigesture
-			 {
+			.fingerdown, .fingerup, .fingermotion, .dollargesture, .dollarrecord, .multigesture {
 				trigger_event('touch', event)
 			}
 			.clipboardupdate {

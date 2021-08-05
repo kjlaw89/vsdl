@@ -1,8 +1,8 @@
 module controller
 
-fn C.SDL_GameControllerAddMapping(charptr) int
+fn C.SDL_GameControllerAddMapping(&char) int
 
-fn C.SDL_GameControllerAddMappingsFromFile(charptr) int
+fn C.SDL_GameControllerAddMappingsFromFile(&char) int
 
 fn C.SDL_GameControllerAddMappingsFromRW(voidptr, int) int
 
@@ -23,17 +23,17 @@ fn C.SDL_GameControllerGetButton(voidptr, int) byte
 
 fn C.SDL_GameControllerGetJoystick(voidptr) voidptr
 
-fn C.SDL_GameControllerGetStringForAxis(int) charptr
+fn C.SDL_GameControllerGetStringForAxis(int) &char
 
-fn C.SDL_GameControllerGetStringForButton(int) charptr
+fn C.SDL_GameControllerGetStringForButton(int) &char
 
-fn C.SDL_GameControllerMapping(voidptr) charptr
+fn C.SDL_GameControllerMapping(voidptr) &char
 
-fn C.SDL_GameControllerMappingForGUID(voidptr) charptr
+fn C.SDL_GameControllerMappingForGUID(voidptr) &char
 
-fn C.SDL_GameControllerName(voidptr) charptr
+fn C.SDL_GameControllerName(voidptr) &char
 
-fn C.SDL_GameControllerNameForIndex(int) charptr
+fn C.SDL_GameControllerNameForIndex(int) &char
 
 fn C.SDL_GameControllerOpen(int) voidptr
 
@@ -97,19 +97,19 @@ pub fn (controller Controller) get_attached() bool {
 }
 
 pub fn (controller Controller) get_axis(axis ControllerAxis) i16 {
-	return C.SDL_GameControllerGetAxis(controller.ptr, axis)
+	return C.SDL_GameControllerGetAxis(controller.ptr, int(axis))
 }
 
 pub fn (controller Controller) get_axis_binding(axis ControllerAxis) ControllerButtonBind {
-	return C.SDL_GameControllerGetBindForAxis(controller.ptr, axis)
+	return C.SDL_GameControllerGetBindForAxis(controller.ptr, int(axis))
 }
 
 pub fn (controller Controller) get_button_binding(button ControllerButton) ControllerButtonBind {
-	return C.SDL_GameControllerGetBindForButton(controller.ptr, button)
+	return C.SDL_GameControllerGetBindForButton(controller.ptr, int(button))
 }
 
 pub fn (controller Controller) get_button(button ControllerButton) bool {
-	return C.SDL_GameControllerGetButton(controller.ptr, button) > 0
+	return C.SDL_GameControllerGetButton(controller.ptr, int(button)) > 0
 }
 
 pub fn (controller Controller) get_joystick() ?Joystick {

@@ -2,7 +2,6 @@ module main
 
 import math
 import rand
-import rand.wyrand
 import sync
 import vsdl
 import vsdl.events
@@ -22,38 +21,38 @@ const (
 	p2_right     = events.KeyCode.key_right
 	// Tetros' 4 possible states are encoded in binaries
 	tetros       = [
-		/* 0000 0 */
-		/* 0000 0 */
-		/* 0110 6 */
-		/* 0110 6 */
+		// 0000 0
+		// 0000 0
+		// 0110 6
+		// 0110 6
 		[66, 66, 66, 66],
-		/* 0000 0 */
-		/* 0000 0 */
-		/* 0010 2 */
-		/* 0111 7 */
+		// 0000 0
+		// 0000 0
+		// 0010 2
+		// 0111 7
 		[27, 131, 72, 232],
-		/* 0000 0 */
-		/* 0000 0 */
-		/* 0011 3 */
-		/* 0110 6 */
+		// 0000 0
+		// 0000 0
+		// 0011 3
+		// 0110 6
 		[36, 231, 36, 231],
-		/* 0000 0 */
-		/* 0000 0 */
-		/* 0110 6 */
-		/* 0011 3 */
+		// 0000 0
+		// 0000 0
+		// 0110 6
+		// 0011 3
 		[63, 132, 63, 132],
-		/* 0000 0 */
-		/* 0011 3 */
-		/* 0001 1 */
-		/* 0001 1 */
+		// 0000 0
+		// 0011 3
+		// 0001 1
+		// 0001 1
 		[311, 17, 223, 74],
-		/* 0000 0 */
-		/* 0011 3 */
-		/* 0010 2 */
-		/* 0010 2 */
+		// 0000 0
+		// 0011 3
+		// 0010 2
+		// 0010 2
 		[322, 71, 113, 47],
-		/* Special case since 15 can't be used */
-		/* 1111 */
+		// Special case since 15 can't be used
+		// 1111
 		[1111, 9, 1111, 9],
 	]
 	// Each tetro has its unique color
@@ -63,55 +62,55 @@ const (
 			g: 0
 			b: 0
 		},
-		/* unused ? */
+		// unused ?
 		gfx.Color{
 			r: 0
 			g: 0x62
 			b: 0xC0
 		},
-		/* quad : darkblue 0062c0 */
+		// quad : darkblue 0062c0
 		gfx.Color{
 			r: 0xCA
 			g: 0x7D
 			b: 0x5F
 		},
-		/* tricorn : lightbrown ca7d5f */
+		// tricorn : lightbrown ca7d5f
 		gfx.Color{
 			r: 0
 			g: 0xC1
 			b: 0xBF
 		},
-		/* short topright : lightblue 00c1bf */
+		// short topright : lightblue 00c1bf
 		gfx.Color{
 			r: 0
 			g: 0xC1
 			b: 0
 		},
-		/* short topleft : lightgreen 00c100 */
+		// short topleft : lightgreen 00c100
 		gfx.Color{
 			r: 0xBF
 			g: 0xBE
 			b: 0
 		},
-		/* long topleft : yellowish bfbe00 */
+		// long topleft : yellowish bfbe00
 		gfx.Color{
 			r: 0xD1
 			g: 0
 			b: 0xBF
 		},
-		/* long topright : pink d100bf */
+		// long topright : pink d100bf
 		gfx.Color{
 			r: 0xD1
 			g: 0
 			b: 0
 		},
-		/* longest : lightr d10000 */
+		// longest : lightr d10000
 		gfx.Color{
 			r: 0
 			g: 170
 			b: 170
 		},
-		/* unused ? */
+		// unused ?
 	]
 )
 
@@ -130,7 +129,7 @@ mut:
 	pos_x       int // X Position of the current tetro
 	pos_y       int // Y Position of the current tetro
 	ready       bool
-	rng         &wyrand.WyRandRNG = 0
+	rng         &rand.PRNG = rand.get_current_rng()
 	score       int       // Score of the current game
 	state       GameState       = .init // State of the current game
 	update_rate u32             = 250

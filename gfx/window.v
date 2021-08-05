@@ -1,6 +1,6 @@
 module gfx
 
-fn C.SDL_CreateWindow(string, u32, u32, u32, u32, bool) voidptr
+fn C.SDL_CreateWindow(&char, int, int, int, int, u32) voidptr
 
 fn C.SDL_CreateRenderer(voidptr, int, u32) voidptr
 
@@ -12,7 +12,7 @@ fn C.SDL_GetWindowBordersSize(voidptr, voidptr, voidptr, voidptr, voidptr) int
 
 fn C.SDL_GetWindowBrightness(voidptr) f32
 
-fn C.SDL_GetWindowData(voidptr, charptr) voidptr
+fn C.SDL_GetWindowData(voidptr, &char) voidptr
 
 fn C.SDL_GetWindowDisplayIndex(voidptr) int
 
@@ -43,7 +43,7 @@ fn C.SDL_GetWindowSize(voidptr, voidptr, voidptr)
 
 fn C.SDL_GetWindowSurface(voidptr) voidptr
 
-fn C.SDL_GetWindowTitle(voidptr) charptr
+fn C.SDL_GetWindowTitle(voidptr) &char
 
 fn C.SDL_GetWindowWMInfo(voidptr)
 
@@ -59,7 +59,7 @@ fn C.SDL_SetWindowBordered(voidptr, bool)
 
 fn C.SDL_SetWindowBrightness(voidptr, f32) int
 
-fn C.SDL_SetWindowData(voidptr, charptr, voidptr) voidptr
+fn C.SDL_SetWindowData(voidptr, &char, voidptr) voidptr
 
 fn C.SDL_SetWindowDisplayMode(voidptr, voidptr) int
 
@@ -83,11 +83,11 @@ fn C.SDL_SetWindowOpacity(voidptr, f32) int
 
 fn C.SDL_SetWindowPosition(voidptr, int, int)
 
-fn C.SDL_SetWindowResizable(voidptr bool)
+fn C.SDL_SetWindowResizable(voidptr, bool)
 
 fn C.SDL_SetWindowSize(voidptr, int, int)
 
-fn C.SDL_SetWindowTitle(voidptr, charptr)
+fn C.SDL_SetWindowTitle(voidptr, &char)
 
 fn C.SDL_UpdateWindowSurface(voidptr)
 
@@ -232,7 +232,7 @@ pub fn (window Window) get_position() Point {
 	x := 0
 	y := 0
 	C.SDL_GetWindowPosition(window.ptr, &x, &y)
-	return {
+	return Point{
 		x: x
 		y: y
 	}
@@ -306,7 +306,7 @@ pub fn (window Window) set_focus(focus bool) {
 
 pub fn (mut window Window) set_fullscreen(fullscreen FullscreenMode) int {
 	window.fullscreen_mode = fullscreen
-	return C.SDL_SetWindowFullscreen(window.ptr, fullscreen)
+	return C.SDL_SetWindowFullscreen(window.ptr, u32(fullscreen))
 }
 
 pub fn (window Window) set_icon(icon &Surface) {

@@ -32,7 +32,9 @@ fn C.Mix_PlayChannelTimed(int, voidptr, int, int) int
 
 fn C.Mix_Resume(int)
 
-fn C.Mix_Volume(int) int
+fn C.Mix_Volume(int, int) int
+
+fn C.Mix_VolumeChunk(voidptr, int) int
 
 pub fn channel_allocate(count int) int {
 	return C.Mix_AllocateChannels(count)

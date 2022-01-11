@@ -77,7 +77,7 @@ On **Ubuntu 14.04 and above**, run:
 
 On **MacOS** install SDL2 via Homebrew:
 
-`brew install sdl2{,-image,-mixer,-ttf}`
+`brew install sdl2{,_image,_mixer,_ttf}`
 
 On **Windows**,
 
